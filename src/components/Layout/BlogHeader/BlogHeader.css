@@ -1,0 +1,17 @@
+.blog-header {
+	font-family: 'Lato', sans-serif;
+	margin-top: 0;
+}
+
+.blog-header a {
+	box-shadow: none;
+	text-decoration: none;
+	color: inherit;
+}
+
+.blog-header a:hover {
+	box-shadow: none;
+	text-decoration: none;
+	color: #f31455;
+	font-style: initial;
+}

@@ -1,51 +1,32 @@
 import React from 'react';
-import {Link, graphql} from 'gatsby';
+import {graphql} from 'gatsby';
 
 import Bio from '../components/bio';
-import Layout from '../components/layout';
+import Layout from '../components/Layout';
 import SEO from '../components/seo';
-import {rhythm} from '../utils/typography';
+import PostSnippet from '../components/PostSnippet';
 
 const BlogIndex = (props) => {
 	const {data} = props;
 	const siteTitle = data.site.siteMetadata.title;
 	const posts = data.allMarkdownRemark.edges;
+	const snippets = posts.map(({node}, index, {length}) => {
+		const snippet = <PostSnippet key={node.fields.slug} {...node} />;
+		return index < length - 1 ? (
+			<React.Fragment key={node.fields.slug}>
+				{snippet}
+				<hr className="post-snippet-divider" />
+			</React.Fragment>
+		) : (
+			snippet
+		);
+	}, []);
 
 	return (
 		<Layout location={props.location} title={siteTitle}>
 			<SEO title="Posts" />
 			<Bio />
-			{posts.map(({node}) => {
-				const title = node.frontmatter.title || node.fields.slug;
-				return (
-					<article key={node.fields.slug}>
-						<header>
-							<h3
-								style={{
-									marginBottom: rhythm(1 / 4)
-								}}
-							>
-								<Link
-									style={{boxShadow: `none`}}
-									to={node.fields.slug}
-								>
-									{title}
-								</Link>
-							</h3>
-							<small>{node.frontmatter.date}</small>
-						</header>
-						<section>
-							<p
-								dangerouslySetInnerHTML={{
-									__html:
-										node.frontmatter.description ||
-										node.excerpt
-								}}
-							/>
-						</section>
-					</article>
-				);
-			})}
+			{snippets}
 		</Layout>
 	);
 };
@@ -67,7 +48,7 @@ export const pageQuery = graphql`
 						slug
 					}
 					frontmatter {
-						date(formatString: "MMMM DD, YYYY")
+						date(formatString: "YYYY-MM-DD")
 						title
 						description
 					}

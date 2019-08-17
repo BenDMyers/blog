@@ -1,6 +1,6 @@
 module.exports = {
 	siteMetadata: {
-		title: `Blog`,
+		title: `Ben Myers`,
 		author: `Ben Myers`,
 		description: `Thoughts on development and accessibility.`,
 		siteUrl: `https://benmyers.netlify.com/`,
@@ -10,6 +10,14 @@ module.exports = {
 		}
 	},
 	plugins: [
+		{
+			resolve: 'gatsby-plugin-web-font-loader',
+			options: {
+				google: {
+					families: ['Lato']
+				}
+			}
+		},
 		{
 			resolve: `gatsby-source-filesystem`,
 			options: {

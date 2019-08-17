@@ -1,0 +1,9 @@
+hr.post-snippet-divider {
+	border-color: rgba(0, 0, 0, 0.07);
+	border-width: 1px;
+	box-sizing: content-box;
+	height: 0;
+	overflow: visible;
+	font-size: 1rem;
+	background: none;
+}

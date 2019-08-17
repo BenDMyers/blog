@@ -13,7 +13,7 @@ const BlogIndex = (props) => {
 
 	return (
 		<Layout location={props.location} title={siteTitle}>
-			<SEO title="All posts" />
+			<SEO title="Posts" />
 			<Bio />
 			{posts.map(({node}) => {
 				const title = node.frontmatter.title || node.fields.slug;

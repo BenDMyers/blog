@@ -44,14 +44,24 @@ const BlogPostTemplate = (props) => {
 					<li>
 						{previous && (
 							<Link to={previous.fields.slug} rel="prev">
-								← {previous.frontmatter.title}
+								<span className="screenreader">
+									Previous post: {previous.frontmatter.title}
+								</span>
+								<span aria-hidden="true">
+									← {previous.frontmatter.title}
+								</span>
 							</Link>
 						)}
 					</li>
 					<li>
 						{next && (
 							<Link to={next.fields.slug} rel="next">
-								{next.frontmatter.title} →
+								<span className="screenreader">
+									Next post: {next.frontmatter.title}
+								</span>
+								<span aria-hidden="true">
+									{next.frontmatter.title} →
+								</span>
 							</Link>
 						)}
 					</li>

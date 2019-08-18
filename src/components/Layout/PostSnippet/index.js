@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'gatsby';
 import moment from 'moment';
 
-import {rhythm} from '../../utils/typography';
+import {rhythm} from '../../../utils/typography';
 import './PostSnippet.css';
 
 const PostSnippet = ({excerpt, fields, frontmatter}) => {

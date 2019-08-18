@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import {rhythm, scale} from '../../utils/typography';
+import {rhythm} from '../../../utils/typography';
 import cover from './cover';
 
 import './PostHeader.css';

@@ -1,4 +1,4 @@
-import {rhythm} from '../../utils/typography';
+import {rhythm} from '../../../utils/typography';
 
 export default (cover) => {
 	const className = `post-header ${cover ? 'with-cover' : 'without-cover'}`;

@@ -1,11 +1,11 @@
 import React from 'react';
 import {Link, graphql} from 'gatsby';
 
-import Bio from '../components/Bio';
-import Layout from '../components/Layout';
-import PostHeader from '../components/PostHeader';
-import SEO from '../components/seo';
-import {rhythm} from '../utils/typography';
+import Bio from '../Layout/Bio';
+import Layout from '../Layout';
+import SEO from '../Layout/Seo';
+import {rhythm} from '../../utils/typography';
+import PostHeader from './PostHeader';
 
 const BlogPostTemplate = (props) => {
 	const post = props.data.markdownRemark;

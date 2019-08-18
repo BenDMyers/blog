@@ -11,16 +11,21 @@ const homepageHeaderStyles = {
 	marginTop: 0
 };
 
-const BlogHeader = ({pathname, title}) => {
+/**
+ * Name of blog, with a link to the homepage.
+ * Really big on the homepage.
+ * Really not big on other pages.
+ */
+const BlogHeader = ({pathname}) => {
 	const homepageHeader = (
 		<h1 className="blog-header" style={homepageHeaderStyles}>
-			<Link to="/">{title}</Link>
+			<Link to="/">Ben Myers</Link>
 		</h1>
 	);
 
 	const otherHeader = (
 		<h3 className="blog-header">
-			<Link to="/">{title}</Link>
+			<Link to="/">Ben Myers</Link>
 		</h3>
 	);
 

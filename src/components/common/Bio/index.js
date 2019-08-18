@@ -12,6 +12,9 @@ import Image from 'gatsby-image';
 import {rhythm} from '../../../utils/typography';
 import './Bio.css';
 
+/**
+ * A brief blurb about the author.
+ */
 const Bio = () => {
 	const data = useStaticQuery(graphql`
 		query BioQuery {

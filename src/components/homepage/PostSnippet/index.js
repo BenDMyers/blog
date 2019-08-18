@@ -5,6 +5,9 @@ import moment from 'moment';
 import {rhythm} from '../../../utils/typography';
 import './PostSnippet.css';
 
+/**
+ * A brief synopsis of a post
+ */
 const PostSnippet = ({excerpt, fields, frontmatter}) => {
 	const title = frontmatter.title || fields.slug;
 	return (

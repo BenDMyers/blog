@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * Copyright and powered-by.
+ */
 const BlogFooter = () => {
 	return (
 		<footer>

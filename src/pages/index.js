@@ -1,14 +1,15 @@
 import React from 'react';
 import {graphql} from 'gatsby';
 
-import Bio from '../components/Layout/Bio';
-import Layout from '../components/Layout';
-import SEO from '../components/Layout/Seo';
-import PostSnippet from '../components/Layout/PostSnippet';
+import Bio from '../components/common/Bio';
+import Page from '../components/common/PageTemplate';
+import PostSnippet from '../components/homepage/PostSnippet';
 
+/**
+ * Blog homepage, which displays a list of post snippets
+ */
 const BlogIndex = (props) => {
 	const {data} = props;
-	const siteTitle = data.site.siteMetadata.title;
 	const posts = data.allMarkdownRemark.edges;
 	const snippets = posts.map(({node}, index, {length}) => {
 		const snippet = <PostSnippet key={node.fields.slug} {...node} />;
@@ -23,11 +24,10 @@ const BlogIndex = (props) => {
 	}, []);
 
 	return (
-		<Layout location={props.location} title={siteTitle}>
-			<SEO title="Posts" />
+		<Page location={props.location} title="Posts">
 			<Bio />
 			{snippets}
-		</Layout>
+		</Page>
 	);
 };
 
@@ -35,11 +35,6 @@ export default BlogIndex;
 
 export const pageQuery = graphql`
 	query {
-		site {
-			siteMetadata {
-				title
-			}
-		}
 		allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}) {
 			edges {
 				node {

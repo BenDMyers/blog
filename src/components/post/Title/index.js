@@ -5,6 +5,9 @@ import cover from './cover';
 
 import './PostHeader.css';
 
+/**
+ * The post title, superimposed on an image.
+ */
 const PostHeader = (props) => {
 	return (
 		<header {...cover(props.cover)}>

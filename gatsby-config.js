@@ -100,7 +100,6 @@ module.exports = {
                                             html
                                             frontmatter {
                                                 date
-                                                path
                                                 title
                                             }
                                         }
@@ -115,7 +114,7 @@ module.exports = {
 									date: edge.node.frontmatter.date,
 									url:
 										site.siteMetadata.siteUrl +
-										edge.node.frontmatter.path,
+										edge.node.slug,
 									html: edge.node.html
 								};
 							});

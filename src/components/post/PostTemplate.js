@@ -8,6 +8,8 @@ import PostNav from './PostNav';
 import Title from './Title';
 import {rhythm} from '../../utils/typography';
 
+import './post-template.css';
+
 const PostTemplate = (props) => {
 	const post = props.data.mdx;
 
@@ -19,7 +21,7 @@ const PostTemplate = (props) => {
 		>
 			<article>
 				<Title {...post.frontmatter} />
-				<section>
+				<section className="post-contents">
 					<MDXRenderer>{post.body}</MDXRenderer>
 				</section>
 				<hr style={{marginBottom: rhythm(1)}} />

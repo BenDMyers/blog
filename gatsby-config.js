@@ -68,7 +68,62 @@ module.exports = {
 				//trackingId: `ADD YOUR TRACKING ID HERE`,
 			}
 		},
-		`gatsby-plugin-feed`,
+		{
+			resolve: 'gatsby-plugin-feed-generator',
+			options: {
+				generator: `GatsbyJS`,
+				rss: true, // Set to false to stop rss generation
+				json: true, // Set to false to stop json feed generation
+				siteQuery: `
+                    {
+                        site {
+                            siteMetadata {
+                                title
+                                description
+                                siteUrl
+                                author
+                            }
+                        }
+                    }
+                `,
+				feeds: [
+					{
+						name: 'mdx-feed',
+						query: `
+                            {
+                                allMdx(
+                                sort: {order: DESC, fields: [frontmatter___date]},
+                                limit: 100,
+                                ) {
+                                    edges {
+                                        node {
+                                            html
+                                            frontmatter {
+                                                date
+                                                path
+                                                title
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        `,
+						normalize: ({query: {site, allMdx}}) => {
+							return allMdx.edges.map((edge) => {
+								return {
+									title: edge.node.frontmatter.title,
+									date: edge.node.frontmatter.date,
+									url:
+										site.siteMetadata.siteUrl +
+										edge.node.frontmatter.path,
+									html: edge.node.html
+								};
+							});
+						}
+					}
+				]
+			}
+		},
 		{
 			resolve: `gatsby-plugin-manifest`,
 			options: {

@@ -1,5 +1,6 @@
 import React from 'react';
 import {graphql} from 'gatsby';
+import {MDXRenderer} from 'gatsby-plugin-mdx';
 
 import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
@@ -8,7 +9,7 @@ import Title from './Title';
 import {rhythm} from '../../utils/typography';
 
 const PostTemplate = (props) => {
-	const post = props.data.markdownRemark;
+	const post = props.data.mdx;
 
 	return (
 		<Page
@@ -18,7 +19,9 @@ const PostTemplate = (props) => {
 		>
 			<article>
 				<Title {...post.frontmatter} />
-				<section dangerouslySetInnerHTML={{__html: post.html}} />
+				<section>
+					<MDXRenderer>{post.body}</MDXRenderer>
+				</section>
 				<hr style={{marginBottom: rhythm(1)}} />
 				<footer>
 					<Bio />
@@ -42,10 +45,10 @@ export const pageQuery = graphql`
 				author
 			}
 		}
-		markdownRemark(fields: {slug: {eq: $slug}}) {
+		mdx(fields: {slug: {eq: $slug}}) {
 			id
 			excerpt(pruneLength: 160)
-			html
+			body
 			frontmatter {
 				title
 				date(formatString: "YYYY-MM-DD")

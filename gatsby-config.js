@@ -19,6 +19,12 @@ module.exports = {
 			}
 		},
 		{
+			resolve: `gatsby-plugin-mdx`,
+			options: {
+				extensions: [`.mdx`, `.md`]
+			}
+		},
+		{
 			resolve: `gatsby-source-filesystem`,
 			options: {
 				path: `${__dirname}/src/pages/posts`,
@@ -82,7 +88,6 @@ module.exports = {
 			options: {
 				pathToConfigModule: `src/utils/typography`
 			}
-		},
-		`gatsby-plugin-mdx`
+		}
 	]
 };

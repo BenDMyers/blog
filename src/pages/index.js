@@ -10,7 +10,7 @@ import PostSnippet from '../components/homepage/PostSnippet';
  */
 const BlogIndex = (props) => {
 	const {data} = props;
-	const posts = data.allMarkdownRemark.edges;
+	const posts = data.allMdx.edges;
 	const snippets = posts.map(({node}, index, {length}) => {
 		const snippet = <PostSnippet key={node.fields.slug} {...node} />;
 		return index < length - 1 ? (
@@ -35,7 +35,7 @@ export default BlogIndex;
 
 export const pageQuery = graphql`
 	query {
-		allMarkdownRemark(sort: {fields: [frontmatter___date], order: DESC}) {
+		allMdx(sort: {fields: [frontmatter___date], order: DESC}) {
 			edges {
 				node {
 					excerpt
@@ -46,6 +46,7 @@ export const pageQuery = graphql`
 						date(formatString: "YYYY-MM-DD")
 						title
 						description
+						emoji
 					}
 				}
 			}

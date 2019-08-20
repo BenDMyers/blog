@@ -1,9 +1,11 @@
 import React from 'react';
 import {graphql} from 'gatsby';
+import {MDXProvider} from '@mdx-js/react';
 import {MDXRenderer} from 'gatsby-plugin-mdx';
 
 import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
+import anchoredHeadings from './AnchoredHeadings';
 import PostNav from './PostNav';
 import Title from './Title';
 import {rhythm} from '../../utils/typography';
@@ -12,6 +14,9 @@ import './post-template.css';
 
 const PostTemplate = (props) => {
 	const post = props.data.mdx;
+	const layoutComponents = {
+		...anchoredHeadings()
+	};
 
 	return (
 		<Page
@@ -22,7 +27,9 @@ const PostTemplate = (props) => {
 			<article>
 				<Title {...post.frontmatter} />
 				<section className="post-contents">
-					<MDXRenderer>{post.body}</MDXRenderer>
+					<MDXProvider components={layoutComponents}>
+						<MDXRenderer>{post.body}</MDXRenderer>
+					</MDXProvider>
 				</section>
 				<hr style={{marginBottom: rhythm(1)}} />
 				<footer>

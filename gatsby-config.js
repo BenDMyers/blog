@@ -3,7 +3,7 @@ module.exports = {
 		title: `Ben Myers`,
 		author: `Ben Myers`,
 		description: `Thoughts on development and accessibility.`,
-		siteUrl: `https://benmyers.netlify.com/`,
+		siteUrl: `https://blog.benmyers.dev/`,
 		social: {
 			linkedin: `BenDMyers`,
 			twitter: `BenDMyers`
@@ -14,7 +14,7 @@ module.exports = {
 			resolve: 'gatsby-plugin-web-font-loader',
 			options: {
 				google: {
-					families: ['Lato']
+					families: ['Lato', 'Roboto Slab']
 				}
 			}
 		},

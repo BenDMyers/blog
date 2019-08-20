@@ -21,21 +21,42 @@ const Anchor = (props) => {
 	);
 };
 
+function toSluggable(children) {
+	if (typeof children === 'string') {
+		return children;
+	} else if (Array.isArray(children)) {
+		return children.reduce((acc, child) => {
+			return acc + toSluggable(child);
+		}, '');
+	} else if (children.props) {
+		return toSluggable(children.props.children);
+	} else {
+		return '';
+	}
+}
+
 const anchoredHeadings = () => {
 	const slugger = GitHubSlugger();
 
-	const h2 = (props) => {
-		let [slug] = useState(slugger.slug(props.children));
-		let [ref, isHovered] = useHover();
+	const anchoredHeading = (Tag, props) => {
+		const sluggable = toSluggable(props.children);
+		const [slug] = useState(slugger.slug(sluggable));
+		const [ref, isHovered] = useHover();
 		return (
-			<h2 ref={ref} id={slug}>
+			<Tag ref={ref} id={slug}>
 				<Anchor slug={slug} isHovered={isHovered} />
 				{props.children}
-			</h2>
+			</Tag>
 		);
 	};
 
-	return {h2};
+	const h2 = (props) => anchoredHeading('h2', props);
+	const h3 = (props) => anchoredHeading('h3', props);
+	const h4 = (props) => anchoredHeading('h4', props);
+	const h5 = (props) => anchoredHeading('h5', props);
+	const h6 = (props) => anchoredHeading('h6', props);
+
+	return {h2, h3, h4, h5, h6};
 };
 
 export default anchoredHeadings;

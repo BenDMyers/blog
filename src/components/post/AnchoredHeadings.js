@@ -4,7 +4,7 @@ import {useFocus} from 'use-events';
 import {FaAnchor} from 'react-icons/fa';
 import GitHubSlugger from 'github-slugger';
 
-const Anchor = (props) => {
+export const Anchor = (props) => {
 	let [isFocused, bind] = useFocus();
 	const show = props.isHovered || isFocused;
 	const showClassName = show ? 'anchor-show' : 'anchor-hide';

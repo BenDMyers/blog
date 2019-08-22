@@ -7,6 +7,7 @@ import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
 import anchoredHeadings from './AnchoredHeadings';
 import PostNav from './PostNav';
+import TOC from './TableOfContents';
 import Title from './Title';
 import {rhythm} from '../../utils/typography';
 
@@ -15,8 +16,11 @@ import './post-template.css';
 const PostTemplate = (props) => {
 	const post = props.data.mdx;
 	const layoutComponents = {
-		...anchoredHeadings()
+		...anchoredHeadings(),
+		TOC: () => <TOC headings={post.tableOfContents} />
 	};
+
+	console.log(post.tableOfContents);
 
 	return (
 		<Page
@@ -58,6 +62,7 @@ export const pageQuery = graphql`
 			id
 			excerpt(pruneLength: 160)
 			body
+			tableOfContents
 			frontmatter {
 				title
 				date(formatString: "YYYY-MM-DD")

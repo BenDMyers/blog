@@ -1,0 +1,9 @@
+.toc-heading {
+	padding-bottom: 1.5%;
+	font-size: 90%;
+}
+
+.toc-list {
+	padding-left: calc(3% + 1em);
+	font-size: 75%;
+}

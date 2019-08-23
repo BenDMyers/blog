@@ -6,6 +6,7 @@ import {MDXRenderer} from 'gatsby-plugin-mdx';
 import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
 import anchoredHeadings from './AnchoredHeadings';
+import Lorem from './Lorem';
 import PostNav from './PostNav';
 import TOC from './TableOfContents';
 import Title from './Title';
@@ -17,6 +18,7 @@ const PostTemplate = (props) => {
 	const post = props.data.mdx;
 	const layoutComponents = {
 		...anchoredHeadings(),
+		Lorem,
 		TOC: () => <TOC headings={post.tableOfContents} />
 	};
 

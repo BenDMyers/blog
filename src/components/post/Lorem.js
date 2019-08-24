@@ -9,6 +9,8 @@ const Lorem = (props) => {
 			<p key={`lorem-${i}`}>
 				{loremIpsum({
 					count: numParagraphs,
+					paragraphLowerBound: 2,
+					paragraphUpperBound: 5,
 					units: 'paragraphs'
 				})}
 			</p>

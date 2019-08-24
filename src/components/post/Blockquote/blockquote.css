@@ -1,0 +1,30 @@
+/* ALL BLOCKQUOTES */
+blockquote.quote-contents {
+	border-left: 0.25rem solid rgba(131, 52, 255, 0.9);
+	padding-left: 3%;
+}
+
+/* BLOCKQUOTE WITH ATTRIBUTION */
+figure.quote-figure {
+	margin-left: 6%;
+}
+
+figure.quote-figure blockquote.quote-contents {
+	margin-bottom: 1.5%;
+	margin-left: 0;
+}
+
+figure.quote-figure figcaption.quote-attribution {
+	padding-left: -3%;
+}
+
+/* BLOCKQUOTE WITHOUT ATTRIBUTION */
+
+blockquote.quote-contents {
+	margin-left: 6%;
+	margin-bottom: 3%;
+}
+
+section.post-contents blockquote.quote-contents p {
+	padding-left: 0;
+}

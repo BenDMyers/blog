@@ -45,7 +45,7 @@ const anchoredHeadings = () => {
 		return (
 			<Tag ref={ref} id={slug}>
 				<Anchor slug={slug} isHovered={isHovered} />
-				{props.children}
+				<div className="heading-contents">{props.children}</div>
 			</Tag>
 		);
 	};

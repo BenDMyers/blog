@@ -12,11 +12,11 @@ export const Anchor = (props) => {
 	return (
 		<a
 			href={`#${props.slug}`}
-			aria-hidden
 			className={`anchor ${showClassName}`}
 			{...bind}
 		>
-			<FaAnchor />
+			<span className="screenreader">Permalink</span>
+			<FaAnchor aria-hidden />
 		</a>
 	);
 };

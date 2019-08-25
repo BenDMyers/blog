@@ -20,7 +20,7 @@ section.post-contents h6 {
 section.post-contents a.anchor {
 	margin-right: 1.5%;
 	font-size: 1rem;
-	color: black;
+	color: var(--text-color);
 	box-shadow: none;
 	display: block;
 	float: left;
@@ -54,7 +54,7 @@ section.post-contents div.heading-contents {
 
 section.post-contents a.anchor.anchor-show:hover,
 section.post-contents a.anchor.anchor-show:focus {
-	color: #f31455;
+	color: var(--link-color);
 }
 
 section.post-contents a.anchor.anchor-hide {

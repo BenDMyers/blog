@@ -1,12 +1,39 @@
+/* CSS CUSTOM PROPERTIES */
+:root {
+	--background-color: #f0f0f0;
+	--blockquote-indicator-color: rgba(131, 52, 255, 0.9);
+	--blockquote-text-color: hsla(0, 0%, 0%, 0.59);
+	--heading-color: black;
+	--hr-color: rgba(0, 0, 0, 0.07);
+	--layout-background-color: #fcfcfc;
+	--layout-box-shadow-amount: 0.35;
+	--link-color: #f31455;
+	--link-effect-color: #c40038;
+	--link-focus-outline-color: rgba(196, 0, 56, 0.5);
+	--text-color: black;
+}
+
+[data-theme='dark'] {
+	--background-color: #212121;
+	--blockquote-text-color: hsla(100%, 100%, 100%, 0.59);
+	--heading-color: white;
+	--hr-color: rgba(255, 255, 255, 0.07);
+	--layout-background-color: #3f3f3f;
+	--layout-box-shadow-amount: 0.65;
+	--text-color: #d8d8d8;
+}
+
+/* OKAY, NOW THE ACTUAL STYLING */
 .layout {
-	background-color: #fcfcfc;
+	background-color: var(--layout-background-color);
 	margin-left: auto;
 	margin-right: auto;
-	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.35);
+	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
+	color: var(--text-color);
 }
 
 body {
-	background-color: #f0f0f0;
+	background-color: var(--background-color);
 	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
@@ -29,13 +56,14 @@ h3,
 h4,
 h5,
 h6 {
+	color: var(--heading-color);
 	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
 	padding: 0;
 	margin: 0;
 }
 
 a {
-	color: #f31455;
+	color: var(--link-color);
 	box-shadow: 0 1px 0 0 currentColor;
 	font-weight: bold;
 }
@@ -43,9 +71,9 @@ a {
 a:hover,
 a:focus {
 	box-shadow: 0 0.1px 0 0 currentColor;
-	color: #c40038;
+	color: var(--link-effect-color);
 }
 
 a:focus {
-	outline: 2px dashed rgba(196, 0, 56, 0.5);
+	outline: 2px dashed var(--link-focus-outline-color);
 }

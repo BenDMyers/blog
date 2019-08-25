@@ -11,7 +11,7 @@ import './PostHeader.css';
 const PostHeader = (props) => {
 	return (
 		<header {...cover(props.cover)}>
-			<h1 style={{marginTop: rhythm(1), marginBottom: 0}}>
+			<h1 style={{marginTop: rhythm(1), marginBottom: 0, color: 'white'}}>
 				{props.title}
 			</h1>
 			<p className="post-header-date">

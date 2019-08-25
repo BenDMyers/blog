@@ -1,7 +1,8 @@
 /* ALL BLOCKQUOTES */
 blockquote.quote-contents {
-	border-left: 0.25rem solid rgba(131, 52, 255, 0.9);
+	border-left: 0.25rem solid var(--blockquote-indicator-color);
 	padding-left: 3%;
+	color: var(--blockquote-text-color);
 }
 
 /* BLOCKQUOTE WITH ATTRIBUTION */

@@ -38,7 +38,12 @@ const PostTemplate = (props) => {
 						<MDXRenderer>{post.body}</MDXRenderer>
 					</MDXProvider>
 				</section>
-				<hr style={{marginBottom: rhythm(1)}} />
+				<hr
+					style={{
+						marginBottom: rhythm(1),
+						border: '1px solid var(--hr-color)'
+					}}
+				/>
 				<footer>
 					<Bio />
 				</footer>

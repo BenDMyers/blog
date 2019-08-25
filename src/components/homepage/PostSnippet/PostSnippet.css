@@ -1,5 +1,5 @@
 hr.post-snippet-divider {
-	border: 1px solid rgba(0, 0, 0, 0.07);
+	border: 1px solid var(--hr-color);
 	border-width: 1px;
 	box-sizing: content-box;
 	height: 0;

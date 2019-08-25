@@ -13,6 +13,6 @@
 .blog-header a:hover {
 	box-shadow: none;
 	text-decoration: none;
-	color: #f31455;
+	color: var(--link-color);
 	font-style: initial;
 }

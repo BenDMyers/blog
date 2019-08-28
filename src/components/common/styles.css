@@ -1,6 +1,7 @@
 /* CSS CUSTOM PROPERTIES */
 :root {
 	--background-color: #f0f0f0;
+	/* --background-color: #212121; */
 	--blockquote-indicator-color: rgba(131, 52, 255, 0.9);
 	--blockquote-text-color: hsla(0, 0%, 0%, 0.59);
 	--heading-color: black;
@@ -10,6 +11,7 @@
 	--link-color: #f31455;
 	--link-effect-color: #c40038;
 	--link-focus-outline-color: rgba(196, 0, 56, 0.5);
+	--table-of-contents-background-color: white;
 	--text-color: black;
 }
 
@@ -20,6 +22,7 @@
 	--hr-color: rgba(255, 255, 255, 0.07);
 	--layout-background-color: #3f3f3f;
 	--layout-box-shadow-amount: 0.65;
+	--table-of-contents-background-color: #333;
 	--text-color: #d8d8d8;
 }
 
@@ -30,11 +33,13 @@
 	margin-right: auto;
 	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
 	color: var(--text-color);
+	transition: background-color 0.5s ease-in, color 0.5s ease-in;
 }
 
 body {
 	background-color: var(--background-color);
 	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	transition: background-color 0.5s ease-in;
 }
 
 .screenreader {

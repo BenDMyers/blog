@@ -29,10 +29,10 @@ const TableOfContents = (props) => {
 	);
 
 	return (
-		<React.Fragment>
+		<nav aria-labelledby="toc" className="table-of-contents">
 			{tocHeading}
 			<ol className="toc-list">{headingList}</ol>
-		</React.Fragment>
+		</nav>
 	);
 };
 

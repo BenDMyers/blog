@@ -9,6 +9,7 @@ import anchoredHeadings from './AnchoredHeadings';
 import Blockquote from './Blockquote';
 import Lorem from './Lorem';
 import PostNav from './PostNav';
+import PostSeo from './PostSeo';
 import TOC from './TableOfContents';
 import Title from './Title';
 import {rhythm} from '../../utils/typography';
@@ -31,6 +32,7 @@ const PostTemplate = (props) => {
 			title={post.frontmatter.title}
 			description={post.frontmatter.description || post.excerpt}
 		>
+			<PostSeo {...post.frontmatter} />
 			<article>
 				<Title {...post.frontmatter} />
 				<section className="post-contents">
@@ -76,6 +78,7 @@ export const pageQuery = graphql`
 				date(formatString: "YYYY-MM-DD")
 				description
 				cover
+				coveralt
 			}
 		}
 	}

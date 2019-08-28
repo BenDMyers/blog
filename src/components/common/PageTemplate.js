@@ -18,7 +18,7 @@ const layoutStyles = {
  * Contains a header, contents, and a footer. Simple.
  */
 const Page = (props) => {
-	const theme = useThemeDebugging('dark');
+	const theme = useThemeDebugging('light');
 
 	return (
 		<div data-theme={theme} className="layout" style={layoutStyles}>

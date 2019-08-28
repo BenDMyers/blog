@@ -10,7 +10,7 @@ const Lorem = (props) => {
 				{loremIpsum({
 					count: numParagraphs,
 					paragraphLowerBound: 2,
-					paragraphUpperBound: 5,
+					paragraphUpperBound: 3,
 					units: 'paragraphs'
 				})}
 			</p>

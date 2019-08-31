@@ -15,6 +15,13 @@ section.post-contents h5,
 section.post-contents h6 {
 	padding-left: 3%;
 	padding-right: 3%;
+	text-transform: none;
+}
+
+section.post-contents ol,
+section.post-contents ul {
+	padding-left: calc(3% + 1em);
+	padding-right: 3%;
 }
 
 section.post-contents a.anchor {
@@ -49,7 +56,6 @@ section.post-contents a.anchor {
 
 section.post-contents div.heading-contents {
 	display: inline-block;
-	margin-bottom: 3%;
 }
 
 section.post-contents a.anchor.anchor-show:hover,
@@ -59,4 +65,8 @@ section.post-contents a.anchor.anchor-show:focus {
 
 section.post-contents a.anchor.anchor-hide {
 	color: rgba(0, 0, 0, 0);
+}
+
+section.post-contents em i {
+	font-style: normal;
 }

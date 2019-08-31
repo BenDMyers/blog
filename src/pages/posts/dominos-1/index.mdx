@@ -1,0 +1,156 @@
+---
+title: "How Domino's Could Topple the Accessible Web — Part 1: Public Accommodations"
+date: 2019-08-31
+description: The popular pizza chain has a big part to play in the unseen war over the web.
+cover: 'https://imgur.com/KG1WTJP.png'
+coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
+emoji: 🍕
+---
+
+<TOC />
+
+*This post is the first in a two-part series on web accessibility in American case law, and the impact <i>Robles v. Domino's Pizza</i> could have on that landscape. This first entry focuses on the ways courts interpret public accommodations.*
+
+## What's Happening
+
+<!-- INTRODUCTION -->
+<!-- - Robles v. Domino's -->
+Last year, 2,285 web accessibility cases were filed in the US. That's about six cases a day, and it's almost three times as many cases as 2017.[^1] As the number of cases rises, so too does the media attention, and no case has quite stolen that spotlight like <i>Robles v. Domino's Pizza</i> has.
+
+Guillermo Robles has had a storied three years. He filed his case in September 2016, alleging that the pizza chain's website and mobile app were incompatible with his screenreader. The Central District of California dismissed the case on the grounds that the law was not concrete enough to hold Domino's accountable. The Ninth Circuit Court of Appeals overturned that dismissal in January 2019, asserting that the law does, in fact, hold the pizza chain accountable for inaccessible websites and apps. Most recently, in July, Domino's petitioned to bring the case to the Supreme Court. They're backed by the U.S. Chamber of Commerce, the Restaurant Law Center, and the National Retail Federation.[^2] Businesses really, really want to see this case go their way.
+
+<!-- - Two main questions: Required? And to what standard? -->
+Domino's ordering a Supreme could have a lasting impact. The Supreme Court has not yet seen a web accessibility case, meaning lower courts have been left to figure this out for themselves. Specifically, courts have been grappling with two big questions:
+
+1. Does American law require websites to be accessible?
+2. If so, which standards of accessibility are websites held to?
+
+The courts' many responses to those questions have led to a lot of confusion, ambiguity, and frustration. However, understanding where these courts are coming from is vital to understanding the future of disabled users' access to the internet. Let's look at that first question:
+
+<!-- REQUIRED? -->
+## Does the Law Require Web Accessibility?
+
+No federal law mentions web accessibility. As a result, courts turn to the next best thing: the Americans with Disabilities Act. Title III of the ADA forbids public accommodations from discriminating against disabled Americans:
+
+<!-- - Title III -->
+> "No individual shall be discriminated against on the basis of disability in the full and equal enjoyment of the goods, services, facilities, privileges, advantages, or accommodations of any place of public accommodation by any person who owns, leases (or leases to), or operates a place of public accommodation."
+
+Disabled plaintiffs argue that websites count as public accommodations and, as a result, cannot be inaccessible.
+
+### What is a Public Accommodation?
+
+It's here that a definition of "public accommodation" would be really nice. Title III, however, does not provide one. Instead, it offers [a long list of examples of public accommodations](https://www.ada.gov/pubs/adastatute08.htm#12181), including hotels, restaurants, banks, travel services, zoos, laundromats, and many more. This list is well understood to be nonexhaustive. Crucially, however, it does not mention websites.
+
+<!-- - A variety of opinions -->
+### So, Are Websites Public Accommodations?
+
+Courts are divided on this question, but their opinions can be roughly grouped into three categories:
+
+1. Yes, websites are public accommodations.
+2. No, websites are not public accommodations.
+3. Websites are *sometimes* public accommodations.
+
+<!-- - - Yes -->
+#### Opinion #1: Yes, Websites Are Public Accommodations
+
+Amongst courts, the opinion that websites are inherently public accommodations is the most fringe. These courts, namely the First and Seventh Circuit Courts of Appeals, maintain that websites are public accommodations just by virtue of providing a service.
+
+The courts argue that there is precedent for nonphysical spaces counting as public accommodations. They wipe the dust off an old case, ADA-wise: the <i>Carparts Distribution Center, Inc. v. Automotive Wholesaler's Association of New England</i> case from 1994. In <i>Carparts</i>, the First Circuit ruled that the ADA covered phone-based services. They noted that Congress had included travel services in the list of example public accommodations. At the time, the travel services industry was largely telephone-based, so the First Circuit reasoned that _obviously_ Congress intended to include nonphysical spaces such as telephone lines.
+
+In their <i>Carparts</i> ruling, the First Circuit noted that:
+
+> "It would be irrational to conclude that persons who enter an office to purchase services are protected by the ADA, but persons who purchase the same services over the telephone or by mail are not. Congress could not have intended such an absurd result." [^3]
+
+The Seventh Circuit court has applied this reasoning to an insurance company that sold its services online:
+
+> "The defendant asks us to interpret 'public accommodation' literally, as denoting a physical site, such as a store or a hotel, but we have already rejected that interpretation. An insurance company can no more refuse to sell a policy to a disabled person over the Internet than a furniture store can refuse to sell furniture to a disabled person who enters the store." [^4]
+
+[Netflix](https://scholar.google.com/scholar_case?case=15520314324288957354), [Scribd](https://scholar.google.com/scholar_case?case=8523925640371825721), and [Blue Apron](http://www.nhd.uscourts.gov/sites/default/files/opinions/17/17NH236.pdf) have all found themselves at the receiving end of courts of this opinion.
+
+<!-- - - No -->
+#### Opinion #2: No, Websites Are Not Public Accommodations
+
+If the First Circuit's <i>Carparts</i> ruling seems like a bit of a stretch to you, you're not alone.
+
+Courts of this opinion, such as the Third, Fifth, and Sixth Circuit Courts, point to the ADA's actual wording: "***place*** of public accommodation." Nonphysical spaces such as websites, they argue, aren't places, and therefore they aren't covered by Title III. To claim that they are covered would be to vastly expand the scope of the law:
+
+<Blockquote
+    attribution={
+        <span>
+            District Court for the Southern District of Florida,&nbsp;
+            <i><a href="https://scholar.google.com/scholar_case?case=9596654457159505828">
+                Access Now, Inc. v. Southwest Airlines, Co.
+            </a></i>
+        </span>
+    }
+>
+    "Here, to fall within the scope of the ADA as presently drafted, a public accommodation must be a physical, concrete structure. To expand the ADA to cover 'virtual' spaces would be to create new rights without well-defined standards."
+</Blockquote>
+
+Additionally, the ADA has been amended several times since the rise of the internet. If Congress really did intend for the ADA to cover nonphysical spaces such as websites, surely they would have included that in one of the amendments, right? [^5]
+
+<!-- - - Nexus -->
+#### Opinion #3: Websites Are *Sometimes* Public Accommodations
+
+The most frequent court opinion about websites as public accommodations kind of sidesteps the question altogether by claiming that websites can be _extensions_ of public accommodations.
+
+<Blockquote
+    attribution={
+        <span>
+            District Court for the Southern District of Florida,&nbsp;
+            <i><a href="https://www.devinemillimet.com/getmedia/e026ae60-63c1-4895-abe8-42c5826d42fa/Gomez-v-Bang-Olufsen-Am-_-Inc-_-2017-U-S-Dist-LEXI.pdf">
+                Gomez v. Bang & Olufsen Am., Inc.
+            </a></i>
+        </span>
+    }
+>
+    "While there is some disagreement amongst district courts on this question, it appears that the majority of courts agree that websites are not covered by the ADA unless some function on the website hinders the full use and enjoyment of a physical space."
+</Blockquote>
+
+This is the principle of <dfn>nexus</dfn>: if a website has a significant connection to the goods and services offered by a physical public accommodation, then the website is seen as an extension of the public accommodation. In that case, it would be subject to Title III.
+
+The first federal trial on web accessibility to be carried out in full was <i>Gil v. Winn-Dixie</i> in 2017. Winn-Dixie offered digital coupons on their website that were only redeemable in their brick-and-mortar stores. Additionally, Winn-Dixie gave customers the option to refill their prescriptions online, but the refills also had to be picked up in-store. The Southern District of Florida determined that the Winn-Dixie website therefore had a nexus to the brick-and-mortar franchises. Thus, the website's incompatibility with screenreaders was a violation of the ADA.[^6]
+
+Nexus does go the other way. In <i>Earll v. eBay, Inc.</i>, for instance, a deaf plaintiff sued eBay since she couldn't use the site's phone-based vendor verification service. The Ninth Circuit determined that, since eBay doesn't have any consumer-facing, brick-and-mortar locations, eBay is not a public accommodation and is not subject to Title III.[^7] Netflix, Viacom, Facebook, and Southwest Airlines have also been defended with a similar argument.[^8]
+
+Much like it did during the Winn-Dixie case, the Ninth Circuit applied the nexus argument to Domino's this January when overturning the district court's dismissal of Robles's case:
+
+<Blockquote
+    attribution={
+        <span>
+            Ninth Circuit Court of Appeals,&nbsp;
+            <i><a href="https://scholar.google.com/scholar_case?case=14468696865090361672&hl=en&as_sdt=6,44#p905">
+                Robles v. Domino's Pizza
+            </a></i>
+        </span>
+    }
+>
+    "Domino's website and app facilitate access to the goods and services of a place of public accommodation — Domino's physical restaurants. They are two of the primary (and heavily advertised) means of ordering Domino's products to be picked up at or delivered from Domino's restaurants. We agree with the district court in this case — and the many other district courts that have confronted this issue in similar contexts — that the ADA applies to Domino's website and app, which connect customers to the goods and services of Domino's physical restaurants."
+</Blockquote>
+
+<!-- CONCLUSION -->
+## Takeaways
+
+The <i>Robles v. Domino's Pizza</i> case is just one of many court cases centered around whether American law requires websites to be accessible. The number of web accessibility-related lawsuits is only going to go up from here as courts continue to give mixed opinions on the matter.
+
+By appealing the Ninth Circuit's decision, Domino’s Pizza is giving the Supreme Court the opportunity to affirm, finally, whether websites are inherently public accommodations, whether they're inherently *not* public accommodations, or whether they count as public accommodations if a nexus is present.
+
+However, while the question of whether the ADA covers websites is important, it's not the only question Domino's is contesting. Wait for Part 2, where we'll cover magic checklists and due process.
+
+<!-- FOOTNOTES -->
+
+[^1]: _The National Law Review_, [_When Good Sites Go Bad: The Growing Risk of Website Accessibility Litigation_](https://www.natlawreview.com/article/when-good-sites-go-bad-growing-risk-website-accessibility-litigation)
+
+[^2]: _The Washington Post_, [_Do protections for people with disabilities apply online? Domino’s asks high court._](https://www.washingtonpost.com/politics/courts_law/do-protections-for-people-with-disabilities-apply-online-dominos-asks-high-court/2019/07/20/984c685e-a7fd-11e9-a3a6-ab670962db05_story.html)
+
+[^3]: [_Carparts Distribution Ctr. v. Automotive Wholesaler's Ass'n_](https://scholar.google.com/scholar_case?case=3450944898673982089)
+
+[^4]: [_Morgan v. Joint Admin. Bd._](https://scholar.google.com/scholar_case?case=731343607554833896)
+
+[^5]: [_Carroll v. Northwest Federal Credit Union_](https://news.cuna.org/ext/resources/NewsNow/2018/2018/January/Carroll-v-Northwest-Fed-CU---17cv1205---Order.pdf)
+
+[^6]: [_Gil v. Winn-Dixie_](https://scholar.google.com/scholar_case?case=6744502269111605689)
+
+[^7]: [_Earll v. eBay, Inc._](https://scholar.google.com/scholar_case?case=13814511373260202940)
+
+[^8]: [_National Federation of the Blind et al v. Scribd, Inc._](https://scholar.google.com/scholar_case?case=8523925640371825721#p569)

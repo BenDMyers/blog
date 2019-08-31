@@ -15,7 +15,7 @@ const PostHeader = (props) => {
 				{props.title}
 			</h1>
 			<p className="post-header-date">
-				<time dateTime={props.date}>
+				<time itemProp="datePublished" dateTime={props.date}>
 					{moment(props.date).format('LL')}
 				</time>
 			</p>

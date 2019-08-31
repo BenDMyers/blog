@@ -11,7 +11,10 @@
 }
 
 p.post-header-date {
+	font-family: 'Montserrat';
+	font-style: italic;
 	font-weight: bold;
+	font-size: 150%;
 }
 
 .post-header.with-cover {
@@ -20,4 +23,14 @@ p.post-header-date {
 	background-position: center;
 	text-shadow: 0 0 20px black;
 	width: auto;
+}
+
+@media screen and (max-width: 600px) {
+	.post-header h1 {
+		font-size: 150%;
+	}
+
+	p.post-header-date {
+		font-size: 100%;
+	}
 }

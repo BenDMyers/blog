@@ -17,7 +17,7 @@ const FootnotesContainer = ({children}) => {
 			{footnotesHeading}
 			<ol>
 				{React.Children.map(children, (fn, index) => (
-					<li id={`fn-${index}`} key={`fn-${index}`}>
+					<li id={`fn-${index + 1}`} key={`fn-${index + 1}`}>
 						{fn}
 					</li>
 				))}

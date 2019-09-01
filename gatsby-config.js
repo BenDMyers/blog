@@ -98,7 +98,7 @@ module.exports = {
                 `,
 				feeds: [
 					{
-						name: 'mdx-feed',
+						name: 'feed',
 						query: `
                             {
                                 allMdx(
@@ -112,6 +112,9 @@ module.exports = {
                                                 date
                                                 title
                                             }
+                                            fields {
+                                                slug
+                                            }
                                         }
                                     }
                                 }
@@ -124,7 +127,7 @@ module.exports = {
 									date: edge.node.frontmatter.date,
 									url:
 										site.siteMetadata.siteUrl +
-										edge.node.slug,
+										edge.node.fields.slug,
 									html: edge.node.html
 								};
 							});
@@ -136,13 +139,13 @@ module.exports = {
 		{
 			resolve: `gatsby-plugin-manifest`,
 			options: {
-				name: `Gatsby Starter Blog`,
-				short_name: `GatsbyJS`,
+				name: `Blog | Ben Myers`,
+				short_name: `Ben Myers`,
 				start_url: `/`,
-				background_color: `#ffffff`,
-				theme_color: `#663399`,
+				background_color: `#f0f0f0`,
+				theme_color: `#f31455`,
 				display: `minimal-ui`,
-				icon: `content/assets/gatsby-icon.png`
+				icon: `content/assets/logo.png`
 			}
 		},
 		`gatsby-plugin-offline`,

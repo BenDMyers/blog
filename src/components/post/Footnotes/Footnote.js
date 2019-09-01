@@ -24,7 +24,9 @@ const Footnote = (props) => {
 	return (
 		<React.Fragment>
 			<span>{props.children || footnoteContents}</span>
-			&nbsp;
+			<span aria-hidden="true" className="footnote-pipe">
+				|
+			</span>
 			<a className="back-to-reference-arrow" href={`#fn-ref-${props.fn}`}>
 				<span className="screenreader">
 					Return to reference {props.fn}

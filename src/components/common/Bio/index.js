@@ -55,14 +55,18 @@ const Bio = () => {
 				}}
 			/>
 			<p>
-				<strong>{author}</strong> is a software developer, accessibility
-				advocate, and a passionate educator. He graduated from Oklahoma
-				State University in 2018 with a bachelor's degree in Computer
-				Science, and now works for USAA as a full-stack engineer.
+				<strong>{author}</strong> is a human T-rex, software developer,
+				accessibility advocate, and a passionate educator. He graduated
+				from Oklahoma State University in 2018 with a bachelor's degree
+				in Computer Science, and now works for USAA as a full-stack
+				engineer.
 				{` `}
+				<a href={`https://benmyers.dev`}>Check out his portfolio</a>
+				{' and '}
 				<a href={`https://linkedin.com/in/${social.linkedin}`}>
-					You should connect with him on LinkedIn.
+					connect with him on LinkedIn
 				</a>
+				.
 			</p>
 		</div>
 	);

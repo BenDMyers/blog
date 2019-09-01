@@ -2,20 +2,19 @@
 :root {
 	--background-color: #f0f0f0;
 	/* --background-color: #212121; */
-	/* --blockquote-indicator-color: rgba(131, 52, 255, 0.9); */
 	--blockquote-indicator-color: #f31455;
 	--heading-color: black;
 	--hr-color: rgba(0, 0, 0, 0.07);
 	--layout-background-color: #fcfcfc;
 	--layout-box-shadow-amount: 0.35;
-	/* --link-color: #f31455; */
-	/* --link-effect-color: #c40038; */
-	/* --link-focus-outline-color: rgba(196, 0, 56, 0.5); */
 	--link-color: #4183c4;
 	--link-effect-color: #126fa7;
 	--link-focus-outline-color: rgba(18, 111, 167, 0.5);
 	--table-of-contents-background-color: white;
 	--text-color: black;
+	--theme-color: #f31455;
+	--theme-color-focus-outline: rgba(196, 0, 56, 0.5);
+	--theme-color-link-effect: #c40038;
 }
 
 [data-theme='dark'] {
@@ -40,7 +39,7 @@
 
 body {
 	background-color: var(--background-color);
-	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-family: 'Roboto Slab', serif;
 	transition: background-color 0.5s ease-in;
 }
 

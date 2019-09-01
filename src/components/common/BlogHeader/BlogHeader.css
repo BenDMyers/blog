@@ -1,7 +1,8 @@
 .blog-header {
-	font-family: 'Lato', sans-serif;
+	font-family: 'Montserrat', sans-serif;
 	margin-top: 0;
 	margin-bottom: 3%;
+	font-size: 3rem;
 }
 
 .blog-header a {
@@ -10,9 +11,20 @@
 	color: inherit;
 }
 
+.blog-header a:focus {
+	outline: 2px dashed var(--theme-color);
+	color: var(--theme-color);
+}
+
 .blog-header a:hover {
 	box-shadow: none;
+	color: var(--theme-color);
 	text-decoration: none;
-	color: var(--link-color);
 	font-style: initial;
+}
+
+@media screen and (max-width: 599px) {
+	.blog-header {
+		text-align: center;
+	}
 }

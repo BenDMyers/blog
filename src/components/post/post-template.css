@@ -7,15 +7,27 @@ section.post-contents p {
 	margin-top: 3%;
 }
 
-section.post-contents p,
+section.post-contents p {
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
 section.post-contents h2,
 section.post-contents h3,
 section.post-contents h4,
 section.post-contents h5,
 section.post-contents h6 {
+	font-family: 'Montserrat';
 	padding-left: 3%;
 	padding-right: 3%;
 	text-transform: none;
+}
+
+section.post-contents h3,
+section.post-contents h4,
+section.post-contents h5,
+section.post-contents h6 {
+	font-weight: bold;
 }
 
 section.post-contents ol,

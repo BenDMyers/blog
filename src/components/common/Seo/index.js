@@ -70,6 +70,10 @@ function SEO({description, lang, meta, title}) {
 				{
 					name: 'google-site-verification',
 					content: 'EEihlIaLnpdccmFKtO6x26cncQA8npVsLLAAdbcdGuY'
+				},
+				{
+					name: 'theme-color',
+					content: '#f31455'
 				}
 			].concat(meta)}
 		/>

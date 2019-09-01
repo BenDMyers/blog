@@ -19,7 +19,9 @@ const PostSnippet = ({excerpt, fields, frontmatter}) => {
 						marginBottom: rhythm(1 / 4)
 					}}
 				>
-					{frontmatter.emoji}
+					<span className="snippet-emoji" role="presentation">
+						{frontmatter.emoji}{' '}
+					</span>
 					<Link to={fields.slug}>{title}</Link>
 				</h3>
 				<small>

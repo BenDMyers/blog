@@ -3,7 +3,6 @@
 	--background-color: #f0f0f0;
 	/* --background-color: #212121; */
 	--blockquote-indicator-color: rgba(131, 52, 255, 0.9);
-	--blockquote-text-color: hsla(0, 0%, 0%, 0.59);
 	--heading-color: black;
 	--hr-color: rgba(0, 0, 0, 0.07);
 	--layout-background-color: #fcfcfc;
@@ -17,7 +16,6 @@
 
 [data-theme='dark'] {
 	--background-color: #212121;
-	--blockquote-text-color: hsla(100%, 100%, 100%, 0.59);
 	--heading-color: white;
 	--hr-color: rgba(255, 255, 255, 0.07);
 	--layout-background-color: #3f3f3f;
@@ -69,16 +67,16 @@ h6 {
 
 a {
 	color: var(--link-color);
-	box-shadow: 0 1px 0 0 currentColor;
 	font-weight: bold;
+	text-decoration: none !important;
 }
 
-a:hover,
-a:focus {
-	box-shadow: 0 0.1px 0 0 currentColor;
+a:hover {
+	box-shadow: 0 1px 0 0 currentColor;
 	color: var(--link-effect-color);
 }
 
 a:focus {
 	outline: 2px dashed var(--link-focus-outline-color);
+	color: var(--link-effect-color);
 }

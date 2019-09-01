@@ -2,9 +2,13 @@
 blockquote.quote-contents {
 	border-left: 0.25rem solid var(--blockquote-indicator-color);
 	padding-left: 3%;
-	color: var(--blockquote-text-color);
+	color: var(--text-color);
 	line-height: 2em;
 	font-size: 95%;
+}
+
+blockquote.quote-contents i {
+	font-style: normal;
 }
 
 /* BLOCKQUOTE WITH ATTRIBUTION */

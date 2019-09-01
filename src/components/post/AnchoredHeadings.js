@@ -15,7 +15,7 @@ export const Anchor = (props) => {
 			href={`#${props.slug}`}
 			className={`anchor ${showClassName}`}
 			{...bind}
-			aria-label={`Permalink for "${props.headingContents}"`}
+			aria-label="Permalink"
 		>
 			<FaAnchor aria-hidden />
 		</a>
@@ -45,11 +45,7 @@ const anchoredHeadings = () => {
 		const [ref, isHovered] = useHover();
 		return (
 			<Tag ref={ref} id={slug}>
-				<Anchor
-					slug={slug}
-					isHovered={isHovered}
-					headingContents={sluggable}
-				/>
+				<Anchor slug={slug} isHovered={isHovered} />
 				<div className="heading-contents">{props.children}</div>
 			</Tag>
 		);

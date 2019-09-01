@@ -19,4 +19,10 @@
 .toc-list {
 	padding-left: calc(3% + 1em);
 	font-size: 75%;
+	margin-bottom: 0;
+}
+
+.toc-skiplink {
+	font-size: 75%;
+	float: right;
 }

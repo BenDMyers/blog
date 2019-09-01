@@ -68,11 +68,11 @@ h6 {
 a {
 	color: var(--link-color);
 	font-weight: bold;
-	text-decoration: none !important;
+	text-decoration: none;
 }
 
 a:hover {
-	box-shadow: 0 1px 0 0 currentColor;
+	text-decoration: underline;
 	color: var(--link-effect-color);
 }
 

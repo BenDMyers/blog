@@ -29,10 +29,8 @@ const PostTemplate = (props) => {
 		Footnote,
 		FootnotesContainer,
 		Lorem,
-		TOC: () => <TOC headings={post.tableOfContents} />
+		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />
 	};
-
-	console.log(FootnotesContainer || 'hello');
 
 	return (
 		<Page

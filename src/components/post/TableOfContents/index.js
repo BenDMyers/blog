@@ -1,4 +1,5 @@
 import React from 'react';
+import {useFocus} from 'use-events';
 import {useHover} from 'use-hooks';
 import {Anchor} from '../AnchoredHeadings';
 import './table-of-contents.css';
@@ -20,6 +21,10 @@ const TableOfContents = (props) => {
 	}
 
 	const headingList = toListItem(props.headings);
+	if (props.includeFootnotes) {
+		headingList.push(toListItem({title: 'Footnotes', url: '#footnotes'}));
+	}
+
 	const [ref, isHovered] = useHover();
 	const tocHeading = (
 		<h2 ref={ref} id="toc" className="toc-heading">
@@ -28,11 +33,22 @@ const TableOfContents = (props) => {
 		</h2>
 	);
 
+	let [isSkiplinkFocused, bind] = useFocus();
+	let skiplinkClasses = `toc-skiplink ${
+		isSkiplinkFocused ? '' : 'screenreader'
+	}`;
+
 	return (
-		<nav aria-labelledby="toc" className="table-of-contents">
-			{tocHeading}
-			<ol className="toc-list">{headingList}</ol>
-		</nav>
+		<React.Fragment>
+			<nav aria-labelledby="toc" className="table-of-contents">
+				<a href="#beginning" className={skiplinkClasses} {...bind}>
+					Skip table of contents
+				</a>
+				{tocHeading}
+				<ol className="toc-list">{headingList}</ol>
+			</nav>
+			<div id="beginning" />
+		</React.Fragment>
 	);
 };
 

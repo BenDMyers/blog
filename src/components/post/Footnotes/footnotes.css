@@ -1,0 +1,9 @@
+#footnotes {
+	margin-bottom: 3%;
+}
+
+a.back-to-reference-arrow {
+	margin-left: 1.5%;
+	text-decoration: none;
+	border-color: rgba(0, 0, 0, 0);
+}

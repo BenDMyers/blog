@@ -7,6 +7,9 @@ import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
 import anchoredHeadings from './AnchoredHeadings';
 import Blockquote from './Blockquote';
+import Footnote from './Footnotes/Footnote';
+import FootnoteReference from './Footnotes/FootnoteReference';
+import FootnotesContainer from './Footnotes/FootnotesContainer';
 import Lorem from './Lorem';
 import PostNav from './PostNav';
 import PostSeo from './PostSeo';
@@ -22,9 +25,14 @@ const PostTemplate = (props) => {
 		...anchoredHeadings(),
 		blockquote: Blockquote,
 		Blockquote,
+		Fn: FootnoteReference,
+		Footnote,
+		FootnotesContainer,
 		Lorem,
 		TOC: () => <TOC headings={post.tableOfContents} />
 	};
+
+	console.log(FootnotesContainer || 'hello');
 
 	return (
 		<Page

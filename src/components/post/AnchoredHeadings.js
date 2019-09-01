@@ -9,13 +9,14 @@ export const Anchor = (props) => {
 	const show = props.isHovered || isFocused;
 	const showClassName = show ? 'anchor-show' : 'anchor-hide';
 
+	/* Relying on https://github.com/w3c/respec/issues/425 for precedent */
 	return (
 		<a
 			href={`#${props.slug}`}
 			className={`anchor ${showClassName}`}
 			{...bind}
+			aria-label={`Permalink for "${props.headingContents}"`}
 		>
-			<span className="screenreader">Permalink</span>
 			<FaAnchor aria-hidden />
 		</a>
 	);
@@ -44,7 +45,11 @@ const anchoredHeadings = () => {
 		const [ref, isHovered] = useHover();
 		return (
 			<Tag ref={ref} id={slug}>
-				<Anchor slug={slug} isHovered={isHovered} />
+				<Anchor
+					slug={slug}
+					isHovered={isHovered}
+					headingContents={sluggable}
+				/>
 				<div className="heading-contents">{props.children}</div>
 			</Tag>
 		);

@@ -2,9 +2,9 @@ import React from 'react';
 
 import BlogFooter from './BlogFooter';
 import BlogHeader from './BlogHeader';
+import DarkModeToggle from './DarkModeToggle';
 import SEO from './Seo';
 import {rhythm} from '../../utils/typography';
-import useThemeDebugging from '../../utils/use-theme-debugging';
 
 import './styles.css';
 
@@ -18,11 +18,10 @@ const layoutStyles = {
  * Contains a header, contents, and a footer. Simple.
  */
 const Page = (props) => {
-	const theme = useThemeDebugging('dark');
-
 	return (
-		<div data-theme={theme} className="layout" style={layoutStyles}>
+		<div className="layout" style={layoutStyles}>
 			<BlogHeader pathname={props.location.pathname} />
+			<DarkModeToggle />
 			<SEO title={props.title} description={props.description} />
 			<main>{props.children}</main>
 			<BlogFooter />

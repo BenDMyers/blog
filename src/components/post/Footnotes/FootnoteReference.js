@@ -7,7 +7,7 @@ const FootnoteReference = ({fn}) => {
 			href={`#fn-${fn}`}
 			id={`fn-ref-${fn}`}
 		>
-			<span className="screenreader">Go to footnote </span>
+			<span className="screenreader"> Go to footnote </span>
 			<sup>{fn}</sup>
 		</a>
 	);

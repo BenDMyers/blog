@@ -51,7 +51,8 @@ const PostTemplate = (props) => {
 				<hr
 					style={{
 						marginBottom: rhythm(1),
-						border: '1px solid var(--hr-color)'
+						backgroundColor: 'var(--text-color)',
+						opacity: 0.33
 					}}
 				/>
 				<footer>

@@ -29,6 +29,7 @@ const PostTemplate = (props) => {
 		Fn: FootnoteReference,
 		Footnote,
 		FootnotesContainer,
+		hr: () => <hr role="presentation" />,
 		Lorem,
 		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />
 	};

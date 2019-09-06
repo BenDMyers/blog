@@ -10,9 +10,7 @@ const Blockquote = (props) => {
 		quote = (
 			<figure className="quote-figure">
 				{quote}
-				<figcaption className="quote-attribution">
-					—{props.attribution}
-				</figcaption>
+				<cite className="quote-attribution">—{props.attribution}</cite>
 			</figure>
 		);
 	}

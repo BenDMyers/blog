@@ -1,37 +1,27 @@
-/* ALL BLOCKQUOTES */
-blockquote.quote-contents {
+blockquote {
+	border-left: 0px;
+}
+
+blockquote p.quote-contents {
 	border-left: 0.25rem solid var(--blockquote-indicator-color);
-	padding-left: 3%;
+	padding-left: 1.5%;
 	color: var(--text-color);
 	line-height: 2em;
-	font-size: 95%;
-}
-
-blockquote.quote-contents i {
-	font-style: normal;
-}
-
-/* BLOCKQUOTE WITH ATTRIBUTION */
-figure.quote-figure {
-	margin-left: 6%;
-}
-
-figure.quote-figure blockquote.quote-contents {
+	font-size: 85%;
+	margin-left: 9%;
 	margin-bottom: 1.5%;
-	margin-left: 0;
 }
 
-figure.quote-figure figcaption.quote-attribution {
-	padding-left: -3%;
+cite.quote-attribution {
+	color: var(--text-color);
+	font-style: normal;
+	padding-left: 6%;
 }
 
-/* BLOCKQUOTE WITHOUT ATTRIBUTION */
-
-blockquote.quote-contents {
-	margin-left: 6%;
-	margin-bottom: 3%;
+cite.quote-attribution::before {
+	content: '—';
 }
 
-section.post-contents blockquote.quote-contents p {
-	padding-left: 0;
+blockquote p.quote-contents i {
+	font-style: normal;
 }

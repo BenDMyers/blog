@@ -7,7 +7,7 @@ section.post-contents p {
 	margin-top: 3%;
 }
 
-section.post-contents p {
+section.post-contents p:not(.quote-contents) {
 	padding-left: 3%;
 	padding-right: 3%;
 }
@@ -81,4 +81,9 @@ section.post-contents a.anchor.anchor-hide {
 
 section.post-contents em i {
 	font-style: normal;
+}
+
+section.post-contents hr {
+	background-color: var(--text-color);
+	opacity: 0.1;
 }

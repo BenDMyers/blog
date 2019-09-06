@@ -54,7 +54,7 @@ const PostTemplate = (props) => {
 					}}
 				/>
 				<footer>
-					<Bio />
+					<Bio className="in-post" />
 					<Share
 						page={post.fields.slug}
 						pageTitle={post.frontmatter.title}

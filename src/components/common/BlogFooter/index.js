@@ -5,7 +5,7 @@ import React from 'react';
  */
 const BlogFooter = () => {
 	return (
-		<footer>
+		<footer className="copyright">
 			© <time dateTime="YYYY">{new Date().getFullYear()}</time>, Built
 			with <a href="https://www.gatsbyjs.org">Gatsby</a>
 		</footer>

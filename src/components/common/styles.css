@@ -85,3 +85,10 @@ a:focus {
 	outline: 2px dashed var(--link-focus-outline-color);
 	color: var(--link-effect-color);
 }
+
+footer.copyright {
+	padding-top: 1.5%;
+	text-align: center;
+	font-style: italic;
+	font-size: 90%;
+}

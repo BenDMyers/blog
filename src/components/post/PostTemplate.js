@@ -18,6 +18,7 @@ import Title from './Title';
 import {rhythm} from '../../utils/typography';
 
 import './post-template.css';
+import Share from './Share';
 
 const PostTemplate = (props) => {
 	const post = props.data.mdx;
@@ -54,6 +55,10 @@ const PostTemplate = (props) => {
 				/>
 				<footer>
 					<Bio />
+					<Share
+						page={post.fields.slug}
+						pageTitle={post.frontmatter.title}
+					/>
 				</footer>
 			</article>
 			<PostNav
@@ -85,6 +90,9 @@ export const pageQuery = graphql`
 				description
 				cover
 				coveralt
+			}
+			fields {
+				slug
 			}
 		}
 	}

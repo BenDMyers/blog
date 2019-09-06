@@ -1,0 +1,131 @@
+section.share-section p,
+section.share-section h2 {
+	padding-left: 3%;
+	padding-right: 3%;
+}
+
+section.share-section p {
+	margin-top: 1.5%;
+}
+
+#share {
+	margin-top: 1.5%;
+	font-family: 'Montserrat';
+}
+
+div.social-share {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+div.social-button {
+	display: flex;
+	width: 5rem;
+	height: 5rem;
+	align-items: center;
+	text-align: center;
+	vertical-align: middle;
+	color: white;
+	border-radius: 50%;
+	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.75);
+	font-size: 250%;
+}
+
+div.social-button svg {
+	margin: 0 auto;
+}
+
+div.social-button:hover {
+	cursor: pointer;
+	box-shadow: 0 1px 3px 1px rgba(34, 36, 38, 0.75);
+}
+
+div.social-button:focus {
+	outline: none;
+	-webkit-box-shadow: 0px 0px 5px 2px var(--link-color);
+	-moz-box-shadow: 0px 0px 5px 2px var(--link-color);
+	box-shadow: 0px 0px 5px 2px var(--link-color);
+}
+
+div.social-button.facebook {
+	background-color: #3c5a99;
+}
+
+div.social-button.facebook:hover,
+div.social-button.facebook:focus {
+	/* #3c5a99 - #222222 */
+	background-color: #1a3877;
+}
+
+div.social-button.twitter {
+	background-color: #1da1f2;
+}
+
+div.social-button.twitter:hover,
+div.social-button.twitter:focus {
+	background-color: #007fd0;
+}
+
+div.social-button.linkedin {
+	background-color: #0077b5;
+}
+
+div.social-button.linkedin:hover,
+div.social-button.linkedin:focus {
+	background-color: #005593;
+}
+
+div.social-button.reddit {
+	background-color: #ff4301;
+}
+
+div.social-button.reddit:hover,
+div.social-button.reddit:focus {
+	background-color: #dd2100;
+}
+
+/* Anchors */
+/* TODO: Move all anchor CSS to its own file */
+section.share-section a.anchor {
+	margin-right: 1.5%;
+	font-size: 1rem;
+	color: var(--text-color);
+	box-shadow: none;
+	display: block;
+	float: left;
+}
+
+@media screen and (max-width: 419px) {
+	section.share-section a.anchor {
+		margin-left: -9%;
+		margin-top: 1.5%;
+	}
+}
+
+@media screen and (min-width: 420px) {
+	section.share-section a.anchor {
+		margin-left: -6%;
+		margin-top: 1%;
+	}
+}
+
+@media screen and (min-width: 600px) {
+	section.share-section a.anchor {
+		margin-left: -4%;
+		margin-top: 0.5%;
+	}
+}
+
+section.share-section div.heading-contents {
+	display: inline-block;
+}
+
+section.share-section a.anchor.anchor-show:hover,
+section.share-section a.anchor.anchor-show:focus {
+	color: var(--link-color);
+}
+
+section.share-section a.anchor.anchor-hide {
+	color: rgba(0, 0, 0, 0);
+}

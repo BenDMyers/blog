@@ -2,14 +2,18 @@ blockquote {
 	border-left: 0px;
 }
 
-blockquote p.quote-contents {
+section.post-contents blockquote p.quote-contents {
 	border-left: 0.25rem solid var(--blockquote-indicator-color);
-	padding-left: 1.5%;
+	padding-left: 3%;
 	color: var(--text-color);
 	line-height: 2em;
 	font-size: 85%;
 	margin-left: 9%;
 	margin-bottom: 1.5%;
+}
+
+section.post-contents blockquote p.quote-contents p {
+	padding-left: 0%;
 }
 
 cite.quote-attribution {

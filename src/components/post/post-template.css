@@ -7,7 +7,7 @@ section.post-contents p {
 	margin-top: 3%;
 }
 
-section.post-contents p:not(.quote-contents) {
+section.post-contents p {
 	padding-left: 3%;
 	padding-right: 3%;
 }

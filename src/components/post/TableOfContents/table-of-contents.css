@@ -8,6 +8,7 @@
 		box-shadow: 0 1px 2px 0
 			rgba(34, 36, 38, var(--layout-box-shadow-amount));
 		background-color: var(--table-of-contents-background-color);
+		transition: background-color 0.5s ease-in, color 0.5s ease-in;
 	}
 }
 
@@ -20,12 +21,14 @@
 
 .toc-list {
 	padding-left: calc(3% + 1em);
-	font-size: 75%;
+	font-size: 14px;
 	margin-bottom: 0;
 }
 
 .toc-list li {
 	margin-bottom: 3%;
+	color: var(--text-color);
+	transition: color 0.5s ease-in;
 }
 
 .toc-list li ol {

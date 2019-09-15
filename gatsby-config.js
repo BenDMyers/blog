@@ -111,6 +111,8 @@ module.exports = {
                                             frontmatter {
                                                 date
                                                 title
+                                                description
+                                                cover
                                             }
                                             fields {
                                                 slug
@@ -128,7 +130,9 @@ module.exports = {
 									url:
 										site.siteMetadata.siteUrl +
 										edge.node.fields.slug,
-									html: edge.node.html
+									html: edge.node.html,
+									excerpt: edge.node.frontmatter.description,
+									bannerImage: edge.node.frontmatter.cover
 								};
 							});
 						}

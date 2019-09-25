@@ -1,7 +1,7 @@
 pre.codeblock {
 	background-color: black;
 	font-family: var(--monospace-font), monospace;
-	overflow-x: scroll;
+	overflow-x: auto;
 }
 
 pre.codeblock div.token-line {

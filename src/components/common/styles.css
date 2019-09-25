@@ -14,6 +14,8 @@
 	--link-color: #229abf;
 	--link-effect-color: #0580a6;
 	--link-focus-outline-color: rgba(5, 128, 166, 0.5);
+	--monospace-font: 'Roboto Mono';
+	--purple-accent: rgb(131, 52, 255);
 	--table-of-contents-background-color: white;
 	--text-color: black;
 	--theme-color: #f31455;

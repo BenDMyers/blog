@@ -1,5 +1,11 @@
 pre.codeblock {
 	background-color: black;
+	font-family: var(--monospace-font), monospace;
+	overflow-x: scroll;
+}
+
+pre.codeblock div.token-line {
+	min-width: 100%;
 }
 
 pre.codeblock span.line-number {
@@ -9,10 +15,15 @@ pre.codeblock span.line-number {
 	user-select: none;
 	margin-left: 20px;
 	margin-right: 20px;
-	border-right: 1px solid #777;
+	border-right: 1px solid #333;
+}
+
+pre.codeblock span.no-line-numbers {
+	margin-right: 20px;
 }
 
 pre.codeblock .highlight-line {
 	background-color: #222;
 	box-shadow: inset 3px 0 0 0 var(--theme-color);
+	border-right: 1px solid black;
 }

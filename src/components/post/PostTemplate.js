@@ -7,6 +7,7 @@ import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
 import anchoredHeadings from './AnchoredHeadings';
 import Blockquote from './Blockquote';
+import CodeBlock from './CodeBlock';
 import Footnote from './Footnotes/Footnote';
 import FootnoteReference from './Footnotes/FootnoteReference';
 import FootnotesContainer from './Footnotes/FootnotesContainer';
@@ -31,6 +32,7 @@ const PostTemplate = (props) => {
 		FootnotesContainer,
 		hr: () => <hr role="presentation" />,
 		Lorem,
+		pre: (props) => <CodeBlock {...props} />,
 		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />
 	};
 

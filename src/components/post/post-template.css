@@ -87,3 +87,11 @@ section.post-contents hr {
 	background-color: var(--text-color);
 	opacity: 0.1;
 }
+
+section.post-contents p code {
+	background-color: var(--inline-code-background-color);
+	color: var(--inline-code-text-color);
+	border: 1px solid var(--inline-code-outline-color);
+	border-radius: 10% 10%;
+	padding: 0.5%;
+}

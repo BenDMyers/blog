@@ -1,0 +1,19 @@
+---
+title: "How (Not) to Build a Button"
+date: 2019-09-25
+description: The popular pizza chain has a big part to play in the unseen war over the web.
+cover: 'https://imgur.com/KG1WTJP.png'
+coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
+emoji: 🔲
+tags: ["web accessibility", "accessibility", "web development"]
+---
+
+Buttons and hyperlinks are the cornerstones of the internet. Buttons allow users to interact with web content and links allow users to discover more content. They provide dynamic experiences and user autonomy—two things the web could not live without. Because they're so central to the online experience, it's crucial that we get them right for everybody.
+
+One common antipattern, especially in a framework-driven world, is adding click event listeners to HTML elements that aren't usually clickable. Let's call this the `<div onclick>` antipattern, even though the elements don't have to be `<div>`s and you don't have to use the `onclick` attribute.
+
+```html {numberLines: true}
+<div>
+    Click me!
+</div>
+```

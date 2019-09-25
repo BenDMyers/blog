@@ -1,4 +1,18 @@
 pre.codeblock {
+	background-color: black;
+}
+
+pre.codeblock span.line-number {
+	display: inline-block;
+	color: #777;
+	width: 2em;
+	user-select: none;
+	margin-left: 20px;
+	margin-right: 20px;
+	border-right: 1px solid #777;
+}
+
+pre.codeblock .highlight-line {
 	background-color: #222;
-	padding: 20px;
+	box-shadow: inset 3px 0 0 0 var(--theme-color);
 }

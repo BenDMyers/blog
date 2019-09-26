@@ -5,11 +5,13 @@ import theme from 'prism-react-renderer/themes/oceanicNext';
 import './code-block.css';
 import {rhythm} from '../../../utils/typography';
 import {useScrollDimensions} from '../../../utils/use-dimensions';
+import CodeBlockTitle from './CodeBlockTitle';
 
 const HIGHLIGHT_RANGE_REGEX = /{([\d,-]+)}/;
+const CODE_TITLE_REGEX = /title=(\w+.?\w*)/;
 
 const calculateLinesToHighlight = (meta) => {
-	if (HIGHLIGHT_RANGE_REGEX.test(meta)) {
+	if (meta && HIGHLIGHT_RANGE_REGEX.test(meta)) {
 		const lineNumbers = HIGHLIGHT_RANGE_REGEX.exec(meta)[1]
 			.split(',')
 			.map((v) => v.split('-').map((y) => parseInt(y, 10)));
@@ -32,10 +34,15 @@ const processProps = (props) => {
 	const language = className.replace(/language-/, '');
 
 	const hlProps = {...defaultProps, code: children, language, theme};
-	const showLineNumbers = metastring.includes('{numberLines: true}');
+	const showLineNumbers =
+		metastring && metastring.includes('{numberLines: true}');
 	const shouldHighlightLine = calculateLinesToHighlight(metastring);
+	const title =
+		metastring &&
+		CODE_TITLE_REGEX.test(metastring) &&
+		CODE_TITLE_REGEX.exec(metastring)[1];
 
-	return [hlProps, showLineNumbers, shouldHighlightLine];
+	return [hlProps, showLineNumbers, shouldHighlightLine, title];
 };
 
 /**
@@ -44,7 +51,9 @@ const processProps = (props) => {
  */
 const CodeBlock = (props) => {
 	const [preRef, preDimensions] = useScrollDimensions();
-	const [hlProps, showLineNumbers, shouldHighlightLine] = processProps(props);
+	const [hlProps, showLineNumbers, shouldHighlightLine, title] = processProps(
+		props
+	);
 	const preStyle = {
 		width: `calc(100% + ${rhythm(3 / 4)} + ${rhythm(3 / 4)})`,
 		marginLeft: `-${rhythm(3 / 4)}`
@@ -59,6 +68,7 @@ const CodeBlock = (props) => {
 					style={preStyle}
 					className={`codeblock ${className}`}
 				>
+					{title && <CodeBlockTitle title={title} />}
 					{/* CREATE LINES */}
 					{tokens.map((line, i) => {
 						// SKIP FINAL, EMPTY LINE

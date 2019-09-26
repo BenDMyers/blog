@@ -88,6 +88,10 @@ section.post-contents hr {
 	opacity: 0.1;
 }
 
+section.post-contents code {
+	font-size: inherit;
+}
+
 section.post-contents p code {
 	font-family: var(--monospace-font), monospace;
 	background-color: var(--inline-code-background-color);

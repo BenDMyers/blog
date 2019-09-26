@@ -39,7 +39,7 @@ function toSluggable(children) {
 const anchoredHeadings = () => {
 	const slugger = GitHubSlugger();
 
-	const anchoredHeading = (Tag, props) => {
+	const AnchoredHeading = (Tag, props) => {
 		const sluggable = toSluggable(props.children);
 		const [slug] = useState(slugger.slug(sluggable));
 		const [ref, isHovered] = useHover();
@@ -51,11 +51,11 @@ const anchoredHeadings = () => {
 		);
 	};
 
-	const h2 = (props) => anchoredHeading('h2', props);
-	const h3 = (props) => anchoredHeading('h3', props);
-	const h4 = (props) => anchoredHeading('h4', props);
-	const h5 = (props) => anchoredHeading('h5', props);
-	const h6 = (props) => anchoredHeading('h6', props);
+	const h2 = (props) => AnchoredHeading('h2', props);
+	const h3 = (props) => AnchoredHeading('h3', props);
+	const h4 = (props) => AnchoredHeading('h4', props);
+	const h5 = (props) => AnchoredHeading('h5', props);
+	const h6 = (props) => AnchoredHeading('h6', props);
 
 	return {h2, h3, h4, h5, h6};
 };

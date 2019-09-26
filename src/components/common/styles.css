@@ -3,6 +3,9 @@
 	--background-color: #f0f0f0;
 	/* --background-color: #212121; */
 	--blockquote-indicator-color: #f31455;
+	--codeblock-highlighted-line: #333;
+	--codeblock-highlighted-line-indicator-width: 6px;
+	--codeblock-line-number-border: #555;
 	--heading-color: black;
 	--highlight-yellow: #f4e62c;
 	--hr-color: rgba(0, 0, 0, 0.07);
@@ -25,6 +28,9 @@
 
 body.dark-mode {
 	--background-color: #212121;
+	--codeblock-highlighted-line: #222;
+	--codeblock-highlighted-line-indicator-width: 3px;
+	--codeblock-line-number-border: #333;
 	--heading-color: white;
 	--hr-color: rgba(255, 255, 255, 0.07);
 	--layout-background-color: #3f3f3f;

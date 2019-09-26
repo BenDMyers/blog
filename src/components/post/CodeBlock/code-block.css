@@ -15,7 +15,7 @@ pre.codeblock span.line-number {
 	user-select: none;
 	margin-left: 20px;
 	margin-right: 20px;
-	border-right: 1px solid #333;
+	border-right: 1px solid var(--codeblock-line-number-border);
 }
 
 pre.codeblock span.no-line-numbers {
@@ -23,7 +23,26 @@ pre.codeblock span.no-line-numbers {
 }
 
 pre.codeblock .highlight-line {
-	background-color: #222;
-	box-shadow: inset 3px 0 0 0 var(--theme-color);
+	background-color: var(--codeblock-highlighted-line);
+	box-shadow: inset var(--codeblock-highlighted-line-indicator-width) 0 0 0
+		var(--theme-color);
 	border-right: 1px solid black;
+}
+
+pre.codeblock div.codeblock-title-wrapper {
+	/* padding-left: 20px; */
+	position: absolute;
+	overflow-y: visible;
+}
+
+pre.codeblock div.codeblock-title {
+	color: var(--text-color);
+	background-color: var(--table-of-contents-background-color);
+	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
+	width: fit-content;
+	padding: 0px 20px;
+	top: -30px;
+	position: absolute;
+	font-weight: bold;
+	float: right;
 }

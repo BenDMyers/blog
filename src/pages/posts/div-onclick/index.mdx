@@ -1,40 +1,49 @@
 ---
 title: "How (Not) to Build a Button"
 date: 2019-09-25
-description: The popular pizza chain has a big part to play in the unseen war over the web.
+description: Breaking down an antipattern is just a few clicks away!
 cover: 'https://imgur.com/KG1WTJP.png'
 coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
 emoji: 🔲
 tags: ["web accessibility", "accessibility", "web development"]
 ---
 
+import Example1 from './Example1';
+
 Buttons and hyperlinks are the cornerstones of the internet. Buttons allow users to interact with web content and links allow users to discover more content. They provide dynamic experiences and user autonomy—two things the web could not live without. Because they're so central to the online experience, it's crucial that we get them right for everybody.
 
-One common antipattern, especially in a framework-driven world, is adding click event listeners to HTML elements that aren't usually clickable. Let's call this the `<div onclick>` antipattern, even though the elements don't have to be `<div>`s and you don't have to use the `onclick` attribute.
+One common antipattern, especially in a framework-driven world, is adding click event listeners to HTML elements that aren't usually clickable. Let's call this the <dfn>clickable div antipattern</dfn>, even though the elements don't have to be <i>div</i> elements.
 
-```html {numberLines: true}{1-3,17-19,21,23}
-<div>
-    Click me!
-</div>
-<div>
-    Click me!
-</div>
-<div>
-    Click me!
-</div>
-<div>
-    Click me!Click me!Click me!Click me!Click me!Click me! 
-</div>
-<div>
-    Click me!
-</div>
-<div>
-    Click me!
-</div>
-<div>
-    Click me!
-</div>
-<div>
+Here's a minimal example of a clickable div that uses the `onclick` attribute. The `btn` class is adapted from [Bootstrap](https://getbootstrap.com/). Go ahead and click it!
+
+<Example1 />
+
+```html {numberLines: true}:title=index.html
+<div class="btn" onclick="doSomething();">
     Click me!
 </div>
 ```
+
+<br/>
+
+## The Allure of Clickable Divs
+
+An <dfn>antipattern</dfn> is a *deceptively compelling* solution to a problem that proves to be ineffective or harmful in the long run. An antipattern's allure is what distinguishes it from bad habits or simply incorrect solutions.
+
+So... what is the allure of clickable divs? Why would someone resort to `<div onclick>` when the `<button>` element has been around for two decades?
+
+The main motivation I've seen for writing a clickable div is **quick-and-easy, yet total, control over design.**
+
+![woo](.\assets\defaultButtonStyles.png)
+
+## Remediation
+
+### Focus
+
+### Key Presses
+
+### Role
+
+### State
+
+## A Deeper Antipattern

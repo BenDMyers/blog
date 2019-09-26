@@ -29,6 +29,12 @@ module.exports = {
 							footnoteBackRefPreviousElementDisplay: 'inline',
 							footnoteBackRefDisplay: 'inline'
 						}
+					},
+					{
+						resolve: `gatsby-remark-images`,
+						options: {
+							backgroundColor: 'none'
+						}
 					}
 				]
 			}
@@ -54,7 +60,8 @@ module.exports = {
 					{
 						resolve: `gatsby-remark-images`,
 						options: {
-							maxWidth: 590
+							maxWidth: '100%',
+							backgroundColor: 'none'
 						}
 					},
 					{
@@ -151,7 +158,6 @@ module.exports = {
 				icon: `content/assets/logo.png`
 			}
 		},
-		`gatsby-plugin-offline`,
 		`gatsby-plugin-react-helmet`,
 		{
 			resolve: `gatsby-plugin-typography`,

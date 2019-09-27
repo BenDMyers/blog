@@ -2,6 +2,7 @@ pre.codeblock {
 	background-color: black;
 	font-family: var(--monospace-font), monospace;
 	overflow-x: auto;
+	tab-size: 4;
 }
 
 pre.codeblock div.token-line {

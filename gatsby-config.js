@@ -33,7 +33,8 @@ module.exports = {
 					{
 						resolve: `gatsby-remark-images`,
 						options: {
-							backgroundColor: 'none'
+							backgroundColor: 'none',
+							showCaptions: ['title']
 						}
 					}
 				]
@@ -60,8 +61,8 @@ module.exports = {
 					{
 						resolve: `gatsby-remark-images`,
 						options: {
-							maxWidth: '100%',
-							backgroundColor: 'none'
+							backgroundColor: 'none',
+							showCaptions: ['title']
 						}
 					},
 					{

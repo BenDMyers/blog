@@ -3,6 +3,7 @@ pre.codeblock {
 	font-family: var(--monospace-font), monospace;
 	overflow-x: auto;
 	tab-size: 4;
+	speak-as: literal-punctuation;
 }
 
 pre.codeblock div.token-line {

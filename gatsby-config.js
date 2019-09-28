@@ -36,7 +36,8 @@ module.exports = {
 							backgroundColor: 'none',
 							showCaptions: ['title']
 						}
-					}
+					},
+					`@weknow/gatsby-remark-twitter`
 				]
 			}
 		},
@@ -72,7 +73,8 @@ module.exports = {
 						}
 					},
 					`gatsby-remark-copy-linked-files`,
-					`gatsby-remark-smartypants`
+					`gatsby-remark-smartypants`,
+					`@weknow/gatsby-remark-twitter`
 				]
 			}
 		},

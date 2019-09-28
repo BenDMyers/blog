@@ -1,0 +1,7 @@
+div.tweet-wrapper {
+	text-align: center;
+}
+
+div.tweet-wrapper div {
+	display: inline-block;
+}

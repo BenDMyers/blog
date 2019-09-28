@@ -16,6 +16,7 @@ import PostNav from './PostNav';
 import PostSeo from './PostSeo';
 import TOC from './TableOfContents';
 import Title from './Title';
+import Tweet from './Tweet';
 import {rhythm} from '../../utils/typography';
 
 import './post-template.css';
@@ -33,7 +34,8 @@ const PostTemplate = (props) => {
 		hr: () => <hr role="presentation" />,
 		Lorem,
 		pre: (props) => <CodeBlock {...props} />,
-		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />
+		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />,
+		Tweet
 	};
 
 	return (

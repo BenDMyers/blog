@@ -99,12 +99,11 @@ section.post-contents code {
 
 section.post-contents code {
 	font-family: var(--monospace-font), monospace;
-	/* background-color: var(--inline-code-background-color); */
-	/* color: var(--inline-code-text-color); */
 	background-color: #ccc;
 	color: black;
 	border-radius: 10% 10%;
 	padding: 0 0.5%;
+	speak-as: literal-punctuation;
 }
 
 section.post-contents a code {

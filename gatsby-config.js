@@ -14,7 +14,7 @@ module.exports = {
 			resolve: 'gatsby-plugin-web-font-loader',
 			options: {
 				google: {
-					families: ['Lato', 'Roboto Slab']
+					families: ['Lato', 'Roboto Slab', 'Roboto Mono']
 				}
 			}
 		},
@@ -28,6 +28,13 @@ module.exports = {
 						options: {
 							footnoteBackRefPreviousElementDisplay: 'inline',
 							footnoteBackRefDisplay: 'inline'
+						}
+					},
+					{
+						resolve: `gatsby-remark-images`,
+						options: {
+							backgroundColor: 'none',
+							showCaptions: ['title']
 						}
 					}
 				]
@@ -54,7 +61,8 @@ module.exports = {
 					{
 						resolve: `gatsby-remark-images`,
 						options: {
-							maxWidth: 590
+							backgroundColor: 'none',
+							showCaptions: ['title']
 						}
 					},
 					{
@@ -63,7 +71,6 @@ module.exports = {
 							wrapperStyle: `margin-bottom: 1.0725rem`
 						}
 					},
-					`gatsby-remark-prismjs`,
 					`gatsby-remark-copy-linked-files`,
 					`gatsby-remark-smartypants`
 				]
@@ -152,7 +159,6 @@ module.exports = {
 				icon: `content/assets/logo.png`
 			}
 		},
-		`gatsby-plugin-offline`,
 		`gatsby-plugin-react-helmet`,
 		{
 			resolve: `gatsby-plugin-typography`,

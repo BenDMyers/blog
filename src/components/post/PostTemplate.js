@@ -7,6 +7,7 @@ import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
 import anchoredHeadings from './AnchoredHeadings';
 import Blockquote from './Blockquote';
+import CodeBlock from './CodeBlock';
 import Footnote from './Footnotes/Footnote';
 import FootnoteReference from './Footnotes/FootnoteReference';
 import FootnotesContainer from './Footnotes/FootnotesContainer';
@@ -15,6 +16,7 @@ import PostNav from './PostNav';
 import PostSeo from './PostSeo';
 import TOC from './TableOfContents';
 import Title from './Title';
+import Tweet from './Tweet';
 import {rhythm} from '../../utils/typography';
 
 import './post-template.css';
@@ -31,7 +33,9 @@ const PostTemplate = (props) => {
 		FootnotesContainer,
 		hr: () => <hr role="presentation" />,
 		Lorem,
-		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />
+		pre: (props) => <CodeBlock {...props} />,
+		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />,
+		Tweet
 	};
 
 	return (

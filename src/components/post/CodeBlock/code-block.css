@@ -1,0 +1,50 @@
+pre.codeblock {
+	background-color: black;
+	font-family: var(--monospace-font), monospace;
+	overflow-x: auto;
+	tab-size: 4;
+	speak-as: literal-punctuation;
+}
+
+pre.codeblock div.token-line {
+	min-width: 100%;
+}
+
+pre.codeblock span.line-number {
+	display: inline-block;
+	color: #777;
+	width: 2em;
+	user-select: none;
+	margin-left: 20px;
+	margin-right: 20px;
+	border-right: 1px solid var(--codeblock-line-number-border);
+}
+
+pre.codeblock span.no-line-numbers {
+	margin-right: 20px;
+}
+
+pre.codeblock .highlight-line {
+	background-color: var(--codeblock-highlighted-line);
+	box-shadow: inset var(--codeblock-highlighted-line-indicator-width) 0 0 0
+		var(--theme-color);
+	border-right: 1px solid black;
+}
+
+pre.codeblock div.codeblock-title-wrapper {
+	/* padding-left: 20px; */
+	position: absolute;
+	overflow-y: visible;
+}
+
+pre.codeblock div.codeblock-title {
+	color: var(--text-color);
+	background-color: var(--table-of-contents-background-color);
+	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
+	width: fit-content;
+	padding: 0px 20px;
+	top: -30px;
+	position: absolute;
+	font-weight: bold;
+	float: right;
+}

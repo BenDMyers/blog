@@ -36,6 +36,11 @@ section.post-contents ul {
 	padding-right: 3%;
 }
 
+section.post-contents ol li p,
+section.post-contents ul li p {
+	padding-left: 0;
+}
+
 section.post-contents a.anchor {
 	margin-right: 1.5%;
 	font-size: 1rem;
@@ -86,4 +91,39 @@ section.post-contents em i {
 section.post-contents hr {
 	background-color: var(--text-color);
 	opacity: 0.1;
+}
+
+section.post-contents code {
+	font-size: inherit;
+}
+
+section.post-contents code {
+	font-family: var(--monospace-font), monospace;
+	background-color: #ccc;
+	color: black;
+	border-radius: 10% 10%;
+	padding: 0 0.5%;
+	speak-as: literal-punctuation;
+}
+
+section.post-contents a code {
+	color: var(--link-color);
+}
+
+section.post-contents kbd {
+	font-family: var(--monospace-font), monospace;
+	background-color: white;
+	color: black;
+	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, 0.75);
+	border-radius: 10% 10%;
+	padding: 0 0.5%;
+}
+
+section.post-contents span.gatsby-resp-image-wrapper {
+	max-width: 100% !important;
+}
+
+section.post-contents figcaption.gatsby-resp-image-figcaption {
+	text-align: center;
+	font-size: 14px;
 }

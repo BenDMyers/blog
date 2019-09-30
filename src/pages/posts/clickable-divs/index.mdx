@@ -1,7 +1,7 @@
 ---
 title: "How (Not) to Build a Button"
-date: 2019-09-29
-description: Buttons and hyperlinks are the cornerstones of the internet. Because they're so central to the online experience, it's crucial that we get them right for everybody.
+date: 2019-09-30
+description: When you reinvent the wheel, you might miss a few spokes.
 cover: 'https://i.imgur.com/tdz9zBE.png'
 coveralt: A pattern of pink-and-yellow pointer cursors on a blue background.
 emoji: 🔲
@@ -62,7 +62,7 @@ The core tenet of keyboard navigation is managing <dfn>focus</dfn>: which *inter
 
 The focus just skips straight from Adrian's tweet to the `tabindex` documentation link below, skipping our example clickable div in the process. It's clear this is a problem: how are keyboard-navigating users going to be able to interact with our button if they can't even *get* to it?
 
-Fortunately, the fix is simple: we'll just specify the attribute `tabindex="0"` on our button div. Why `"0"`? [`tabindex`](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) accepts three kinds of values:
+Fortunately, the fix is simple: we'll just specify the attribute `tabindex="0"` on our button div. Why `"0"`? [The `tabindex` attribute](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/tabindex) accepts three kinds of values:
 
 * **`"0"`:** The element is inserted into the focus order based on where it is in the DOM.
 
@@ -70,7 +70,9 @@ Fortunately, the fix is simple: we'll just specify the attribute `tabindex="0"` 
 
 * **A negative number, usually `"-1"`:** The element is focusable programmatically (via JavaScript), but not via keyboard navigation. This does not solve our problem.
 
-Let's add the `tabindex` and verify that our button is now tabbable.
+Now's also a really good time to [make sure you set some focus styles](https://css-tricks.com/focusing-on-focus-styles/). That way, people know when they're focusing on your button.
+
+We can now verify that our button is tabbable.
 
 <Example2 />
 
@@ -80,7 +82,7 @@ Let's add the `tabindex` and verify that our button is now tabbable.
 </div>
 ```
 
-Now that you can actually tab to the button, it's a really good time to [make sure you set some focus styles](https://css-tricks.com/focusing-on-focus-styles/). That way, people know when they're focusing on your button.
+There's still a problem though: keyboard users can get to our button, but they can't actually press it with any keys. Try it for yourself!
 
 ### Key Presses
 

@@ -16,7 +16,8 @@ section.share-section p {
 div.social-share {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-evenly;
+    justify-content: space-evenly;
+    margin-bottom: 1.75rem;
 }
 
 div.social-button {

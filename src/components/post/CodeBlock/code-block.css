@@ -32,19 +32,19 @@ pre.codeblock .highlight-line {
 }
 
 pre.codeblock div.codeblock-title-wrapper {
-	/* padding-left: 20px; */
 	position: absolute;
 	overflow-y: visible;
 }
 
-pre.codeblock div.codeblock-title {
+div.codeblock-title {
 	color: var(--text-color);
 	background-color: var(--table-of-contents-background-color);
-	box-shadow: 0 1px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
+	box-shadow: 1px 0px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
 	width: fit-content;
 	padding: 0px 20px;
-	top: -30px;
-	position: absolute;
 	font-weight: bold;
-	float: right;
+	margin-left: 0;
+	font-family: var(--monospace-font), monospace;
+	font-size: 14px;
+	border-top-right-radius: 0.25rem;
 }

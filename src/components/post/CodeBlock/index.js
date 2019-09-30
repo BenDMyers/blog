@@ -60,61 +60,63 @@ const CodeBlock = (props) => {
 	};
 
 	return (
-		<Highlight {...hlProps}>
-			{({className, tokens, getLineProps, getTokenProps}) => (
-				/* CREATE CODEBLOCK */
-				<pre
-					ref={preRef}
-					style={preStyle}
-					className={`codeblock ${className}`}
-				>
-					{title && <CodeBlockTitle title={title} />}
-					{/* CREATE LINES */}
-					{tokens.map((line, i) => {
-						// SKIP FINAL, EMPTY LINE
-						if (i === tokens.length - 1 && line[0].empty) {
-							return null;
-						}
+		<>
+			{title && <CodeBlockTitle title={title} />}
+			<Highlight {...hlProps}>
+				{({className, tokens, getLineProps, getTokenProps}) => (
+					/* CREATE CODEBLOCK */
+					<pre
+						ref={preRef}
+						style={preStyle}
+						className={`codeblock ${className}`}
+					>
+						{/* CREATE LINES */}
+						{tokens.map((line, i) => {
+							// SKIP FINAL, EMPTY LINE
+							if (i === tokens.length - 1 && line[0].empty) {
+								return null;
+							}
 
-						return (
-							<div
-								key={i}
-								{...getLineProps({
-									line,
-									key: i,
-									className: shouldHighlightLine(i)
-										? 'highlight-line'
-										: '',
-									style: {
-										width: `${preDimensions.width}px`
-									}
-								})}
-							>
-								{/* RENDER LINE NUMBERS IF APPLICABLE */}
-								{showLineNumbers && (
-									<span className="line-number">
-										<span className="screenreader">
-											Line&nbsp;
+							return (
+								<div
+									key={i}
+									{...getLineProps({
+										line,
+										key: i,
+										className: shouldHighlightLine(i)
+											? 'highlight-line'
+											: '',
+										style: {
+											width: `${preDimensions.width}px`
+										}
+									})}
+								>
+									{/* RENDER LINE NUMBERS IF APPLICABLE */}
+									{showLineNumbers && (
+										<span className="line-number">
+											<span className="screenreader">
+												Line&nbsp;
+											</span>
+											{i + 1}&nbsp;
 										</span>
-										{i + 1}&nbsp;
-									</span>
-								)}
-								{!showLineNumbers && (
-									<span className="no-line-numbers" />
-								)}
-								{/* LINE CONTENTS */}
-								{line.map((token, key) => (
-									<span
-										key={key}
-										{...getTokenProps({token, key})}
-									/>
-								))}
-							</div>
-						);
-					})}
-				</pre>
-			)}
-		</Highlight>
+									)}
+									{!showLineNumbers && (
+										<span className="no-line-numbers" />
+									)}
+									{/* LINE CONTENTS */}
+									{line.map((token, key) => (
+										<span
+											key={key}
+											{...getTokenProps({token, key})}
+										/>
+									))}
+								</div>
+							);
+						})}
+					</pre>
+				)}
+			</Highlight>
+		</>
 	);
 	// return <div />;
 };

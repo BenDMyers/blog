@@ -1,16 +1,18 @@
 ---
 title: "How (Not) to Build a Button"
 date: 2019-09-28
-description: Breaking down an antipattern is just a few clicks away!
+description: This antipattern really clicks.
 cover: 'https://i.imgur.com/tdz9zBE.png'
-coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
+coveralt: A pattern of pink-and-yellow pointer cursors on a blue background.
 emoji: 🔲
-tags: ["web accessibility", "accessibility", "web development"]
+tags: ["web accessibility", "accessibility", "web development", "buttons"]
 ---
 
 import Example1 from './Example1';
 import Example2 from './Example2';
 import Example3 from './Example3';
+import Example4 from './Example4';
+import Example5 from './Example5';
 
 Buttons and hyperlinks are the cornerstones of the internet. Buttons allow users to interact with web content and links allow users to discover more content. They provide dynamic experiences and user autonomy—two things the web could not live without. Because they're so central to the online experience, it's crucial that we get them right for everybody.
 
@@ -104,11 +106,77 @@ myButton.addEventListener('keydown', function(event) {
 
 ### Role
 
+Currently, our button isn't providing any indication to assistive technologies that it even is a button. This means that screenreaders are missing out on at least two key features they would get with `<button>` elements:
+
+First of all, when a screenreader user navigates to a button, they expect that their screenreader will, in fact, announce it as a button. A VoiceOver user, for instance, currently hears "Click me!" when they focus on our button, where they would usually expect to hear "button, Click me!." For some button text, like "Click me!" or "Submit," they could probably infer the element's buttonhood, but you can't guarantee that for all button text. By exposing the div's buttonhood to assistive technology, you ensure that the assistive technology can inform the user of the div's purpose and contract for interaction.
+
+Secondly, you enable other kinds of navigation for screenreaders beyond simply tabbing. Most screenreaders enable users to jump directly from heading to heading, link to link, button to button,and so forth. JAWS enables this through keyboard shortcuts and VoiceOver enables this through its Rotor feature. This is a totally valid way to navigate the page, but it's only possible if the screenreader knows what each element is supposed to represent. If you don't tell assistive technologies that your clickable div is supposed to be a button, it'll get passed over when users navigate between buttons.
+
+Fortunately, this fix is easy: we just need to add the attribute `role="button"` to our clickable div.
+
+<Example4 />
+
+```html {numberLines: true}:title=index.html
+<div class="btn" tabindex="0" role="button" onclick="doSomething();">
+    Click me!
+</div>
+```
+
+If you navigate to the above button with a screenreader active, your screenreader should now announce it as a button. Success!
+
+As an aside: if your clickable div behaves more like a link, use `role="link"` instead. Remember: buttons perform some action on the page, like opening a pop-up or submitting a form, and links take you to a different resource.
+
+
 ### State
+
+Buttons rarely exist in isolation. They often exist in the context of a form. As a result, they can be saddled with some pretty complex logic. Consider, for instance, a button that can be enabled or disabled depending on some form validation:
+
+<Example5 />
+
+The button in the above sample form has a clear disabled state when the form isn't ready to be submitted yet. While the button is disabled, it can't be clicked, nor can it be tabbed to.
+
+The above button is implemented as a `<button>`, but if you were to implement it as a clickable div, you'd have to programmatically toggle its `tabindex` and enable/disable its `onclick` behavior. It can be done, but you might have more than a few headaches along the way.
 
 ## Or...
 
+At this point, we've invested so much effort into making our clickable div behave like a button. It's pretty clear we've succumbed to the sunk cost fallacy. Let's crawl out of this rabbit hole.
+
+The button contract is that users expect the following from their buttons:
+
+* **The button is *clickable*.**  We enabled this with `onclick`.
+* **The button is *tappable* on mobile.** We didn't really explore this, but you get this for free with `onclick`.
+* **The button is *focusable*.** We enabled this with `tabindex`.
+* **The button can be triggered by pressing Enter or Space.** We had to attach a keydown event listener to our div.
+* **The button announces that it is a button to assistive technology.** We implemented this by setting the `role`.
+* **The button handles states such as *disabled* if needed.** This all has to be added in programmatically on a case-by-case basis.
+
+We get all of this—the clickability, the tappability, the focusability, the key presses, the role, the states, all of it!—for *free*, out of the box, when we use the `<button>` element.
+
+But what about the allure of clickable divs we were talking about earlier, the styling difficulty?
+
+For that, we have [Andy Bell's excellent CSS reset](https://hankchizljaw.com/wrote/introducing-the-button-element/) that should make buttons look like divs in just 11 lines of CSS. You can style from there to your heart's content.
+
+```css {numberLines: true}
+button {
+    display: inline-block;
+    border: none;
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif; /* Use whatever font-family you want */
+    font-size: 1rem;
+    line-height: 1;
+    background: transparent;
+    -webkit-appearance: none;
+}
+```
+
 ## A Deeper Problem
+
+The clickable div problem interests me in ways other accessibility defects don't. That developers would turn to DIY-ing a button instead of wrangling CSS or looking for a CSS reset has to say something about development. I could put it down to a lack of awareness around accessibility, but that's nothing new. Nearly every accessibility defect comes down to a lack of awareness. I could pin it on a lack of understanding around semantic markup and on how people are confusing their presentation and their semantics, but that explanation feels incomplete to me, too.
+
+At its heart, I think clickable divs are a compelling antipattern because developers make assumptions about interactions and usability. We make assumptions about which users navigate our pages and how. We're so familiar with buttons' clickability, yet we don't realize there's more to that button contract. This assumption misleads us into believing that DIY-ing button functionality is a path of less resistance than seeking out a CSS reset.
+
+But user experiences aren't something to be hacked in. Usability is not powered by duct tape. When we roll our own experiences, instead of using native, semantic elements, we risk missing out on inclusive functionality we aren't aware of. Perhaps the desire to hack our own experiences like this is its own underlying and compelling antipattern.
 
 ## Prior Art
 

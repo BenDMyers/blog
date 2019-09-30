@@ -36,8 +36,7 @@ module.exports = {
 							backgroundColor: 'none',
 							showCaptions: ['title']
 						}
-					},
-					`@weknow/gatsby-remark-twitter`
+					}
 				]
 			}
 		},

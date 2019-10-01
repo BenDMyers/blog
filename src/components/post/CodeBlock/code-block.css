@@ -10,6 +10,8 @@ pre.codeblock {
 }
 pre.codeblock div.token-line {
 	min-width: 100%;
+	overflow-x: inherit;
+	display: inline-block;
 }
 
 pre.codeblock span.line-number {

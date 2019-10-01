@@ -10,8 +10,6 @@ pre.codeblock {
 }
 pre.codeblock div.token-line {
 	min-width: 100%;
-	overflow-x: inherit;
-	display: inline-block;
 }
 
 pre.codeblock span.line-number {
@@ -51,4 +49,10 @@ div.codeblock-title {
 	font-family: var(--monospace-font), monospace;
 	font-size: 14px;
 	border-top-right-radius: 0.25rem;
+}
+
+@media screen and (max-width: 768px) {
+	pre.codeblock {
+		overflow-x: scroll;
+	}
 }

@@ -1,7 +1,7 @@
 pre.codeblock {
 	background-color: black;
 	font-family: var(--monospace-font), monospace;
-	overflow-x: auto;
+	overflow: auto;
 	tab-size: 4;
 	speak-as: literal-punctuation;
 }

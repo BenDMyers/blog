@@ -54,6 +54,6 @@ div.codeblock-title {
 @media screen and (max-width: 768px) {
 	pre.codeblock {
 		overflow-x: scroll;
-		white-space: nowrap !important;
+		white-space: pre !important;
 	}
 }

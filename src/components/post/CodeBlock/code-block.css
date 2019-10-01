@@ -4,8 +4,10 @@ pre.codeblock {
 	overflow: auto;
 	tab-size: 4;
 	speak-as: literal-punctuation;
+	white-space: pre;
+	display: inline-block;
+	min-width: 100%;
 }
-
 pre.codeblock div.token-line {
 	min-width: 100%;
 }

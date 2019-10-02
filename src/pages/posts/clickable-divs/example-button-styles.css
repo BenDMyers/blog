@@ -17,16 +17,16 @@
 	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
 		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 	color: #fff;
-	background-color: #007bff;
-	border-color: #007bff;
+	background-color: var(--theme-color);
+	border-color: var(--theme-color);
 	cursor: pointer;
 	width: 10em;
 }
 
 .btn:hover:not(:disabled) {
 	color: #fff;
-	background-color: #0069d9;
-	border-color: #0062cc;
+	background-color: var(--theme-color-link-effect);
+	border-color: var(--theme-color-focus-outline);
 }
 
 .btn:focus {
@@ -77,4 +77,12 @@
 #example-5-btn-wrapper {
 	width: 100%;
 	text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+	#example-5-container {
+		width: auto;
+		margin-left: 10%;
+		margin-right: 10%;
+	}
 }

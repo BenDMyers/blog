@@ -1,12 +1,15 @@
 import React, {useEffect} from 'react';
 import './example-button-styles.css';
 
+let flag = true;
+
 const ENTER = 13;
 const SPACE = 32;
 
 const Example4 = () => {
 	const doSomething = (event) => {
-		event.target.innerText = "I've been clicked!";
+		event.target.innerText = flag ? "I've been clicked!" : 'Click me!';
+		flag = !flag;
 	};
 
 	useEffect(() => {

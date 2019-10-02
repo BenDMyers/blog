@@ -1,9 +1,11 @@
 import React from 'react';
 import './example-button-styles.css';
 
+let flag = true;
+
 const Example2 = () => {
 	const doSomething = (event) => {
-		event.target.innerText = "I've been clicked!";
+		event.target.innerText = flag ? "I've been clicked!" : 'Click me!';
 	};
 
 	return (

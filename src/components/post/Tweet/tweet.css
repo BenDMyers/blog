@@ -5,3 +5,7 @@ div.tweet-wrapper {
 div.tweet-wrapper div {
 	display: inline-block;
 }
+
+twitter-widget.twitter-tweet.twitter-tweet-rendered {
+	width: auto !important;
+}

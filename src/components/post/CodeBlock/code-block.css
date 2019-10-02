@@ -56,4 +56,8 @@ div.codeblock-title {
 		overflow-x: scroll;
 		white-space: pre !important;
 	}
+
+	pre.codeblock div.token-line {
+		width: 100% !important;
+	}
 }

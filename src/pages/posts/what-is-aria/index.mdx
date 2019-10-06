@@ -1,0 +1,29 @@
+---
+title: What Is ARIA?
+date: 2019-10-05
+description: The popular pizza chain has a big part to play in the unseen war over the web.
+cover: 'https://imgur.com/KG1WTJP.png'
+coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
+emoji: 🔧
+tags: ["web accessibility", "accessibility", "web development"]
+---
+
+<p><dfn>ARIA</dfn>, short for "Accessible Rich Internet Applications," is a set of HTML attributes that modify how a page's content is presented to assistive technologies such as screenreaders.</p>
+
+ARIA can be one of the most intimidating aspects of accessible web development. The [list of allowed ARIA attributes](https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques#States_and_properties) is long, to say the least. The [First Rule of ARIA Use](https://www.w3.org/TR/using-aria/#rule1) downright discourages using ARIA when native HTML elements and attributes could get the job done instead. [WebAIM's latest analysis of a million sites' homepages](https://webaim.org/projects/million/update#aria) found that ARIA usage increased over a six-month period, and presence of ARIA attributes was positively correlated with an increase of accessibility defects, though they're quick to point out that this could be the result of increased homepage complexity.
+
+So what does ARIA do? How can we make sure we don't misuse it?
+
+Let's start with a brief foray into operating systems.
+
+## The Accessibility Tree
+
+It's easy to think the relationship between browsers and assistive technologies looks something like this: the assistive technology polls the browser for the page's content, which it can then announce.
+
+![](https://i.imgur.com/q2TjT5F.png)
+
+Software doesn't really work this way, though, and nor would you want it to! If it did, developers of assistive technologies would have to plan for any version of any browser, or any other program the user might have, producing hellish degrees of combinatorics.<Fn fn="1" />
+
+<FootnotesContainer>
+    <Footnote fn="1" author="Léonie Watson & Chaals McCathie Nevile" publication="Smashing Magazine" title="Accessibility APIs: A Key To Web Accessibility" url="https://www.smashingmagazine.com/2015/03/web-accessibility-with-accessibility-api/" />
+</FootnotesContainer>

@@ -21,6 +21,7 @@ import {rhythm} from '../../utils/typography';
 
 import './post-template.css';
 import Share from './Share';
+import Img from './Img';
 
 const PostTemplate = (props) => {
 	const post = props.data.mdx;
@@ -32,6 +33,7 @@ const PostTemplate = (props) => {
 		Footnote,
 		FootnotesContainer,
 		hr: () => <hr role="presentation" />,
+		img: Img,
 		Lorem,
 		pre: (props) => <CodeBlock {...props} />,
 		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />,

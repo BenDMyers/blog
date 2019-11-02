@@ -1,12 +1,16 @@
 ---
 title: "The Accessibility Tree"
-date: 2019-11-01
+date: 2019-11-02
 description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
 cover: 'https://i.imgur.com/tdz9zBE.png'
 coveralt: A pattern of pink-and-yellow pointer cursors on a blue background.
 emoji: 🧱
 tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
 ---
+
+<TOC includeFootnotes="true" />
+
+<!-- REWORK INTRODUCTION -->
 
 How do screenreaders work?
 
@@ -36,11 +40,51 @@ Off-screen models posed many problems. Accounting for the alignment and placemen
 
 Guessing at what graphics instructions mean is clearly messy, but could something like an off-screen model work for webpages? Could screenreaders scrape HTML or traverse the DOM, and insert the page contents into the model?
 
-Screenreaders such as JAWS tried this approach, but it, too, had its problems. Screenreaders and other assistive technologies usually strive to be general purpose and work no matter which software the user is running, but that's hampered by including a lot of web-parsing logic. Also, it left users high and dry whenever new HTML elements were introduced. For instance, once sites started using HTML5's new tags such as `<header>` and `<footer>`, JAWS omitted key page contents until an (expensive) update could be pushed out.<Fn fn="4" />
+Screenreaders such as JAWS tried this approach, but it, too, had its problems. Screenreaders and other assistive technologies usually strive to be general purpose and work no matter which application the user is running, but that's hampered by including a lot of web-parsing logic. Also, it left users high and dry whenever new HTML elements were introduced. For instance, when sites started using HTML5's new tags such as `<header>` and `<footer>`, JAWS omitted key page contents until an (expensive) update could be pushed out.<Fn fn="4" />
 
 ## Back to the Drawing Board
 
-**Assistive technologies are swimming upstream by trying to reverse engineer meaning.**
+Assistive technologies that build their own off-screen models of webpages or applications can be error-prone and susceptible to new, unfamiliar elements and controls. These issues are symptoms of a bigger problem with the approach: trying to reverse engineer meaning is like swimming upstream.
+
+Instead of having assistive technologies make guesses about screen contents, let's have applications tell assistive technologies exactly what they're trying to convey.
+
+## Accessibility APIs and Building Blocks
+
+If you want applications such as browsers to be able to expose information to assistive technologies, you'll need them to speak the same language.
+
+## From the DOM to the Accessibility Tree
+
+<Lorem />
+
+## But Why Do We Care?
+
+Why should web developers care about the accessibility tree? Is it any more than just some interesting trivia about browser internals?
+
+Understanding the flow of a webpage's contents from browser to assistive technology changed the way I view the web apps I work on. I think there are three key ways that this flow impacts web developers:
+
+1. It explains discrepancies between different assistive technologies on different platforms.
+2. Browsers can use accessibility trees to optimize how pages are exposed to assistive technologies.
+3. Web developers have a responsibility to be good stewards of the accessibility tree.
+
+### Explaining Discrepancies
+
+We know that there are three key players in the flow of web contents to assistive technologies: the browser, the operating system accessibility API, and the assistive technology itself. This gives us three possible places to introduce discrepancies:
+
+- Operating system accessibility APIs could provide different building blocks.
+- Browsers could use assemble their accessibility trees differently.
+- Assistive technologies could interpret those building blocks in different ways.
+
+
+
+### Browser Optimizations
+
+<Lorem />
+
+### Tree Stewardship
+
+Being aware of the accessibility tree and how it impacts your users' experience should make one thing clear: to build quality web applications, we must be responsible stewards of our applications' accessibility trees. Fortunately, we have two tools at our disposal: semantic markup and ARIA.
+
+When we use semantic markup, we make it much, much easier for browsers to use the most appropriate building blocks. When we use a `<input type="checkbox" />` element, for instance, the browser knows it can put a `Checkbox` object in the tree with all of the properties that that entails, and it can trust that that's an accurate representation of the UI element.
 
 ***
 

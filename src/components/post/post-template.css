@@ -99,8 +99,7 @@ section.post-contents code {
 
 section.post-contents code {
 	font-family: var(--monospace-font), monospace;
-	background-color: #ccc;
-	color: black;
+	background-color: var(--inline-code-background-color);
 	border-radius: 10% 10%;
 	padding: 0 0.5%;
 	speak-as: literal-punctuation;

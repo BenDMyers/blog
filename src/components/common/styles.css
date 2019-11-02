@@ -9,9 +9,7 @@
 	--heading-color: black;
 	--highlight-yellow: #f4e62c;
 	--hr-color: rgba(0, 0, 0, 0.07);
-	--inline-code-background-color: rgba(0, 0, 0, 0.75);
-	--inline-code-outline-color: #d8d8d8;
-	--inline-code-text-color: #d8d8d8;
+	--inline-code-background-color: rgba(131, 52, 255, 0.125);
 	--layout-background-color: #fcfcfc;
 	--layout-box-shadow-amount: 0.35;
 	--link-color: #229abf;
@@ -33,6 +31,7 @@ body.dark-mode {
 	--codeblock-line-number-border: #333;
 	--heading-color: white;
 	--hr-color: rgba(255, 255, 255, 0.07);
+	--inline-code-background-color: rgba(131, 52, 255, 0.333);
 	--layout-background-color: #3f3f3f;
 	--layout-box-shadow-amount: 0.65;
 	--table-of-contents-background-color: #333;

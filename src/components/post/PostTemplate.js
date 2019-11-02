@@ -17,6 +17,7 @@ import PostSeo from './PostSeo';
 import TOC from './TableOfContents';
 import Title from './Title';
 import Tweet from './Tweet';
+import WideImage from './WideImage';
 import {rhythm} from '../../utils/typography';
 
 import './post-template.css';
@@ -35,7 +36,8 @@ const PostTemplate = (props) => {
 		Lorem,
 		pre: (props) => <CodeBlock {...props} />,
 		TOC: (props) => <TOC headings={post.tableOfContents} {...props} />,
-		Tweet
+		Tweet,
+		WideImage
 	};
 
 	return (

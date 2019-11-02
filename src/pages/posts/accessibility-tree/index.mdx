@@ -1,0 +1,54 @@
+---
+title: "The Accessibility Tree"
+date: 2019-11-01
+description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
+cover: 'https://i.imgur.com/tdz9zBE.png'
+coveralt: A pattern of pink-and-yellow pointer cursors on a blue background.
+emoji: 🧱
+tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
+---
+
+How do screenreaders work?
+
+If you're a web developer, your first answer might be pretty similar to mine: "Surely they read the DOM... right?" But this hesitant, web-centric answer doesn't help a whole lot with the follow-up question: how do screenreaders read programs that aren't browsers?
+
+It's easy to take it for granted that screenreaders can access page contents from a browser. They just seem to work, more or less. However, understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
+
+Let's dive into how browsers and operating systems work together 
+
+## Screenreaders of Yore
+
+The earliest screenreaders were built for text-only, DOS operating systems, and they had a lot of their work cut out for them. The text was all there in the device's screen buffer, so screenreaders just needed to send the buffer's contents to speech synthesis hardware and call it a day.<Fn fn="1" />
+
+Graphical user interfaces proved trickier for screenreaders, however, since GUIs don't have any intrinsic text representations. Instead, screenreaders like Berkeley Systems' outSPOKEN had to resort to intercepting low-level graphics instructions sent to the device's graphics engine.<Fn fn="2" /> Screenreaders then attempted to interpret these instructions. This rectangle with some text inside is probably a button. That text over there is highlighted, so it's probably selected. These assumptions about what's on the screen were then stored in the screenreader's own database, called an <dfn>off-screen model</dfn>.
+
+<WideImage
+    src="/outSPOKEN.jpg"
+    alt="outSPOKEN menu"
+    caption={
+        <>
+            Screenshot courtesy of <a href="https://www.macintoshrepository.org/2080-outspoken-1-7">Macintosh Repository</a>
+        </>
+    }
+/>
+
+Off-screen models posed many problems. Accounting for the alignment and placement of UI elements was tricky, and errors in calculations could snowball into bigger errors. The heuristics that off-screen models relied on could be flimsy — assuming they've even been implemented for the UI elements you want in the first place!<Fn fn="3" />
+
+Guessing at what graphics instructions mean is clearly messy, but could something like an off-screen model work for webpages? Could screenreaders scrape HTML or traverse the DOM, and insert the page contents into the model?
+
+Screenreaders such as JAWS tried this approach, but it, too, had its problems. Screenreaders and other assistive technologies usually strive to be general purpose and work no matter which software the user is running, but that's hampered by including a lot of web-parsing logic. Also, it left users high and dry whenever new HTML elements were introduced. For instance, once sites started using HTML5's new tags such as `<header>` and `<footer>`, JAWS omitted key page contents until an (expensive) update could be pushed out.<Fn fn="4" />
+
+## Back to the Drawing Board
+
+**Assistive technologies are swimming upstream by trying to reverse engineer meaning.**
+
+***
+
+<FootnotesContainer>
+    <Footnote fn="1">
+        Yes, this <em>is</em> an oversimplification.
+    </Footnote>
+    <Footnote fn="2" author="Rich Schwerdtfeger" publication="BYTE" title="Making the GUI Talk" url="https://developer.paciellogroup.com/blog/2015/01/making-the-gui-talk-1991-by-rich-schwerdtfeger/" />
+    <Footnote fn="3" author="Léonie Watson & Chaals McCathie Nevile" publication="Smashing Magazine" title="Accessibility APIs: A Key To Web Accessibility" url="https://www.smashingmagazine.com/2015/03/web-accessibility-with-accessibility-api/" />
+    <Footnote fn="4" author="Marco Zehe" title="Why accessibility APIs matter" url="https://marcozehe.wordpress.com/2013/09/07/why-accessibility-apis-matter/" />
+</FootnotesContainer>

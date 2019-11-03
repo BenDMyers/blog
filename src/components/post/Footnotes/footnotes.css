@@ -28,14 +28,14 @@ a.footnote-reference sup {
 }
 
 a.footnote-reference {
-	color: var(--theme-color);
+	color: var(--link-color);
 }
 
 a.footnote-reference:hover {
-	color: var(--theme-color-link-effect);
+	color: var(--link-effect-color);
 }
 
 a.footnote-reference:focus {
-	color: var(--theme-color-link-effect);
-	outline: 2px dashed var(--theme-color-focus-outline);
+	color: var(--link-effect-color);
+	outline: 2px dashed var(--link-focus-outline-color);
 }

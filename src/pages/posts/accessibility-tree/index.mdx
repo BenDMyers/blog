@@ -1,6 +1,6 @@
 ---
 title: "The Accessibility Tree"
-date: 2019-11-02
+date: 2019-11-03
 description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
 cover: 'https://i.imgur.com/tdz9zBE.png'
 coveralt: A pattern of pink-and-yellow pointer cursors on a blue background.
@@ -50,7 +50,48 @@ Instead of having assistive technologies make guesses about screen contents, let
 
 ## Accessibility APIs and Building Blocks
 
-If you want applications such as browsers to be able to expose information to assistive technologies, you'll need them to speak the same language.
+If you want applications such as browsers to be able to expose information to assistive technologies, you'll need them to speak the same language. Since no developer wants to have to support exposing their application's contents to JAWS and NVDA and VoiceOver and Dragon NaturallySpeaking and every other assistive technology individually, we'll need assistive technologies to share a common language. That way, those who are developing browsers or other applications need only expose their contents once and any assistive technology can use it.
+
+This <i>lingua franca</i> is provided by the user's operating system. Specifically, operating systems have interfaces—<dfn>accessibility APIs</dfn>—that help translate between programs and assistive technologies. These accessibility APIs have sexy, exciting names such as Microsoft Active Accessibility, IAccessible2, and—creatively—Apple Accessibility API.
+
+
+How do these accessibility APIs help? They give programs the building blocks they need to describe their contents, and they serve as a convenient middleman between a program and an assistive technology.
+
+### Building Blocks
+
+These building blocks are data structures called <dfn>accessible objects</dfn>. They're bundles of properties that represent the functionality of a UI element, without any of the presentational or aesthetic information.
+
+One of these building blocks could be a `Checkbox` object, for instance.
+
+<!-- CHECKBOX ACCESSIBLE OBJECT DIAGRAM -->
+
+You could also have a `Button` object:
+
+<!-- BUTTON ACCESSIBLE OBJECT DIAGRAM -->
+
+These building blocks enable all applications to describe themselves in a similar way. As a result, a checkbox is a checkbox, as far as assistive technology is concerned, regardless of whether it appears in a Microsoft Word dialog box or on a web form.
+
+<!-- DIALOG/FORM DIAGRAM -->
+
+These building blocks, by the way, contain three kinds of information about a UI element:
+
+* **Role:** What kind of element is this? Is it text, a button, a checkbox, or something else? This information matters because it lays out expectations for what this element is doing here, how to interact with this element, and what will happen if you do interact with it.
+
+* **Label:** An identifier, called an <dfn>accessible name</dfn>, for this element. Buttons will generally use their text contents to determine their name, so `<button>Submit</button>` will have the name "Submit." HTML form fields often get their name from associated `<label>` elements. Names are used by screenreaders to announce an element, and speech recognition users can use names in their voice commands to target specific elements.
+
+* **State and other properties:** Other functional aspects of an element that would be relevant for a user or an assistive technology to be aware of. Is this checkbox checked or unchecked? Is this expandable section currently hidden? Will clicking this button open a dropdown menu? These properties tend to be much more subject to change than an element's role or name.
+
+You can see all three of these in just about any screenreader announcement:
+
+<!-- VOICEOVER SCREENSHOT -->
+
+### Accessibility APIs As a Middleman
+
+When an application has described its contents using these building blocks, it then sends this new representation to the accessibility APIs. Assistive technology polls the accessibility APIs regularly. They get information such as the active window, programs' contents, and the currently focused element. 
+
+They can use this information in different ways. Screenreaders use this information to decide what to announce, or to enable shortcuts that allow the user to jump between different elements of the same type. Speech recognition software uses this information to determine which elements the user can target with their voice commands and how. Screen magnifiers use this information to judge where the user's cursor is, in case they need to focus elsewhere.
+
+This middleman relationship works both ways. Accessibility APIs enable assistive technologies to interact with programs, giving their users more flexibility. For instance, eye-tracking technology can interpret a user's gaze dwelling on an element as a click, and send that event back through the accessibility API so that the browser treats it the same as a mouse click.
 
 ## From the DOM to the Accessibility Tree
 

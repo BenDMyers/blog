@@ -1,9 +1,9 @@
 ---
 title: "The Accessibility Tree"
-date: 2019-11-03
+date: 2019-11-04
 description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
-cover: 'https://i.imgur.com/tdz9zBE.png'
-coveralt: A pattern of pink-and-yellow pointer cursors on a blue background.
+cover: '/a11y-tree-cover.png'
+coveralt: A pattern of orange and green LEGO bricks against a navy blue background.
 emoji: 🧱
 tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
 ---
@@ -78,6 +78,10 @@ You could also have a `Button` object:
 These building blocks enable all applications to describe themselves in a similar way. As a result, a checkbox is a checkbox, as far as assistive technology is concerned, regardless of whether it appears in a Microsoft Word dialog box or on a web form.
 
 <!-- DIALOG/FORM DIAGRAM -->
+<WideImage
+    src="/similar-objects.png"
+    alt='A diagram shows a pop-up with an unchecked "Show tips at startup" checkbox and an OK button. It also shows a web form with a checked "Unsubscribe" button and a Submit button. Arrows connect the two checkboxes to an orange LEGO brick and the two buttons to a green LEGO brick.'
+/>
 
 These building blocks, by the way, contain three kinds of information about a UI element:
 

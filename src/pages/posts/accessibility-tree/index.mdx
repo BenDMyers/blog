@@ -3,7 +3,7 @@ title: "The Accessibility Tree"
 date: 2019-11-04
 description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
 cover: '/a11y-tree-cover.png'
-coveralt: A pattern of orange and green LEGO bricks against a navy blue background.
+coveralt: A tessellation of orange and green LEGO bricks
 emoji: 🧱
 tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
 ---
@@ -118,6 +118,10 @@ Putting all of these pieces together, the flow of information from application t
 
 For browsers, the assistive technology-friendly version of the page is called the <dfn>accessibility tree</dfn>. The accessibility tree is built alongside the DOM in parallel, and it's updated whenever the page updates.
 
+How do browsers know how to convert HTML elements into an accessibility tree? As with everything for the web, there's a standard for that. The World Wide Web Consortium's Web Accessibility Initiative publishes guidance called the [<dfn>Core Accessibility API Mappings</dfn>](https://www.w3.org/TR/core-aam-1.1/), or <i>Core-AAM</i> for short.
+
+The relationship between DOM nodes and accessibility tree nodes isn't quite one-to-one. Some nodes might be flattened, such as `<div>`s or `<span>`s that are only being used for styling. Other elements, such as `<video>` elements, might be expanded into several nodes of the accessibility tree. This is because video players are complex, and need to expose several controls like the <i>Play/Pause</i> button, the progress bar, and the <i>Full Screen</i> button.<Fn fn="5" />
+
 Some browsers let you view the accessibility tree in their developer tools. Try it now! If you're using Chrome, do the following:
 
 1. Hit F12 to open the DevTools.
@@ -125,15 +129,12 @@ Some browsers let you view the accessibility tree in their developer tools. Try 
 3. In the pane that opened up with tabs such as <i>Styles</i> and <i>Computed</i>, click the <i>Accessibility</i> tab. This might be hidden.
 4. You can now navigate the page's accessibility tree.
 
+<!-- CHROME A11Y TREE SCREENSHOT -->
+
 If you're using other browsers, you can instead follow [Firefox's Accessibility Inspector instructions](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector) or [Microsoft Edge's instructions](https://docs.microsoft.com/en-us/microsoft-edge/devtools-guide/elements/accessibility).
 
 Poke around on different sites and see what kinds of nodes you can find and which properties they have.
 
-<!-- CHROME A11Y TREE SCREENSHOT -->
-
-As you navigate different sites' accessibility trees, you might realize that the relationship between DOM nodes and accessibility tree nodes isn't quite one-to-one. Some nodes might be flattened, such as `<div>`s or `<span>`s that are only being used for styling. Other nodes, such as `<video>` elements, might be expanded into several nodes of the accessibility tree. This is because video players are complex, and need to expose several controls like the <i>Play/Pause</i> button, the progress bar, and the <i>Full Screen</i> button.<Fn fn="5" />
-
-How do browsers know how to convert HTML elements into an accessibility tree? As with everything for the web, there's a standard for that. The World Wide Web Consortium's Web Accessibility Initiative publishes guidance called the [<dfn>Core Accessibility API Mappings</dfn>](https://www.w3.org/TR/core-aam-1.1/), or <i>Core-AAM</i> for short.
 
 ## But Why Do We Care?
 

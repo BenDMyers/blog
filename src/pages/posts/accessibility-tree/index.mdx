@@ -1,6 +1,6 @@
 ---
 title: "The Accessibility Tree"
-date: 2019-11-05
+date: 2019-11-11
 description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
 cover: '/a11y-tree-cover.png'
 coveralt: A tessellation of orange and green LEGO bricks
@@ -12,7 +12,7 @@ tags: ["web accessibility", "accessibility", "web development", "accessibility t
 
 How do assistive technologies work?
 
-People may use all sorts of assistive technologies to navigate and interact with your page. They might use screenreaders such as JAWS or VoiceOver to announce page contents aloud or via a [braille display](https://en.wikipedia.org/wiki/Refreshable_braille_display). They might use speech recognition software such as Dragon NaturallySpeaking, and issue voice commands to scroll around or click buttons. They might need screen magnifiers or eye-tracking software or any number of other assistive technologies.
+People may use all sorts of assistive technologies to navigate and interact with your page. They might use screenreaders to announce page contents aloud or via a [braille display](https://en.wikipedia.org/wiki/Refreshable_braille_display). They might use speech recognition software such as Dragon NaturallySpeaking, and issue voice commands to scroll around or click buttons. They might need screen magnifiers or eye-tracking software or any number of other assistive technologies.
 
 These technologies generally need access to your page contents to enable their users to interact with them. How does your page get from the browser to the assistive technology? Understanding that flow made me radically rethink the code that I write.
 
@@ -40,11 +40,9 @@ Guessing at what graphics instructions mean is clearly messy, but could somethin
 
 Screenreaders such as JAWS tried this approach, but it, too, had its problems. Screenreaders and other assistive technologies usually strive to be general purpose and work no matter which application the user is running, but that's hampered by including a lot of web-parsing logic. Also, it left users high and dry whenever new HTML elements were introduced. For instance, when sites started using HTML5's new tags such as `<header>` and `<footer>`, JAWS omitted key page contents until an (expensive) update could be pushed out.<Fn fn="4" />
 
-## Back to the Drawing Board
+What did we learn from off-screen models? Assistive technologies that build their own off-screen models of webpages or applications can be error-prone and susceptible to new, unfamiliar elements and controls. These issues are symptoms of a bigger problem with the approach: **when we try to reverse engineer meaning, we end up swimming upstream against the flow of information.**
 
-Assistive technologies that build their own off-screen models of webpages or applications can be error-prone and susceptible to new, unfamiliar elements and controls. These issues are symptoms of a bigger problem with the approach: trying to reverse engineer meaning is like swimming upstream.
-
-Instead of having assistive technologies make guesses about screen contents, let's have applications tell assistive technologies exactly what they're trying to convey.
+Let's go back to the drawing board. Instead of having assistive technologies make guesses about screen contents, let's have applications tell assistive technologies exactly what they're trying to convey.
 
 ## Accessibility APIs and Building Blocks
 
@@ -97,11 +95,12 @@ You can see all three of these in just about any screenreader announcement:
 <WideImage
     src="/checkbox-announcement.png"
     alt={`VoiceOver announcement, which reads "checked, Unsubscribe, checkbox"`}
+    caption="A humble checkbox, as announced by VoiceOver"
 />
 
 ### Accessibility APIs As a Middleman
 
-When an application has described its contents using these building blocks, it then sends this new representation to the accessibility APIs. Assistive technology polls the accessibility APIs regularly. They get information such as the active window, programs' contents, and the currently focused element. 
+An application assembles these building blocks into an assistive technology-friendly representation of all of its contents. This representation is the <dfn>accessibility tree</dfn>. After the application builds the tree, it then sends this new tree to the operating system's accessibility APIs. Assistive technology polls the accessibility APIs regularly. They get information such as the active window, programs' contents, and the currently focused element. 
 
 They can use this information in different ways. Screenreaders use this information to decide what to announce, or to enable shortcuts that allow the user to jump between different elements of the same type. Speech recognition software uses this information to determine which elements the user can target with their voice commands and how. Screen magnifiers use this information to judge where the user's cursor is, in case they need to focus elsewhere.
 
@@ -110,30 +109,27 @@ This middleman relationship works both ways. Accessibility APIs enable assistive
 Putting all of these pieces together, the flow of information from application to assistive technology goes:
 
 1. The operating system provides accessible objects for each kind of UI element.
-2. The application uses these objects as building blocks to assemble an assistive technology-friendly representation of its contents.
-3. The application sends this representation to the operating system's accessibility API.
+2. The application uses these objects as building blocks to assemble an accessibility tree.
+3. The application sends this tree to the operating system's accessibility API.
 4. Assistive technologies poll the accessibility API for updates, and receive the application's contents.
 5. The assistive technology exposes this information to the user.
 6. The assistive technology receives commands from the user, such as special hotkeys, voice commands, switch flips, or the user's gaze dwelling on an element.
 7. The assistive technology sends those commands through the accessibility API, where they're translated into interactions with the application.
-8. As the application changes, it provides a new representation of its contents to the accessibility API, and the cycle begins anew.
+8. As the application changes, it provides a new accessibility tree to the accessibility API, and the cycle begins anew.
+
+Or, for a much more TL;DR version:
+
+<!-- SIMPLE TREE FLOW -->
 
 ## From the DOM to the Accessibility Tree
 
-For browsers, the assistive technology-friendly version of the page is called the <dfn>accessibility tree</dfn>. The accessibility tree is built alongside the DOM in parallel, and it's updated whenever the page updates.
+We've taken a pretty sharp detour into operating system internals. Let's bring this back to the web. At this point, we can figure that your browser is, behind the scenes, converting your page's HTML elements into an accessibility tree.<Fn fn="5" /> Whenever the page updates, so, too, does its accessibility tree.
 
-How do browsers know how to convert HTML elements into an accessibility tree? As with everything for the web, there's a standard for that. The World Wide Web Consortium's Web Accessibility Initiative publishes guidance called the [<dfn>Core Accessibility API Mappings</dfn>](https://www.w3.org/TR/core-aam-1.1/), or <i>Core-AAM</i> for short.
+How do browsers know how to convert HTML elements into an accessibility tree? As with everything for the web, there's a standard for that. To that end, the World Wide Web Consortium's Web Accessibility Initiative publishes the [<dfn>Core Accessibility API Mappings</dfn>](https://www.w3.org/TR/core-aam-1.1/), or <i>Core-AAM</i> for short. Core-AAM provides guidance for choosing which building blocks the browser should use when. Additionally, it advises on how to calculate those blocks' properties such as their name, as well as how to manage state changes or keyboard navigation.
 
-The relationship between DOM nodes and accessibility tree nodes isn't quite one-to-one. Some nodes might be flattened, such as `<div>`s or `<span>`s that are only being used for styling. Other elements, such as `<video>` elements, might be expanded into several nodes of the accessibility tree. This is because video players are complex, and need to expose several controls like the <i>Play/Pause</i> button, the progress bar, and the <i>Full Screen</i> button.<Fn fn="5" />
+The relationship between DOM nodes and accessibility tree nodes isn't quite one-to-one. Some nodes might be flattened, such as `<div>`s or `<span>`s that are only being used for styling. Other elements, such as `<video>` elements, might be expanded into several nodes of the accessibility tree. This is because video players are complex, and need to expose several controls like the <i>Play/Pause</i> button, the progress bar, and the <i>Full Screen</i> button.<Fn fn="6" />
 
-Some browsers let you view the accessibility tree in their developer tools. Try it now! If you're using Chrome, do the following:
-
-1. Hit F12 to open the DevTools.
-2. Click on the <i>Elements</i> tab.
-3. In the pane that opened up with tabs such as <i>Styles</i> and <i>Computed</i>, click the <i>Accessibility</i> tab. This might be hidden.
-4. You can now navigate the page's accessibility tree.
-
-If you're using other browsers, you can instead follow [Firefox's Accessibility Inspector instructions](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector) or [Microsoft Edge's instructions](https://docs.microsoft.com/en-us/microsoft-edge/devtools-guide/elements/accessibility.)
+Some browsers let you view the accessibility tree in their developer tools. Try it now! If you're using Chrome, right-click on a page element and click *Inspect*. In the pane that opened up with tabs such as <i>Styles</i> and <i>Computed</i>, click the <i>Accessibility</i> tab. This might be hidden. Congrats! You can now see that element in the accessibility tree! If you're using other browsers, you can instead follow [Firefox's Accessibility Inspector instructions](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector) or [Microsoft Edge's instructions.](https://docs.microsoft.com/en-us/microsoft-edge/devtools-guide/elements/accessibility)
 
 Poke around on different sites and see what kinds of nodes you can find and which properties they have.
 
@@ -141,6 +137,7 @@ Poke around on different sites and see what kinds of nodes you can find and whic
 <WideImage
     src="/a11y-tree.png"
     alt="Facebook's homepage's accessibility tree, as viewed in the Chrome Developer Tools"
+    caption={`The textboxes on Facebook's login page have properties such as "focusable," "editable," and "multi-line."`}
 />
 
 ## But Why Do We Care?
@@ -167,7 +164,7 @@ These differences are, honestly, minute most of the time. However, bugs that aff
 
 When constructing accessibility trees, many browsers employ heuristics to improve the user experience. For instance, many developers use the CSS rules `display: none;` or `visibility: hidden;` to remove content from the page. However, since the content is still in the HTML, those using assistive technologies would still be able to get to it, which could have undesirable consequences. Browsers instead use these CSS rules as flags that they should remove those elements from the accessibility tree, too. This is why we have to resort to [other tricks to create screenreader-only text.](https://cloudfour.com/thinks/see-no-evil-hidden-content-and-accessibility/#showing-additional-content-for-screen-readers)
 
-Browsers use other tricks to protect users from developers' bad habits. For instance, to counter the [problem of layout tables](https://webaim.org/techniques/tables/), the source code for both Google Chrome<Fn fn="6" /> and Mozilla Firefox<Fn fn="7" /> will guess at whether a `<table>` element is being used for layout or for tabular data and adjust the accessibility tree accordingly.
+Browsers use other tricks to protect users from developers' bad habits. For instance, to counter the [problem of layout tables](https://webaim.org/techniques/tables/), the source code for both Google Chrome<Fn fn="7" /> and Mozilla Firefox<Fn fn="8" /> will guess at whether a `<table>` element is being used for layout or for tabular data and adjust the accessibility tree accordingly.
 
 ### Tree Stewardship
 
@@ -190,11 +187,14 @@ Decades of trial and error in building screenreaders and a wide variety of other
     <Footnote fn="2" author="Rich Schwerdtfeger" publication="BYTE" title="Making the GUI Talk" url="https://developer.paciellogroup.com/blog/2015/01/making-the-gui-talk-1991-by-rich-schwerdtfeger/" />
     <Footnote fn="3" author="Léonie Watson & Chaals McCathie Nevile" publication="Smashing Magazine" title="Accessibility APIs: A Key To Web Accessibility" url="https://www.smashingmagazine.com/2015/03/web-accessibility-with-accessibility-api/" />
     <Footnote fn="4" author="Marco Zehe" title="Why accessibility APIs matter" url="https://marcozehe.wordpress.com/2013/09/07/why-accessibility-apis-matter/" />
-    <Footnote fn="5" author="Steve Faulkner, The Paciello Group" title="The Browser Accessibility Tree" url="https://developer.paciellogroup.com/blog/2015/01/the-browser-accessibility-tree/" />
-    <Footnote fn="6">
+    <Footnote fn="5">
+        It probably comes as no surprise that the accessibility tree is built in parallel to the DOM. One of the things I realized as I was writing this post is that creating structured representations of a page that enable programmatic interfacing with the page is really browsers' bread and butter. Your browser does exactly this to manage page contents (via the DOM) and element styles (via the CSS Object Model), so why not throw in accessibility tree creation while you're at it?
+    </Footnote>
+    <Footnote fn="6" author="Steve Faulkner, The Paciello Group" title="The Browser Accessibility Tree" url="https://developer.paciellogroup.com/blog/2015/01/the-browser-accessibility-tree/" />
+    <Footnote fn="7">
         <a href="https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/accessibility/AXTable.cpp">Chromium source code</a>
     </Footnote>
-    <Footnote fn="7">
+    <Footnote fn="8">
         <a href="https://dxr.mozilla.org/mozilla-central/source/accessible/generic/TableAccessible.cpp">Firefox source code</a>
     </Footnote>
 </FootnotesContainer>

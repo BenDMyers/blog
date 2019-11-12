@@ -1,6 +1,6 @@
 ---
 title: "The Accessibility Tree"
-date: 2019-11-11
+date: 2019-11-12
 description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
 cover: '/a11y-tree-cover.png'
 coveralt: A tessellation of orange and green LEGO bricks
@@ -10,26 +10,24 @@ tags: ["web accessibility", "accessibility", "web development", "accessibility t
 
 <TOC includeFootnotes="true" />
 
-How do assistive technologies work?
+Disabled users can and do use your page with a variety of assistive technologies. They could use screenreaders, magnifiers, eye tracking, voice commands, and more. All of these assistive technologies share a common need: they all need to be able to access your page's contents.
 
-People may use all sorts of assistive technologies to navigate and interact with your page. They might use screenreaders to announce page contents aloud or via a [braille display](https://en.wikipedia.org/wiki/Refreshable_braille_display). They might use speech recognition software such as Dragon NaturallySpeaking, and issue voice commands to scroll around or click buttons. They might need screen magnifiers or eye-tracking software or any number of other assistive technologies.
+The flow of page contents from browser to assistive technology isn't often talked about, but it's a vital aspect of enabling many disabled users' access to the internet. It's taken a lot of experimentation and innovation to get to where we are now: the *accessibility tree*. This tree shapes how disabled users understand and interact with your page. As web developers, we have a responsibility to understand the tree and how it impacts user experience.
 
-These technologies generally need access to your page contents to enable their users to interact with them. How does your page get from the browser to the assistive technology? Understanding that flow made me radically rethink the code that I write.
-
-Let's start with a history of trial and error for screenreaders and the problems that they've encountered.
+Let's take a journey through browser internals, operating systems, and assistive technologies. Our first stop: a crucial lesson learned from earlier screenreaders about information flow.
 
 ## The Ghost of Screenreaders Past
 
-The earliest screenreaders were built for text-only DOS operating systems, and they had a lot of their work cut out for them. The text was all there in the device's screen buffer, so screenreaders just needed to send the buffer's contents to speech synthesis hardware and call it a day.<Fn fn="1" />
+The earliest screenreaders were built for text-only DOS operating systems, and they were pretty straightforward. The text was all there in the device's screen buffer, so screenreaders just needed to send the buffer's contents to speech synthesis hardware and call it a day.<Fn fn="1" />
 
-Graphical user interfaces proved trickier for screenreaders, however, since GUIs don't have any intrinsic text representations. Instead, screenreaders like Berkeley Systems' outSPOKEN had to resort to intercepting low-level graphics instructions sent to the device's graphics engine.<Fn fn="2" /> Screenreaders then attempted to interpret these instructions. This rectangle with some text inside is probably a button. That text over there is highlighted, so it's probably selected. These assumptions about what's on the screen were then stored in the screenreader's own database, called an <dfn>off-screen model</dfn>.
+Graphical user interfaces proved trickier for screenreaders, however, since GUIs don't have any intrinsic text representations. Instead, screenreaders like Berkeley Systems' outSPOKEN had to resort to intercepting low-level graphics instructions sent to the device's graphics engine.<Fn fn="2" /> Screenreaders then attempted to interpret these instructions. This rectangle with some text inside is probably a button. That text over there is highlighted, so it's probably selected. These assumptions about what was on the screen were then stored in the screenreader's own database, called an <dfn>off-screen model</dfn>.
 
 <WideImage
     src="/outSPOKEN.jpg"
     alt="outSPOKEN menu"
     caption={
         <>
-            Screenshot courtesy of <a href="https://www.macintoshrepository.org/2080-outspoken-1-7">Macintosh Repository</a>
+            outSPOKEN, the first screenreader to use an off-screen model. Screenshot courtesy of <a href="https://www.macintoshrepository.org/2080-outspoken-1-7">Macintosh Repository.</a>
         </>
     }
 />
@@ -46,7 +44,7 @@ Let's go back to the drawing board. Instead of having assistive technologies mak
 
 ## Accessibility APIs and Building Blocks
 
-If you want applications such as browsers to be able to expose information to assistive technologies, you'll need them to speak the same language. Since no developer wants to have to support exposing their application's contents to JAWS and NVDA and VoiceOver and Dragon NaturallySpeaking and every other assistive technology individually, we'll need assistive technologies to share a common language. That way, those who are developing browsers or other applications need only expose their contents once and any assistive technology can use it.
+If you want applications such as browsers to be able to expose information to assistive technologies, you'll need them to speak the same language. Since no developer wants to have to support exposing their application's contents to each screenreader and speech recognition software and eye tracker and every other assistive technology individually, we'll need assistive technologies to share a common language. That way, those who are developing browsers or other applications need only expose their contents once and any assistive technology can use it.
 
 This <i>lingua franca</i> is provided by the user's operating system. Specifically, operating systems have interfaces—<dfn>accessibility APIs</dfn>—that help translate between programs and assistive technologies. These accessibility APIs have exciting names such as Microsoft Active Accessibility, IAccessible2, and macOS Accessibility Protocol.
 
@@ -120,6 +118,7 @@ Putting all of these pieces together, the flow of information from application t
 Or, for a much more TL;DR version:
 
 <!-- SIMPLE TREE FLOW -->
+[insert image here]
 
 ## From the DOM to the Accessibility Tree
 

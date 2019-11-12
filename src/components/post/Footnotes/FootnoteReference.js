@@ -8,7 +8,7 @@ const FootnoteReference = ({fn}) => {
 			id={`fn-ref-${fn}`}
 		>
 			<span className="screenreader"> Go to footnote </span>
-			<sup>{fn}</sup>
+			<sup>[{fn}]</sup>
 		</a>
 	);
 };

@@ -1,0 +1,202 @@
+---
+title: "The Accessibility Tree"
+date: 2019-11-12
+description: Understanding the flow of page contents from browser to screenreader caused me to radically rethink accessible markup.
+cover: '/a11y-tree-cover.png'
+coveralt: A tessellation of orange and green LEGO bricks
+emoji: 🧱
+tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
+---
+
+<TOC includeFootnotes="true" />
+
+Disabled users can and do use your page with a variety of assistive technologies. They use screenreaders, magnifiers, eye tracking, voice commands, and more. All of these assistive technologies share a common need: they all need to be able to access your page's contents.
+
+The flow of page contents from browser to assistive technology isn't often talked about, but it's a vital aspect of enabling many disabled users' access to the internet. It's taken a lot of experimentation and innovation to get to where we are now: the *accessibility tree*. This tree shapes how disabled users understand and interact with your page, and it can mean the difference between access and exclusion. As web developers, it's our job to be aware of how the code we write shapes the tree.
+
+Let's take a journey through browser internals, operating systems, and assistive technologies. Our first stop: a crucial lesson learned from earlier screenreaders about information flow.
+
+## The Ghost of Screenreaders Past
+
+The earliest screenreaders were built for text-only DOS operating systems, and they were pretty straightforward. The text was all there in the device's screen buffer, so screenreaders just needed to send the buffer's contents to speech synthesis hardware and call it a day.<Fn fn="1" />
+
+Graphical user interfaces proved trickier for screenreaders, however, since GUIs don't have any intrinsic text representations. Instead, screenreaders like Berkeley Systems' outSPOKEN had to resort to intercepting low-level graphics instructions sent to the device's graphics engine.<Fn fn="2" /> Screenreaders then attempted to interpret these instructions. This rectangle with some text inside is probably a button. That text over there is highlighted, so it's probably selected. These assumptions about what was on the screen were then stored in the screenreader's own database, called an <dfn>off-screen model</dfn>.
+
+<WideImage
+    src="/outSPOKEN.jpg"
+    alt="outSPOKEN menu"
+    caption={
+        <>
+            outSPOKEN, the first screenreader to use an off-screen model. Screenshot courtesy of <a href="https://www.macintoshrepository.org/2080-outspoken-1-7">Macintosh Repository.</a>
+        </>
+    }
+/>
+
+Off-screen models posed many problems. Accounting for the alignment and placement of UI elements was tricky, and errors in calculations could snowball into bigger errors. The heuristics that off-screen models relied on could be flimsy — assuming they've even been implemented for the UI elements you want in the first place!<Fn fn="3" />
+
+Guessing at what graphics instructions mean is clearly messy, but could something like an off-screen model work for webpages? Could screenreaders scrape HTML or traverse the DOM, and insert the page contents into the model?
+
+Screenreaders such as JAWS tried this approach, but it, too, had its problems. Screenreaders and other assistive technologies usually strive to be general purpose and work no matter which application the user is running, but that's hampered by including a lot of web-parsing logic. Also, it left users high and dry whenever new HTML elements were introduced. For instance, when sites started using HTML5's new tags such as `<header>` and `<footer>`, JAWS omitted key page contents until an (expensive) update could be pushed out.<Fn fn="4" />
+
+What did we learn from off-screen models? Assistive technologies that build their own off-screen models of webpages or applications can be error-prone and susceptible to new, unfamiliar elements and controls. These issues are symptoms of a bigger problem with the approach: **when we try to reverse engineer meaning, we end up swimming upstream against the flow of information.**
+
+Let's go back to the drawing board. Instead of having assistive technologies make guesses about screen contents, let's have applications tell assistive technologies exactly what they're trying to convey.
+
+## Accessibility APIs and Building Blocks
+
+If you want applications such as browsers to be able to expose information to assistive technologies, you'll need them to speak the same language. Since no developer wants to have to support exposing their application's contents to each screenreader and speech recognition software and eye tracker and every other assistive technology individually, we'll need assistive technologies to share a common language. That way, those who are developing browsers or other applications need only expose their contents once and any assistive technology can use it.
+
+This <i>lingua franca</i> is provided by the user's operating system. Specifically, operating systems have interfaces—<dfn>accessibility APIs</dfn>—that help translate between programs and assistive technologies. These accessibility APIs have exciting names such as Microsoft Active Accessibility, IAccessible2, and macOS Accessibility Protocol.
+
+
+How do these accessibility APIs help? They give programs the building blocks they need to describe their contents, and they serve as a convenient middleman between a program and an assistive technology.
+
+### Building Blocks
+
+Accessibility APIs provide the building blocks for applications to describe their contents. These building blocks are data structures called <dfn>accessible objects</dfn>. They're bundles of properties that represent the functionality of a UI element, without any of the presentational or aesthetic information.
+
+One of these building blocks could be a `Checkbox` object, for instance.
+
+<!-- CHECKBOX ACCESSIBLE OBJECT DIAGRAM -->
+<WideImage
+    src="/checkbox-object.png"
+    alt='An orange LEGO brick is labeled with properties of a Checkbox object. The name is "Show tips on startup", checked is true, focusable is true, and focused is false'
+/>
+
+You could also have a `Button` object:
+
+<!-- BUTTON ACCESSIBLE OBJECT DIAGRAM -->
+<WideImage
+    src="/button-object.png"
+    alt='A green LEGO brick is labeled with properties of a Button object. The name is "Submit", pressed is false, focusable is true, and focused is true'
+/>
+
+These building blocks enable all applications to describe themselves in a similar way. As a result, a checkbox is a checkbox, as far as assistive technology is concerned, regardless of whether it appears in a Microsoft Word dialog box or on a web form.
+
+<!-- DIALOG/FORM DIAGRAM -->
+<WideImage
+    src="/similar-objects.png"
+    alt='A diagram shows a pop-up with an unchecked "Show tips at startup" checkbox and an OK button. It also shows a web form with a checked "Unsubscribe" button and a Submit button. Arrows connect the two checkboxes to an orange LEGO brick and the two buttons to a green LEGO brick.'
+/>
+
+These building blocks, by the way, contain three kinds of information about a UI element:
+
+* **Role:** What kind of element is this? Is it text, a button, a checkbox, or something else? This information matters because it lays out expectations for what this element is doing here, how to interact with this element, and what will happen if you do interact with it.
+
+* **Name:** A label or identifier, called an <dfn>accessible name</dfn>, for this element. Buttons will generally use their text contents to determine their name, so `<button>Submit</button>` will have the name "Submit." HTML form fields often get their name from associated `<label>` elements. Names are used by screenreaders to announce an element, and speech recognition users can use names in their voice commands to target specific elements.
+
+* **State and other properties:** Other functional aspects of an element that would be relevant for a user or an assistive technology to be aware of. Is this checkbox checked or unchecked? Is this expandable section currently hidden? Will clicking this button open a dropdown menu? These properties tend to be much more subject to change than an element's role or name.
+
+You can see all three of these in just about any screenreader announcement:
+
+<!-- VOICEOVER SCREENSHOT -->
+<WideImage
+    src="/checkbox-announcement.png"
+    alt={`VoiceOver announcement, which reads "checked, Unsubscribe, checkbox"`}
+    caption="A humble checkbox, as announced by VoiceOver"
+/>
+
+### Accessibility APIs As a Middleman
+
+An application assembles these building blocks into an assistive technology-friendly representation of all of its contents. This representation is the <dfn>accessibility tree</dfn>. The application then sends this new tree to the operating system's accessibility APIs. Assistive technologies poll the accessibility APIs regularly. They get information such as the active window, programs' contents, and the currently focused element. 
+
+They can use this information in different ways. Screenreaders use this information to decide what to announce, or to enable shortcuts that allow the user to jump between different elements of the same type. Speech recognition software uses this information to determine which elements the user can target with their voice commands and how. Screen magnifiers use this information to judge where the user's cursor is, in case they need to focus elsewhere.
+
+This middleman relationship works both ways. Accessibility APIs enable assistive technologies to interact with programs, giving their users more flexibility. For instance, eye-tracking technology can interpret a user's gaze dwelling on an element as a click. The eye tracker can then send that event back through the accessibility API so that the browser treats it like a mouse click.
+
+Putting all of these pieces together, the flow of information from application to assistive technology goes:
+
+1. The operating system provides accessible objects for each kind of UI element.
+2. The application uses these objects as building blocks to assemble an accessibility tree.
+3. The application sends this tree to the operating system's accessibility API.
+4. Assistive technologies poll the accessibility API for updates, and receive the application's contents.
+5. The assistive technology exposes this information to the user.
+6. The assistive technology receives commands from the user, such as special hotkeys, voice commands, switch flips, or the user's gaze dwelling on an element.
+7. The assistive technology sends those commands through the accessibility API, where they're translated into interactions with the application.
+8. As the application changes, it provides a new accessibility tree to the accessibility API, and the cycle begins anew.
+
+Or, for a much more TL;DR version:
+
+<!-- SIMPLE TREE FLOW -->
+<WideImage
+    src="/tree-flow.png"
+    alt="A diagram detailing the flow of the accessibility tree from application, through the accessibility API, to the assistive technology, and the flow of events from assistive technology, through the accessibility API, to the application."
+/>
+
+## From the DOM to the Accessibility Tree
+
+We've taken a pretty sharp detour into operating system internals. Let's bring this back to the web. At this point, we can figure that your browser is, behind the scenes, converting your page's HTML elements into an accessibility tree.<Fn fn="5" /> Whenever the page updates, so, too, does its accessibility tree.
+
+How do browsers know how to convert HTML elements into an accessibility tree? As with everything for the web, there's a standard for that. To that end, the World Wide Web Consortium's Web Accessibility Initiative publishes the [<dfn>Core Accessibility API Mappings</dfn>](https://www.w3.org/TR/core-aam-1.1/), or <i>Core-AAM</i> for short. Core-AAM provides guidance for choosing which building blocks the browser should use when. Additionally, it advises on how to calculate those blocks' properties such as their name, as well as how to manage state changes or keyboard navigation.
+
+The relationship between DOM nodes and accessibility tree nodes isn't quite one-to-one. Some nodes might be flattened, such as `<div>`s or `<span>`s that are only being used for styling. Other elements, such as `<video>` elements, might be expanded into several nodes of the accessibility tree. This is because video players are complex, and need to expose several controls like the <i>Play/Pause</i> button, the progress bar, and the <i>Full Screen</i> button.<Fn fn="6" />
+
+Some browsers let you view the accessibility tree in their developer tools. Try it now! If you're using Chrome, right-click on a page element and click *Inspect*. In the pane that opened up with tabs such as <i>Styles</i> and <i>Computed</i>, click the <i>Accessibility</i> tab. This might be hidden. Congrats! You can now see that element in the accessibility tree! If you're using other browsers, you can instead follow [Firefox's Accessibility Inspector instructions](https://developer.mozilla.org/en-US/docs/Tools/Accessibility_inspector) or [Microsoft Edge's instructions.](https://docs.microsoft.com/en-us/microsoft-edge/devtools-guide/elements/accessibility)
+
+Poke around on different sites and see what kinds of nodes you can find and which properties they have.
+
+<!-- CHROME A11Y TREE SCREENSHOT -->
+<WideImage
+    src="/a11y-tree.png"
+    alt="Facebook's homepage's accessibility tree, as viewed in the Chrome Developer Tools"
+    caption={`The textboxes on Facebook's login page have properties such as "focusable," "editable," and "multi-line."`}
+/>
+
+## But Why Do We Care?
+
+Why should web developers care about the accessibility tree? Is it any more than just some interesting trivia about browser internals?
+
+Understanding the flow of a webpage's contents from browser to assistive technology changed the way I view the web apps I work on. I think there are three key ways that this flow impacts web developers:
+
+1. It explains discrepancies between different assistive technologies on different platforms.
+2. Browsers can use accessibility trees to optimize how pages are exposed to assistive technologies.
+3. Web developers have a responsibility to be good stewards of the accessibility tree.
+
+### Explaining Discrepancies
+
+We know that there are three key players in the flow of web contents to assistive technologies: the browser, the operating system accessibility API, and the assistive technology itself. This gives us three possible places to introduce discrepancies:
+
+- Operating system accessibility APIs could provide different building blocks.
+- Browsers could use assemble their accessibility trees differently.
+- Assistive technologies could interpret those building blocks in different ways.
+
+These differences are, honestly, minute most of the time. However, bugs that affect certain combinations of browsers and assistive technologies are prevalent enough that you should be testing your sites on many different combinations.
+
+### Browser Optimizations
+
+When constructing accessibility trees, many browsers employ heuristics to improve the user experience. For instance, many developers use the CSS rules `display: none;` or `visibility: hidden;` to remove content from the page. However, since the content is still in the HTML, those using assistive technologies would still be able to get to it, which could have undesirable consequences. Browsers instead use these CSS rules as flags that they should remove those elements from the accessibility tree, too. This is why we have to resort to [other tricks to create screenreader-only text.](https://cloudfour.com/thinks/see-no-evil-hidden-content-and-accessibility/#showing-additional-content-for-screen-readers)
+
+Additionally, browsers use tricks to protect users from developers' bad habits. For instance, to counter the [problems that can be caused by layout tables](https://webaim.org/techniques/tables/), both Google Chrome<Fn fn="7" /> and Mozilla Firefox<Fn fn="8" /> will guess at whether a `<table>` element is being used for layout or for tabular data and adjust the accessibility tree accordingly.
+
+### Tree Stewardship
+
+Being aware of the accessibility tree and how it impacts your users' experience should make one thing clear: to build quality web applications, we must be responsible stewards of our applications' accessibility trees. After all, it's the only way many assistive technology users will be able to navigate and interface with our page. If our tree is rotten, there's not really anything these users can do to make our page usable. Fortunately, we have two tools for tree stewardship at our disposal: semantic markup and ARIA.
+
+When we use semantic markup, we make it much, much easier for browsers to determine the most appropriate building blocks. When we write `<input type="checkbox" />`, for instance, the browser knows it can put a `Checkbox` object in the tree with all of the properties that that entails. The browser can trust that that's an accurate representation of the UI element. The same goes for buttons and any other kind of UI element you might want on your page. 
+
+Semantic markup will work for the majority of our needs, but there are times when we need to make tweaks here and there to our application's accessibility tree. This is what ARIA is for! In my next post, I'll explore how ARIA's whole purpose is to modify elements' representation in the accessibility tree.
+
+## Conclusion
+
+Decades of trial and error in building screenreaders and a wide variety of other assistive technologies have taught us one big lesson: assistive technology will work much more reliably when information flows directly to it rather than be reverse engineered. Browsers do a lot of heavy lifting to make sure our pages play nicely with assistive technologies. However, they can't do their job well if we don't do our job well.
+
+***
+
+<FootnotesContainer>
+    <Footnote fn="1">
+        Please forgive the oversimplification.
+    </Footnote>
+    <Footnote fn="2" author="Rich Schwerdtfeger" publication="BYTE" title="Making the GUI Talk" url="https://developer.paciellogroup.com/blog/2015/01/making-the-gui-talk-1991-by-rich-schwerdtfeger/" />
+    <Footnote fn="3" author="Léonie Watson & Chaals McCathie Nevile" publication="Smashing Magazine" title="Accessibility APIs: A Key To Web Accessibility" url="https://www.smashingmagazine.com/2015/03/web-accessibility-with-accessibility-api/" />
+    <Footnote fn="4" author="Marco Zehe" title="Why accessibility APIs matter" url="https://marcozehe.wordpress.com/2013/09/07/why-accessibility-apis-matter/" />
+    <Footnote fn="5">
+        It probably comes as no surprise that the accessibility tree is built in parallel to the DOM. One of the things I realized as I was writing this post is that creating structured representations of a page that enable programmatic interfacing with the page is really browsers' bread and butter. Your browser does exactly this to manage page contents (via the DOM) and element styles (via the CSS Object Model), so why not throw in accessibility tree creation while you're at it?
+    </Footnote>
+    <Footnote fn="6" author="Steve Faulkner, The Paciello Group" title="The Browser Accessibility Tree" url="https://developer.paciellogroup.com/blog/2015/01/the-browser-accessibility-tree/" />
+    <Footnote fn="7">
+        <a href="https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/accessibility/AXTable.cpp">Chromium source code</a>
+    </Footnote>
+    <Footnote fn="8">
+        <a href="https://dxr.mozilla.org/mozilla-central/source/accessible/generic/TableAccessible.cpp">Firefox source code</a>
+    </Footnote>
+</FootnotesContainer>

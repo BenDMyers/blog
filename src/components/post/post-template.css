@@ -32,7 +32,12 @@ section.post-contents h6 {
 
 section.post-contents ol,
 section.post-contents ul {
-	padding-left: calc(3% + 1em);
+    padding-left: calc(9% + 0.5em);
+	padding-right: 3%;
+}
+
+#footnotes-container ol {
+    padding-left: calc(3% + 1em);
 	padding-right: 3%;
 }
 
@@ -99,8 +104,7 @@ section.post-contents code {
 
 section.post-contents code {
 	font-family: var(--monospace-font), monospace;
-	background-color: #ccc;
-	color: black;
+	background-color: var(--inline-code-background-color);
 	border-radius: 10% 10%;
 	padding: 0 0.5%;
 	speak-as: literal-punctuation;

@@ -1,0 +1,14 @@
+img.wide-image {
+	min-width: calc(100% + 2.625rem);
+	margin-left: -1.3125rem;
+}
+
+figure.wide-image-figure img.wide-image {
+	margin-bottom: 0;
+}
+
+figcaption.wide-image-caption {
+	text-align: center;
+	font-size: 14px;
+	font-style: italic;
+}

@@ -36,6 +36,11 @@ section.post-contents ul {
 	padding-right: 3%;
 }
 
+#footnotes-container ol {
+    padding-left: calc(3% + 1em);
+	padding-right: 3%;
+}
+
 section.post-contents ol li p,
 section.post-contents ul li p {
 	padding-left: 0;

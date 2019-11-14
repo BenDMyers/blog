@@ -1,0 +1,14 @@
+.video-player-container {
+    position: relative;
+    padding-top: 56.25%; /* Player ratio: 100 / (1280 / 720) */
+    min-width: calc(100% + 2.625rem);
+    margin-left: -1.3125rem;
+    box-shadow: 0 1px 2px 0 rgba(34, 36, 38, var(--layout-box-shadow-amount));
+    margin-bottom: 0.5rem;
+}
+
+.video-player {
+    position: absolute;
+    top: 0;
+    left: 0;
+}

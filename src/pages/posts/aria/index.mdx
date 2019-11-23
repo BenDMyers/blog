@@ -1,6 +1,6 @@
 ---
 title: "What Is ARIA?"
-date: 2019-11-20
+date: 2019-11-25
 description: A beginner's guide to navigating the multitude of ARIA attributes.
 cover: '/a11y-tree-cover.png'
 coveralt: A tessellation of orange and green LEGO bricks
@@ -8,8 +8,152 @@ emoji: 🔧
 tags: ["web accessibility", "accessibility", "web development", "accessibility tree", "aria"]
 ---
 
-<TOC includeFootnotes="true" />
+<TOC />
 
 <p><dfn>ARIA</dfn>, short for <i>Accessible Rich Internet Applications</i>, is a subset of HTML attributes that modify how assistive technologies such as screenreaders navigate your page.</p>
 
 ## Revisiting the Accessibility Tree
+
+In [my last post](https://blog.benmyers.dev/accessibility-tree/), I introduced the <dfn>accessibility tree</dfn>: an alternate DOM that browsers create specifically for assistive technologies. These accessibility trees describe the page in terms of <dfn>accessible objects</dfn>: data structures provided by the operating system that represent different kinds of UI elements and controls, such as text nodes, checkboxes, or buttons.
+
+Accessible objects describe UI elements as sets of properties. For example, properties that could describe a checkbox include:
+
+* Whether it is checked or unchecked
+* Its label
+* The fact that it even is a checkbox, as opposed to other elements
+* Whether it is in a disabled state
+* Whether it can be focused with the keyboard
+* Whether it is currently focused with the keyboard
+
+We can break these attributes into four types:
+
+1. **Name:** A label or identifier for this element. Names are used by screenreaders to announce an element, and speech recognition users can use names in their voice commands to target specific elements.
+2. **Role:** What kind of UI element is this? Is it text, a button, a checkbox, or something else? This lays out expectations for what this element is doing here, how to interact with this element, and what will happen if you do interact with it.
+3. **State:** What attributes about this element are subject to change? If this element is part of a field, does it have a value? Is the current value invalid? Does this field have a disabled state?
+4. **Other properties:** Functional aspects of an element that would be relevant for a user or an assistive technology to be aware of, but aren't as subject to change as state. Is this element focusable with the keyboard? Does it have a longer-form description? Is this element connected to other elements in some way?
+
+These qualities encompass everything a user might want to know about the *function* of an element, while omitting everything about the element's appearance or presentation.
+
+## Good Markup Means Happy Trees
+
+*Semantic markup* refers to using the native HTML elements that best reflect the desired experience. For instance, if you want an element that, when clicked, submits a form or performs some action on the page, [it's *usually* best to use a `<button>` tag](https://blog.benmyers.dev/clickable-divs/). When we write semantic HTML, the browser has a much easier time picking out the right accessible objects. Additionally, the browser can do the heavy lifting to make sure the accessible objects have all of the necessary properties, without any extra effort on our part.
+
+However, semantics can only get us so far. Sometimes we want [newer, more complex experiences that semantic elements just don't support yet](https://developer.paciellogroup.com/blog/2014/10/aria-in-html-there-goes-the-neighborhood/#html5na), such as:
+
+* Messaging that is subject to change, including error messages
+* Tabs, tablists, and tabpanels
+* Tooltips
+* Toggle switches
+
+What do we do in these cases? It's still important to engineer these experiences in ways that assistive technologies can understand. First, we get as far as we possibly can with semantic markup. Then, we use HTML's ARIA attributes to tweak the accessibility tree.
+
+ARIA doesn't modify the DOM or add new functionality to elements. It won't change elements' behavior in any way. **ARIA exclusively manipulates elements' representation in the accessibility tree.** In other words, ARIA is used to modify an element's name, role, state, and other properties for assistive technologies.
+
+We'll explore how ARIA modifies names, roles, states, and properties by adding ARIA attributes to this dark mode toggle.
+
+<!-- BAD TOGGLE -->
+
+## Setting Up the Toggle Example
+
+<!-- TODO -->
+todotodotodo
+
+## Name
+
+An element's <dfn>accessible name</dfn> is its label or identifier. Screenreaders announce an element's name when the user navigates to that element. Speech recognition users may also use an element's name to target that element in a voice command.
+
+Browsers will use a variety of methods to calculate an element's name — and yes, [the World Wide Web Consortium has specs for that](https://www.w3.org/TR/accname-1.1/). For instance, when naming an `<img>` element, browsers will use the image's `alt` attribute, if it exists. If form fields have an associated `<label>` element, that label's contents will be used as the accessible name. Most elements' names, however, will be determined by the elements' text contents or their children's text contents. `<button>Submit</button>` will create a button with the name "Submit."
+
+Sometimes, the strategy of using text contents isn't good enough. Some cases where manually setting the accessible name would be justified include:
+
+* Short, repeated links like "Read more" whose context is made clear to sighted users, but which need more context to make them distinct to assistive technologies
+* Icon buttons that have no meaningful text contents
+* Regions of the page that should be labeled so that assistive technologies can build a skimmable page outline
+
+ARIA offers two attributes for modifying an element's name: `aria-label` and `aria-labelledby`.
+
+### `aria-label`
+
+When you specify `aria-label` on an element, you override any name that element had, and you replace it with the contents of that `aria-label` attribute. In this example, we use `aria-label` to add more context to a link.
+
+```html {numberLines: true}{3}
+<a
+    href="https://blog.benmyers.dev/aria"
+    aria-label="Read more about ARIA"
+>
+    Read more...
+</a>
+```
+
+This ensures that when users navigate the page using means such as the [VoiceOver Rotor](https://dequeuniversity.com/screenreaders/voiceover-keyboard-shortcuts#vo-mac-the-rotor), where links could appear out of context, this link will convey its purpose and not get lost in a sea of generic "Read more" links.
+
+`aria-label` is particularly useful for icon buttons, such as search buttons that display a magnifying glass or close buttons that have a little <b>X</b>.
+
+```html {numberLines: true}{1}
+<button aria-label="Search">
+    <svg viewBox="0 0 22 22">
+        <!-- Some magnifying glass SVG icon -->
+    </svg>
+</button>
+```
+
+When users navigate to this button, they will hear "Close," instead of anything else that might be in the button.
+
+`aria-label` is best used when there isn't already some visible text label on the page. Additionally, [browsers won't automatically translate `aria-label` values](https://www.heydonworks.com/article/aria-label-is-a-xenophobe) the same way it might for other foreign-language page contents.
+
+Let's add `aria-label` to our toggle:
+
+```html {numberLines: 13}{16}:title=index.html
+<span
+    tabindex="0"
+    class="toggle-switch"
+    aria-label="Use dark mode"
+>
+    <span class="toggle-knob"></span>
+</span>
+```
+
+<!-- DO THE THING -->
+
+### `aria-labelledby`
+
+`aria-labelledby` differs from `aria-label` in that it's meant for cases where a text label is already present on the page. `aria-labelledby` takes a text label's `id`, and uses that label's contents as an accessible name.
+
+For instance, we could use `aria-labelledby` to use a header as a label for a table of contents section. The `<section>` uses the heading's `id` to specify which element should serve as its label.
+
+```html {numberLines: true}{1}
+<section aria-labelledby="toc-heading">
+    <h1 id="toc-heading">
+        Table of Contents
+    </h1>
+    <ol>
+        <!-- List items here -->
+    </ol>
+</section>
+```
+
+As a result, the whole table of contents section is named "Table of Contents."
+
+This approach is very similar to using a `<label>` element's `for` attribute, except it works for all elements, not just form fields.
+
+## Role
+
+woo role
+
+## State
+
+woo state
+
+## Properties
+
+woo properties
+
+## Use Less ARIA.
+
+The World Wide Web Consortium's ARIA specs provide [five rules for ARIA use](https://www.w3.org/TR/using-aria/#NOTES). The first rule isn't *quite* "Don't use ARIA," [as some have quipped](https://www.google.com/search?q=%22the+first+rule+of+aria+is+don%27t+use+aria%22), but it's pretty close:
+
+> If you *can* use a native HTML element or attribute with the semantics and behavior you require **already built in**, instead of re-purposing an element and adding an ARIA role, state or property to make it accessible, **then do so.**
+
+In other words, ARIA should be a tool in your arsenal, but it shouldn't be the first one you reach for. That should be semantic markup. To borrow [an analogy from Kathleen McMahon](https://noti.st/resource11/K8ARii), if web development is like cooking, then semantic elements are your high-quality ingredients and ARIA attributes are your seasonings. You only need a touch.
+
+<!-- Practically, this means we've gone about our toggle switch the wrong way. We started by asking how ARIA could fix our switch. Instead, we should have started by asking whether we could use more appropriate HTML elements. As it turns out, we have two viable candidates. Native checkboxes (`<input type="checkbox">`) make sense, because they alternate between two opposite states, just like our toggle. We could also make a case for `<button>`, since clicking it performs an action on our page. There are [accessible solutions for checkbox switches](https://scottaohara.github.io/a11y_styled_form_controls/src/checkbox--switch/) and [for button switches](https://scottaohara.github.io/a11y_styled_form_controls/src/toggle-button-switch/) that are styled to look like our toggle switch. -->

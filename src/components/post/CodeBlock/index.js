@@ -14,7 +14,7 @@ const START_LINE_NUMBER_REGEX = /{numberLines: (\d+)/;
 const calculateLinesToHighlight = (meta, showLineNumbers) => {
     let firstLine = 1;
     if(parseInt(showLineNumbers)) {
-        firstLine = parseInt(showLineNumbers);
+        firstLine = parseInt(showLineNumbers) + 1;
     }
     
 	if (meta && HIGHLIGHT_RANGE_REGEX.test(meta)) {

@@ -36,7 +36,14 @@ module.exports = {
 							backgroundColor: 'none',
 							showCaptions: ['title']
 						}
-					}
+                    },
+                    {
+                        resolve: "@weknow/gatsby-remark-codepen",
+                        options: {
+                            theme: "dark",
+                            height: 400
+                        }
+                    }
 				]
 			}
 		},
@@ -70,7 +77,14 @@ module.exports = {
 						options: {
 							wrapperStyle: `margin-bottom: 1.0725rem`
 						}
-					},
+                    },
+                    {
+                        resolve: "@weknow/gatsby-remark-codepen",
+                        options: {
+                            theme: "dark",
+                            height: 400
+                        }
+                    },
 					`gatsby-remark-copy-linked-files`,
 					`gatsby-remark-smartypants`
 				]

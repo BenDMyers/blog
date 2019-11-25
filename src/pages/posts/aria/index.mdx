@@ -1,6 +1,6 @@
 ---
 title: "What Is ARIA?"
-date: 2019-11-25
+date: 2019-11-26
 description: A beginner's guide to navigating the multitude of ARIA attributes.
 cover: 'https://i.imgur.com/jxuy6hS.png'
 coveralt: A code snippet featuring a span that has the aria-label, role, and aria-checked attributes.
@@ -10,22 +10,42 @@ tags: ["web accessibility", "accessibility", "web development", "accessibility t
 
 <TOC />
 
-It's no secret that websites are becoming increasingly complex.
+## Introduction
 
-[there are a lot of them](https://www.w3.org/TR/wai-aria-1.1/#state_prop_def)
+It's no secret that today's websites are increasingly complex. Webpages now more closely resemble dynamic, living applications. Developers combine and style HTML elements to create new user experiences. However, it can be challenging for disabled users' assistive technologies to make sense of this new world.
 
-<!-- <p><dfn>ARIA</dfn>, short for <i>Accessible Rich Internet Applications</i>, is a subset of HTML attributes that modify how assistive technologies such as screenreaders navigate your page. </p> -->
+One tool devised to solve this problem is <dfn>ARIA</dfn>. Short for <i>Accessible Rich Internet Applications</i>, ARIA is a subset of HTML attributes (generally prefixed with `aria-`) that modify how assistive technologies such as screenreaders navigate your page.
+
+Unfortunately, developers often misunderstand ARIA and misapply it, which leads to worse experiences for disabled users. In 2017, the web accessibility resource WebAIM reported:
+
+<Blockquote
+    attribution={<>Jon Whiting, <a href="https://webaim.org/blog/aria-cause-solution/">To ARIA! The Cause of, and Solution to, All Our Accessibility Problems</a></>}
+>
+    When WebAIM evaluates a client’s website for accessibility, we often spend more time evaluating and reporting on ARIA use than any other issue. Almost every report we write includes a section cautioning against ARIA abuse and outlining ARIA uses that need to be corrected or, most often, removed.
+</Blockquote>
+
+In [their August 2019 analysis of the one million post popular homepages](https://webaim.org/projects/million/update#aria), WebAIM found that ARIA usage had increased sharply over the previous six months, and that the increased use of ARIA was strongly correlated with an increase in accessibility defects on the page.
+
+<Tweet tweetId="1167147412281933826" />
+
+The WebAIM report is quick to remind us that correlation does not imply causation. It suggests that more complex homepages and the use of libraries and frameworks could lead to both more situations requiring ARIA and more bugs. That said, it still seems like there's a lack of understanding around what ARIA is and how it should be used well.
+
+This could be because [there are a lot of ARIA attributes](https://www.w3.org/TR/wai-aria-1.1/#state_prop_def), each with their own (admittedly, sometimes niche) use cases. This can make ARIA seem unapproachable.
+
+Additionally, ARIA isn't always included in web development resources. When it is, it's often handwaved away as just making the element ✨<span class="vaporwave">more accessible</span>✨. A friend of mine admitted to copying ARIA from example code because the docs promised exactly that. Without the context of what ARIA does, it's totally reasonable for developers to assume that more ARIA means better accessibility, so you might as well go all in.
+
+So, today: what ARIA is, what it does, why you should use it, and when you shouldn't.
 
 ## Revisiting the Accessibility Tree
 
-In [my last post](https://blog.benmyers.dev/accessibility-tree/), I introduced the <dfn>accessibility tree</dfn>: an alternative DOM that browsers create specifically for assistive technologies. These accessibility trees describe the page in terms of <dfn>accessible objects</dfn>: data structures provided by the operating system that represent different kinds of UI elements and controls, such as text nodes, checkboxes, or buttons.
+In [my last post](https://blog.benmyers.dev/accessibility-tree/), I introduced the <dfn>accessibility tree</dfn>: an alternate DOM that browsers create specifically for assistive technologies. These accessibility trees describe the page in terms of <dfn>accessible objects</dfn>: data structures provided by the operating system that represent different kinds of UI elements and controls, such as text nodes, checkboxes, or buttons.
 
 Accessible objects describe UI elements as sets of properties. For example, properties that could describe a checkbox include:
 
 * Whether it is checked or unchecked
 * Its label
 * The fact that it even is a checkbox, as opposed to other elements
-* Whether it is in a disabled state
+* Whether it is enabled or disabled
 * Whether it can be focused with the keyboard
 * Whether it is currently focused with the keyboard
 
@@ -34,7 +54,7 @@ We can break these attributes into four types:
 1. **Name:** A label or identifier for this element. Names are used by screenreaders to announce an element, and speech recognition users can use names in their voice commands to target specific elements.
 2. **Role:** What kind of UI element is this? Is it text, a button, a checkbox, or something else? This lays out expectations for what this element is doing here, how to interact with this element, and what will happen if you do interact with it.
 3. **State:** What attributes about this element are subject to change? If this element is part of a field, does it have a value? Is the current value invalid? Does this field have a disabled state?
-4. **Other properties:** Functional aspects of an element that would be relevant for a user or an assistive technology to be aware of, but aren't as subject to change as state. Is this element focusable with the keyboard? Does it have a longer-form description? Is this element connected to other elements in some way?
+4. **Properties:** Functional aspects of an element that would be relevant to a user or an assistive technology, but aren't as subject to change as state. Is this element focusable with the keyboard? Does it have a longer-form description? Is this element connected to other elements in some way?
 
 These qualities encompass everything a user might want to know about the *function* of an element, while omitting everything about the element's appearance or presentation.
 
@@ -51,7 +71,7 @@ However, semantics can only get us so far. Sometimes we want [newer, more comple
 
 What do we do in these cases? It's still important to engineer these experiences in ways that assistive technologies can understand. First, we get as far as we possibly can with semantic markup. Then, we use HTML's ARIA attributes to tweak the accessibility tree.
 
-ARIA doesn't modify the DOM or add new functionality to elements. It won't change elements' behavior in any way. **ARIA exclusively manipulates elements' representation in the accessibility tree.** In other words, ARIA is used to modify an element's name, role, state, and other properties for assistive technologies.
+ARIA doesn't modify the DOM or add new functionality to elements. It won't change elements' behavior in any way. **ARIA exclusively manipulates elements' representation in the accessibility tree.** In other words, ARIA is used to modify an element's name, role, state, and properties for assistive technologies.
 
 That's great in theory, but how does it work in practice?
 
@@ -64,7 +84,7 @@ https://codepen.io/BenDMyers/pen/jOOReJG
 
 If you click the toggle, you'll trigger dark mode. Click it again and you'll go back to light mode. The toggle is even keyboard-navigable—you can tab to it and trigger it with Enter or Space.
 
-It does have a bit of a problem, however. If you navigate to it with a screenreader, you'll get something like this:
+It does have a bit of a problem, though. If you navigate to it with a screenreader, you'll get something like this:
 
 <!-- UNDERWHELMING "group" SCREENSHOT -->
 <WideImage
@@ -191,12 +211,12 @@ When I lingered on this element for a bit with VoiceOver active, VoiceOver told 
 
 Assistive technologies can now use these roles to provide extra functionalities that make navigating the page easier for disabled users. For instance, when a user issues a "click button" voice command, the Dragon NaturallySpeaking speech recognition software will light up all of the buttons on the page. Screenreaders often provide shortcuts for navigating between different elements of the same role—JAWS provides hotkeys and VoiceOver provides the Rotor for this purpose.
 
-Importantly, [a role creates a contract](https://blog.benmyers.dev/clickable-divs/). You're promising to users that they can interact with elements in a certain way and that it will behave predictably. For instance, users will expect the following from switches:
+Importantly, [a role is a promise](https://www.w3.org/TR/wai-aria-practices-1.1/#principle-1-a-role-is-a-promise). You're promising to users that they can interact with elements in a certain way and that they will behave predictably. For instance, users will expect the following from switches:
 
-* It can be clicked.
-* It can be focused on with the keyboard.
-* When the switch is focused, it can be triggered by clicking Space.
-* Triggering the switch will cause something to toggle.
+* They can be clicked
+* They can be focused on with the keyboard
+* When the switch is focused, it can be triggered by clicking Space
+* Triggering the switch will cause something to toggle
 
 Specifying an element's `role` will *not* auto-magically add any of that expected functionality. It won't make our element focusable or add key events. It's up to the developer to follow through on that promise. In the case of our toggle, I've already handled this with `tabindex` and by adding a `keydown` event listener.
 
@@ -261,3 +281,13 @@ In other words, ARIA should be a tool in your arsenal, but it shouldn't be the f
 
 ## Conclusion
 
+woo Conclusion
+
+## Further Reading
+
+If you'd like to read more about ARIA, I recommend the following resources:
+
+* The World Wide Web Consortium's [ARIA specs](https://www.w3.org/TR/wai-aria-1.1/)
+* The World Wide Web Consortium's [ARIA Authoring Practices](https://www.w3.org/TR/wai-aria-practices-1.1/)
+* Kat Shaw's [What the Heck is ARIA? A Beginner's Guide to ARIA for Accessibility](https://www.lullabot.com/articles/what-heck-aria-beginners-guide-aria-accessibility)
+* WebAIM's [To ARIA! The Cause of, and Solution to, All Our Accessibility Problems](https://webaim.org/blog/aria-cause-solution/), by Jon Whiting

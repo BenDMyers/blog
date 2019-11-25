@@ -137,3 +137,8 @@ section.post-contents figcaption.gatsby-resp-image-figcaption {
 	text-align: center;
 	font-size: 14px;
 }
+
+section.post-contents .vaporwave {
+    font-style: italic;
+    letter-spacing: 0.3em;
+}

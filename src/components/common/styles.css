@@ -2,11 +2,13 @@
 :root {
 	--background-color: #f0f0f0;
 	/* --background-color: #212121; */
-	--blockquote-indicator-color: #f31455;
+    --blockquote-indicator-color: #f31455;
+    --body-font: 'Montserrat';
 	--codeblock-highlighted-line: #333;
 	--codeblock-highlighted-line-indicator-width: 6px;
 	--codeblock-line-number-border: #555;
-	--heading-color: black;
+    --heading-color: black;
+    --heading-font: 'Nunito Sans';
 	--highlight-yellow: #f4e62c;
 	--hr-color: rgba(0, 0, 0, 0.07);
 	--inline-code-background-color: rgba(124, 124, 124, 0.22);
@@ -50,7 +52,7 @@ body.dark-mode {
 
 body {
 	background-color: var(--background-color);
-	font-family: 'Roboto Slab', serif;
+	font-family: var(--body-font), sans-serif;
 	transition: background-color 0.5s ease-in;
 }
 
@@ -74,7 +76,7 @@ h4,
 h5,
 h6 {
 	color: var(--heading-color);
-	font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+	font-family: var(--heading-font), Arial, Helvetica, sans-serif;
 	padding: 0;
 	margin: 0;
 }

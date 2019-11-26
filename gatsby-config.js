@@ -14,7 +14,7 @@ module.exports = {
 			resolve: 'gatsby-plugin-web-font-loader',
 			options: {
 				google: {
-					families: ['Lato', 'Roboto Slab', 'Oxygen Mono']
+					families: ['Lato', 'Roboto Slab', 'Oxygen Mono', 'Nunito Sans:400,700,900', 'Maven Pro']
 				}
 			}
 		},

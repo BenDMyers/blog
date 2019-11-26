@@ -1,18 +1,18 @@
 .post-header {
 	padding: 10%;
 	text-align: center;
-	font-family: 'Lato';
+	font-family: var(--heading-font);
 	margin-bottom: 3%;
 	background-size: cover;
 }
 
 .post-header h1 {
-	font-family: 'Montserrat';
+	font-family: var(--heading-font);
 	font-weight: 900;
 }
 
 p.post-header-date {
-	font-family: 'Montserrat';
+	font-family: var(--heading-font);
 	font-style: italic;
 	font-weight: bold;
 	font-size: 150%;

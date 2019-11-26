@@ -10,7 +10,7 @@ section.share-section p {
 
 #share {
 	margin-top: 1.5%;
-	font-family: 'Montserrat';
+	font-family: var(--heading-font);
 }
 
 div.social-share {

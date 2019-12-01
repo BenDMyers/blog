@@ -36,9 +36,9 @@ function mapToTabSchema(tabs) {
 /**
  * Expects `props.tabs` to be `[{lang, code, label?, numberLines?, highlightLines?}...]`
  */
-const TabbedCodeBlock = ({tabs}) => {
+const TabbedCodeBlock = ({tabs, ...props}) => {
     let mappedTabs = mapToTabSchema(tabs);
-    return <Tabs tabs={mappedTabs} />;
+    return <Tabs tabs={mappedTabs} {...props} />;
 }
 
 export default TabbedCodeBlock;

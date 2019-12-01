@@ -26,10 +26,10 @@ function createLabelsAndPanels(tabs) {
 /**
  * Expects `props.tabs` to be `[{label, contents}...]`
  */
-const TabbedRegion = ({tabs}) => {
+const TabbedRegion = ({tabs, ...props}) => {
     const {labels, panels} = createLabelsAndPanels(tabs);
     return (
-        <Tabs>
+        <Tabs {...props}>
             <TabList>
                 {labels}
             </TabList>

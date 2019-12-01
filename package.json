@@ -44,6 +44,7 @@
     "react-icons": "^3.7.0",
     "react-player": "^1.14.1",
     "react-share": "^3.0.1",
+    "react-tabs": "^3.0.0",
     "react-toggle": "^4.0.2",
     "react-twitter-embed": "^2.0.8",
     "react-typography": "^0.16.19",

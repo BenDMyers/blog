@@ -9,7 +9,13 @@ const tabs = [
 ];
 
 const TabsWithAriaChecked = () => {
-    return <TabbedCodeBlock tabs={tabs} defaultIndex={2} />
+    return (
+        <TabbedCodeBlock
+            tabs={tabs}
+            defaultIndex={2}
+            aria-label="Code snippets for toggle switch using aria-checked"
+        />
+    );
 }
 
 export default TabsWithAriaChecked;

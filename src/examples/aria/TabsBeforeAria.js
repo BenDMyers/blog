@@ -9,7 +9,12 @@ const tabs = [
 ];
 
 const TabsBeforeAria = () => {
-    return <TabbedCodeBlock tabs={tabs} />
+    return (
+        <TabbedCodeBlock
+            tabs={tabs}
+            aria-label="Code snippets for toggle switch before ARIA" 
+        />
+    );
 }
 
 export default TabsBeforeAria;

@@ -9,7 +9,12 @@ const tabs = [
 ];
 
 const TabsWithRole = () => {
-    return <TabbedCodeBlock tabs={tabs} />
+    return (
+        <TabbedCodeBlock
+            tabs={tabs}
+            aria-label="Code snippets for toggle switch specifying an ARIA role"
+        />
+    );
 }
 
 export default TabsWithRole;

@@ -9,7 +9,12 @@ const tabs = [
 ];
 
 const TabsWithAriaLabelledby = () => {
-    return <TabbedCodeBlock tabs={tabs} />
+    return (
+        <TabbedCodeBlock
+            tabs={tabs}
+            aria-label="Code snippets for toggle switch using aria-labelledby"
+        />
+    );
 }
 
 export default TabsWithAriaLabelledby;

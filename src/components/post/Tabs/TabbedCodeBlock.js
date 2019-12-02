@@ -29,7 +29,11 @@ function mapToTabSchema(tabs) {
             </CodeBlock>
         );
 
-        return {label, contents: codeblock};
+        let newTab = {label, contents: codeblock};
+
+        tab.highlight && (newTab.labelClass = 'contains-highlights');
+
+        return newTab;
     })
 }
 

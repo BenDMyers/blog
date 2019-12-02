@@ -63,3 +63,13 @@ div.react-tabs ul.react-tabs__tab-list {
 .react-tabs__tab-panel--selected {
     display: block;
 }
+
+.react-tabs__tab span.contains-highlights:before {
+    content: '● ';
+    color: var(--theme-color);
+}
+
+.react-tabs__tab.react-tabs__tab--selected span.contains-highlights:before {
+    content: '● ';
+    color: white;
+}

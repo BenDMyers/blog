@@ -8,9 +8,10 @@ function createLabelsAndPanels(tabs) {
 
     for (let i = 0; i < tabs.length; i++) {
         const {label, contents} = tabs[i];
+        const labelClass = tabs[i].labelClass || '';
         labels.push(
             <Tab key={`label-${i}-${label}`}>
-                {label}
+                <span className={labelClass}>{label}</span>
             </Tab>
         );
         panels.push(

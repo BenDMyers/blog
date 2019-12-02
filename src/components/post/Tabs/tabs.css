@@ -73,3 +73,7 @@ div.react-tabs ul.react-tabs__tab-list {
     content: '● ';
     color: white;
 }
+
+.react-tabs__tab-panel--selected pre {
+    margin-bottom: 0;
+}

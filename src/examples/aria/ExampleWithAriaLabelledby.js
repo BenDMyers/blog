@@ -29,7 +29,7 @@ const ExampleWithAriaLabelledby = () => {
         <section
             id="toggle-example-with-aria-labelledby"
             className="toggle-example"
-            aria-label="Toggle switch with aria-label"
+            aria-label="Toggle switch with aria-labelledby"
         >
             <div className="container">
                 <div id="toggle-label">Use Dark Mode</div>

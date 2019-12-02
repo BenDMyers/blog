@@ -31,7 +31,7 @@ const ExampleWithAriaChecked = () => {
         <section
             id="toggle-example-with-aria-checked"
             className="toggle-example"
-            aria-label="Toggle switch with aria-label"
+            aria-label="Toggle switch with aria-checked"
         >
             <div className="container">
                 <span

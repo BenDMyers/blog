@@ -1,12 +1,23 @@
 ---
 title: "What Is ARIA?"
-date: 2019-11-26
+date: 2019-12-04
 description: A beginner's guide to navigating the multitude of ARIA attributes.
 cover: 'https://i.imgur.com/jxuy6hS.png'
 coveralt: A code snippet featuring a span that has the aria-label, role, and aria-checked attributes.
 emoji: 🔧
 tags: ["web accessibility", "accessibility", "web development", "accessibility tree", "aria"]
 ---
+
+import TabsBeforeAria from '../../../examples/aria/TabsBeforeAria';
+import TabsWithRole from '../../../examples/aria/TabsWithRole';
+import TabsWithAriaLabel from '../../../examples/aria/TabsWithAriaLabel';
+import TabsWithAriaLabelledby from '../../../examples/aria/TabsWithAriaLabelledby';
+import TabsWithAriaChecked from '../../../examples/aria/TabsWithAriaChecked';
+import ExampleBeforeAria from '../../../examples/aria/ExampleBeforeAria';
+import ExampleWithRole from '../../../examples/aria/ExampleWithRole';
+import ExampleWithAriaLabel from '../../../examples/aria/ExampleWithAriaLabel';
+import ExampleWithAriaLabelledby from '../../../examples/aria/ExampleWithAriaLabelledby';
+import ExampleWithAriaChecked from '../../../examples/aria/ExampleWithAriaChecked';
 
 <TOC />
 
@@ -80,9 +91,10 @@ That's great in theory, but how does it work in practice?
 Take a look at this toggle switch:
 
 <!-- BAD TOGGLE -->
-https://codepen.io/BenDMyers/pen/jOOReJG
+<TabsBeforeAria />
+<ExampleBeforeAria />
 
-If you click the toggle, you'll trigger dark mode. Click it again and you'll go back to light mode. The toggle is even keyboard-navigable—you can tab to it and trigger it with Enter or Space.
+If you click the toggle, you'll trigger dark mode. Click it again and you'll go back to light mode. The toggle is even keyboard-navigable—you can tab to it and trigger it with Space.
 
 It does have a bit of a problem, though. If you navigate to it with a screenreader, you'll get something like this:
 
@@ -107,13 +119,14 @@ We can help the browser along by providing our toggle with a `role` attribute. `
 
 We want to pick the role that best describes our toggle element. In our case, there are two roles that describe elements that alternate between two opposite states: `checkbox` and `switch`. These roles are functionally very similar, except that `checkbox`'s states are *checked* and *unchecked*, and `switch` uses *on* and *off*. [The `switch` role also has weaker support than `checkbox`.](https://scottaohara.github.io/a11y_styled_form_controls/src/checkbox--switch/#affects_on_sr) We'll go ahead and use `switch`, but you're free to use `checkbox` on your own.
 
-https://codepen.io/BenDMyers/pen/BaaEeXp
+<TabsWithRole />
+<ExampleWithRole />
 
 When we navigate to our toggle with a screenreader now, we get a more accurate description of this element:
 
 <WideImage
-    src="/aria/role.png"
-    alt={`VoiceOver announcement, which reads "Use dark mode, off, switch"`}
+    src="/aria/off-switch.png"
+    alt={`VoiceOver announcement, which reads "off, switch"`}
 />
 
 When I lingered on this element for a bit with VoiceOver active, VoiceOver told me how I could interact with the element using the Space key:
@@ -160,14 +173,16 @@ When you specify `aria-label` on an element, you override any name that element 
 
 Let's add `aria-label` to our toggle:
 
-https://codepen.io/BenDMyers/pen/OJJGaPW
+<TabsWithAriaLabel />
+<ExampleWithAriaLabel />
 
-If you navigate to the switch with a screenreader now, you'll see we've already made this element much clearer:
+If you navigate to the switch with a screenreader now, you'll hear something like this:
 
 <!-- NEW SCREENREADER XP -->
 <WideImage
-    src="/aria/arialabel.png"
-    alt={`VoiceOver announcement, which reads "Use dark mode, group"`}
+    src="/aria/role.png"
+    alt={`VoiceOver announcement, which reads "Use dark mode, off, switch"`}
+    caption="Adding a label has gone a long way towards making this element understandable."
 />
 
 `aria-label` is best used when there isn't already some visible text label on the page. Alternatively, if we already have a label on the page, we could use `aria-labelledby`. `aria-labelledby` takes a text label's `id`, and uses that label's contents as an accessible name.
@@ -189,7 +204,8 @@ This approach is very similar to using a `<label>` element's `for` attribute, ex
 
 Here's what our toggle example would look like if we used `aria-labelledby` instead of `aria-label`:
 
-https://codepen.io/BenDMyers/pen/dyyLQvY
+<TabsWithAriaLabelledby />
+<ExampleWithAriaLabelledby />
 
 *Note:* While writing this article, I learned that [screenreaders may disregard `aria-label` and `aria-labelledby` for static elements](http://www.davidmacd.com/blog/does-aria-label-override-static-text.html). If your labels aren't working, make sure your element has either a [landmark role](https://www.washington.edu/accessibility/web/landmarks/) or a role that implies interactivity.
 
@@ -203,9 +219,10 @@ Another ARIA state attribute worth mentioning is `aria-hidden`. Whenever an elem
 
 Returning to our toggle, elements that have specified `role="checkbox"` or `role="switch"` expect that the element will have the `aria-checked` state attribute, and that it will alternate between `"true"` and `"false"` whenever the toggle is triggered.
 
-The following pen demonstrates how we can use JavaScript to change `aria-checked`:
+The following example demonstrates how we can use JavaScript to change `aria-checked`:
 
-https://codepen.io/BenDMyers/pen/zYYXgOG
+<TabsWithAriaChecked />
+<ExampleWithAriaChecked />
 
 Try navigating to the toggle with your screenreader. Flip the switch to turn dark mode on. Now, the toggle actually announces when it's on:
 

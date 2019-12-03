@@ -1,0 +1,76 @@
+.toggle-switch, .toggle-switch .toggle-knob {
+    transition: all 0.2s ease-in;
+}
+
+.toggle-switch {
+    height: 90px;
+    width: 165px;
+    display: inline-block;
+    background-color: #333333;
+    margin: 6px;
+    margin-bottom: 15px;
+    border-radius: 90px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.toggle-switch .toggle-knob {
+    width: 84px;
+    height: 78px;
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 78px;
+    margin: 6px 9px;
+}
+
+.toggle-switch.active {
+    background-color: #f31455;
+}
+
+.toggle-switch.active .toggle-knob {
+    margin-left: 72px;
+}
+
+/* Focus styles */
+.toggle-switch:focus {
+    outline: none;
+}
+
+.toggle-switch:focus .toggle-knob {
+    box-shadow: 0px 0px 5px 5px #229abf;
+}
+
+/* PAGE APPEARANCE */
+/* (Pretty standard, boring stuff) */
+
+section.toggle-example {
+    background-color: #eeeeee;
+    transition: 0.3s background-color ease-in, 0.3s color ease-in;
+    height: 50%;
+    text-align: center;
+    min-width: calc(100% + 2.625rem);
+    margin-left: -1.3125rem;
+    margin-top: -0.6rem;
+}
+
+section.toggle-example.dark-mode {
+    background-color: #222222;
+    color: #dddddd;
+}
+
+div.container {
+    width: 100vw;
+    padding: 75px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+span.status {
+    font-weight: bold;
+}
+
+#toggle-label {
+    font-weight: bold;
+}

@@ -16,10 +16,8 @@ function handleClick() {
 }
 
 function handleKeyPress(event) {
-    if (event.key === ' ' || event.key === 'Enter') {
-        // Prevents unintentional form submissions, page scrolls, the like
+    if (event.key === ' ') {
         event.preventDefault();
-
         handleClick();
     }
 }

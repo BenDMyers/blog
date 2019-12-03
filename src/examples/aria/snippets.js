@@ -88,7 +88,7 @@ function handleClick() {
 
 // Adds keyboard events to the toggle
 toggler.addEventListener('keydown', function (event) {
-    if (event.key === ' ' || event.key === 'Enter') {
+    if (event.key === ' ') {
         // Prevents unintentional form submissions, page scrolls, the like
         event.preventDefault();
 
@@ -121,7 +121,7 @@ function handleClick() {
 
 // Adds keyboard events to the toggle
 toggler.addEventListener('keydown', function (event) {
-    if (event.key === ' ' || event.key === 'Enter') {
+    if (event.key === ' ') {
         // Prevents unintentional form submissions, page scrolls, the like
         event.preventDefault();
 

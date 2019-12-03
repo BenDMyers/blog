@@ -1,6 +1,6 @@
 ---
 title: "What Is ARIA?"
-date: 2019-11-26
+date: 2019-12-04
 description: A beginner's guide to navigating the multitude of ARIA attributes.
 cover: 'https://i.imgur.com/jxuy6hS.png'
 coveralt: A code snippet featuring a span that has the aria-label, role, and aria-checked attributes.
@@ -94,7 +94,7 @@ Take a look at this toggle switch:
 <TabsBeforeAria />
 <ExampleBeforeAria />
 
-If you click the toggle, you'll trigger dark mode. Click it again and you'll go back to light mode. The toggle is even keyboard-navigable—you can tab to it and trigger it with Enter or Space.
+If you click the toggle, you'll trigger dark mode. Click it again and you'll go back to light mode. The toggle is even keyboard-navigable—you can tab to it and trigger it with Space.
 
 It does have a bit of a problem, though. If you navigate to it with a screenreader, you'll get something like this:
 
@@ -125,8 +125,8 @@ We want to pick the role that best describes our toggle element. In our case, th
 When we navigate to our toggle with a screenreader now, we get a more accurate description of this element:
 
 <WideImage
-    src="/aria/role.png"
-    alt={`VoiceOver announcement, which reads "Use dark mode, off, switch"`}
+    src="/aria/off-switch.png"
+    alt={`VoiceOver announcement, which reads "off, switch"`}
 />
 
 When I lingered on this element for a bit with VoiceOver active, VoiceOver told me how I could interact with the element using the Space key:
@@ -176,12 +176,13 @@ Let's add `aria-label` to our toggle:
 <TabsWithAriaLabel />
 <ExampleWithAriaLabel />
 
-If you navigate to the switch with a screenreader now, you'll see we've already made this element much clearer:
+If you navigate to the switch with a screenreader now, you'll hear something like this:
 
 <!-- NEW SCREENREADER XP -->
 <WideImage
-    src="/aria/arialabel.png"
-    alt={`VoiceOver announcement, which reads "Use dark mode, group"`}
+    src="/aria/role.png"
+    alt={`VoiceOver announcement, which reads "Use dark mode, off, switch"`}
+    caption="Adding a label has gone a long way towards making this element understandable."
 />
 
 `aria-label` is best used when there isn't already some visible text label on the page. Alternatively, if we already have a label on the page, we could use `aria-labelledby`. `aria-labelledby` takes a text label's `id`, and uses that label's contents as an accessible name.

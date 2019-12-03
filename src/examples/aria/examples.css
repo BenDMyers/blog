@@ -70,3 +70,7 @@ div.container {
 span.status {
     font-weight: bold;
 }
+
+#toggle-label {
+    font-weight: bold;
+}

@@ -51,6 +51,7 @@ section.toggle-example {
     min-width: calc(100% + 2.625rem);
     margin-left: -1.3125rem;
     margin-top: -0.6rem;
+    color: black;
 }
 
 section.toggle-example.dark-mode {

@@ -91,7 +91,7 @@ const CodeBlock = (props) => {
         if(preRef.current) {
             setOverflowWidth(preRef.current.scrollWidth);
         }
-    }, [(preRef.current && preRef.current.scrollWidth), (window && window.innerWidth)])
+    }, [(preRef.current && preRef.current.scrollWidth)])
 
 	return (
 		<>

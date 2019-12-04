@@ -109,7 +109,9 @@ const CodeBlock = (props) => {
 							// SKIP FINAL, EMPTY LINE
 							if (i === tokens.length - 1 && line[0].empty) {
 								return null;
-							}
+                            }
+                            
+                            let highlightLine = shouldHighlightLine(i) ? 'highlight-line' : '';
 
 							return (
 								<div
@@ -117,9 +119,7 @@ const CodeBlock = (props) => {
 									{...getLineProps({
 										line,
 										key: i,
-										className: shouldHighlightLine(i)
-											? 'highlight-line'
-											: '',
+										className: highlightLine,
 										style: {
 											minWidth: `${overflowWidth}px`
 										}
@@ -131,7 +131,12 @@ const CodeBlock = (props) => {
 											<span className="screenreader">
 												Line&nbsp;
 											</span>
-											{i + firstLine}&nbsp;
+											{i + firstLine}
+                                            {highlightLine ?
+                                                <span className="screenreader">, highlighted'</span>
+                                                : ''
+                                            }
+                                            &nbsp;
 										</span>
 									)}
 									{!showLineNumbers && (

@@ -32,6 +32,7 @@ function mapToTabSchema(tabs) {
         let newTab = {label, contents: codeblock};
 
         tab.highlight && (newTab.labelClass = 'contains-highlights');
+        tab.highlight && (newTab.description = 'Contains highlighted lines.')
 
         return newTab;
     })

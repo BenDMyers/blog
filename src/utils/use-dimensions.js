@@ -8,7 +8,7 @@ const useDimensions = () => {
 	const [dimensions, setDimensions] = useState({});
 	useLayoutEffect(() => {
 		setDimensions(targetRef.current.getBoundingClientRect().toJSON());
-	}, [targetRef.current]);
+	}, [targetRef.current, window.innerWidth]);
 	return [targetRef, dimensions];
 };
 

@@ -89,6 +89,12 @@ section.post-contents a.anchor.anchor-hide {
 	color: rgba(0, 0, 0, 0);
 }
 
+/* Apparently the small amount of left/right padding on `<code>` elements caused them
+   to newline whenever they were inside a heading????? */
+section.post-contents div.heading-contents code {
+    padding: 0;
+}
+
 section.post-contents em i {
 	font-style: normal;
 }
@@ -130,4 +136,9 @@ section.post-contents span.gatsby-resp-image-wrapper {
 section.post-contents figcaption.gatsby-resp-image-figcaption {
 	text-align: center;
 	font-size: 14px;
+}
+
+section.post-contents .vaporwave {
+    font-style: italic;
+    letter-spacing: 0.3em;
 }

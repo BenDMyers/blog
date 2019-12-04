@@ -14,7 +14,7 @@ module.exports = {
 			resolve: 'gatsby-plugin-web-font-loader',
 			options: {
 				google: {
-					families: ['Lato', 'Roboto Slab', 'Oxygen Mono']
+                    families: ['Lato', 'Roboto Slab:400,700,900', 'Oxygen Mono']
 				}
 			}
 		},
@@ -36,10 +36,18 @@ module.exports = {
 							backgroundColor: 'none',
 							showCaptions: ['title']
 						}
-					}
+                    },
+                    {
+                        resolve: "@weknow/gatsby-remark-codepen",
+                        options: {
+                            theme: "dark",
+                            height: 400
+                        }
+                    }
 				]
 			}
-		},
+        },
+        `gatsby-plugin-remove-serviceworker`,
 		{
 			resolve: `gatsby-source-filesystem`,
 			options: {
@@ -70,7 +78,14 @@ module.exports = {
 						options: {
 							wrapperStyle: `margin-bottom: 1.0725rem`
 						}
-					},
+                    },
+                    {
+                        resolve: "@weknow/gatsby-remark-codepen",
+                        options: {
+                            theme: "dark",
+                            height: 400
+                        }
+                    },
 					`gatsby-remark-copy-linked-files`,
 					`gatsby-remark-smartypants`
 				]

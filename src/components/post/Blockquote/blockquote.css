@@ -26,6 +26,7 @@ cite.quote-attribution::before {
 	content: '—';
 }
 
+blockquote p.quote-contents em,
 blockquote p.quote-contents i {
 	font-style: normal;
 }

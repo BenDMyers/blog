@@ -46,7 +46,8 @@ module.exports = {
                     }
 				]
 			}
-		},
+        },
+        `gatsby-plugin-remove-serviceworker`,
 		{
 			resolve: `gatsby-source-filesystem`,
 			options: {

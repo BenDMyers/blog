@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import Highlight, {defaultProps} from 'prism-react-renderer';
 import theme from 'prism-react-renderer/themes/oceanicNext';
 
 import './code-block.css';
 import {rhythm} from '../../../utils/typography';
-import {useScrollDimensions} from '../../../utils/use-dimensions';
 import CodeBlockTitle from './CodeBlockTitle';
 
 const HIGHLIGHT_RANGE_REGEX = /{([\d,-]+)}/;
@@ -73,7 +72,8 @@ const processProps = (props) => {
  * @link https://mdxjs.com/guides/syntax-highlighting
  */
 const CodeBlock = (props) => {
-	const [preRef, preDimensions] = useScrollDimensions();
+    const preRef = useRef(null);
+    const [overflowWidth, setOverflowWidth] = useState();
 	const [hlProps, showLineNumbers, shouldHighlightLine, title] = processProps(
 		props
 	);
@@ -86,6 +86,12 @@ const CodeBlock = (props) => {
     if (parseInt(showLineNumbers)) {
         firstLine = parseInt(showLineNumbers);
     }
+
+    useEffect(() => {
+        if(preRef.current) {
+            setOverflowWidth(preRef.current.scrollWidth);
+        }
+    }, [(preRef.current && preRef.current.scrollWidth), window.innerWidth])
 
 	return (
 		<>
@@ -115,7 +121,7 @@ const CodeBlock = (props) => {
 											? 'highlight-line'
 											: '',
 										style: {
-											width: `${preDimensions.width}px`
+											minWidth: `${overflowWidth}px`
 										}
 									})}
 								>
@@ -135,7 +141,7 @@ const CodeBlock = (props) => {
 									{line.map((token, key) => (
 										<span
 											key={key}
-											{...getTokenProps({token, key})}
+                                            {...getTokenProps({token, key})}
 										/>
 									))}
 								</div>

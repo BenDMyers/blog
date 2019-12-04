@@ -1,4 +1,5 @@
 import React from 'react';
+import './semantic-example.css';
 
 let switchIsActive = false;
 

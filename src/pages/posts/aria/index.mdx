@@ -13,11 +13,13 @@ import TabsWithRole from '../../../examples/aria/TabsWithRole';
 import TabsWithAriaLabel from '../../../examples/aria/TabsWithAriaLabel';
 import TabsWithAriaLabelledby from '../../../examples/aria/TabsWithAriaLabelledby';
 import TabsWithAriaChecked from '../../../examples/aria/TabsWithAriaChecked';
+import TabsWithCheckbox from '../../../examples/aria/TabsWithCheckbox';
 import ExampleBeforeAria from '../../../examples/aria/ExampleBeforeAria';
 import ExampleWithRole from '../../../examples/aria/ExampleWithRole';
 import ExampleWithAriaLabel from '../../../examples/aria/ExampleWithAriaLabel';
 import ExampleWithAriaLabelledby from '../../../examples/aria/ExampleWithAriaLabelledby';
 import ExampleWithAriaChecked from '../../../examples/aria/ExampleWithAriaChecked';
+import ExampleWithCheckbox from '../../../examples/aria/ExampleWithCheckbox';
 
 <TOC />
 
@@ -265,12 +267,15 @@ The World Wide Web Consortium's ARIA specs provide [five rules for ARIA use](htt
 
 > If you *can* use a native HTML element or attribute with the semantics and behavior you require **already built in**, instead of re-purposing an element and adding an ARIA role, state or property to make it accessible, **then do so.**
 
-In other words, ARIA should be a tool in your arsenal, but it shouldn't be the first one you reach for. Instead, your first instinct should be to use semantic elements where possible.
+In other words, ARIA should be a tool in your arsenal, but it shouldn't be the first one you reach for. Instead, your first instinct should be to use semantic elements where possible. In the case of our toggle, that might look like this, which uses no ARIA at all:
 
-Why is that? Some reasons include:
+<TabsWithCheckbox />
+<ExampleWithCheckbox />
 
-* Semantic elements provide functionality and expose properties to the accessibility for free, out of the box. This ensures users have a robust and familiar experience across the web.
-* Semantic markup enables [progressive enhancement](https://www.smashingmagazine.com/2009/04/progressive-enhancement-what-it-is-and-how-to-use-it/), which means your page is moderately functional, even if CSS or JavaScript resources fail. If either the CSS or the JavaScript were unable to load, our ARIA-only toggle would be toast.
+Why should we default to semantic markup over ARIA? Some reasons include:
+
+* Semantic elements provide functionality and expose properties to the accessibility for free, out of the box. This ensures users have a robust and familiar experience across the web. With our semantic toggle, for instance, we didn't have to add tabbing or key events.
+* Semantic markup enables [progressive enhancement](https://www.smashingmagazine.com/2009/04/progressive-enhancement-what-it-is-and-how-to-use-it/), which means your page is moderately functional, even if CSS or JavaScript resources fail. If either the CSS or the JavaScript were unable to load, our ARIA-only toggle would be toast. Our semantic toggle would at least provide a checkbox with default styles.
 * Some assistive technologies maintain [off-screen models](https://blog.benmyers.dev/accessibility-tree/#the-ghost-of-screenreaders-past) instead of consuming the accessibility tree, so these tools may not support ARIA.
 
 I really like [how Kathleen McMahon put it](https://noti.st/resource11/K8ARii). If web development is like cooking, then semantic elements are your high-quality ingredients. ARIA attributes, then, are your seasonings. Cook with them, by all means, but you'll only need a touch.

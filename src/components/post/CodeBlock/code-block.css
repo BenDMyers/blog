@@ -26,6 +26,11 @@ pre.codeblock span.no-line-numbers {
 	margin-right: 20px;
 }
 
+pre.codeblock span.terminal-prompt {
+    color: #aaaaaa;
+    user-select: none;
+}
+
 pre.codeblock .highlight-line {
 	background-color: var(--codeblock-highlighted-line);
 	box-shadow: inset var(--codeblock-highlighted-line-indicator-width) 0 0 0

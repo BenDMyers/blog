@@ -7,8 +7,9 @@ import {rhythm} from '../../../utils/typography';
 import CodeBlockTitle from './CodeBlockTitle';
 
 const HIGHLIGHT_RANGE_REGEX = /{([\d,-]+)}/;
-const CODE_TITLE_REGEX = /title=(\w+.?\w*)/;
+const CODE_TITLE_REGEX = /title=([\w|_|-|\d|.]+)/;
 const START_LINE_NUMBER_REGEX = /{numberLines: (\d+)/;
+const PROMPT_RANGE_REGEX = /{promptLines: ([\d,-]+)}/;
 
 const calculateLinesToHighlight = (meta, showLineNumbers) => {
     let firstLine = 1;
@@ -34,6 +35,30 @@ const calculateLinesToHighlight = (meta, showLineNumbers) => {
 	}
 };
 
+const calculatePromptLines = (meta, showLineNumbers) => {
+    let firstLine = 1;
+    if (parseInt(showLineNumbers)) {
+        firstLine = parseInt(showLineNumbers) + 1;
+    }
+
+    if (meta && PROMPT_RANGE_REGEX.test(meta)) {
+        const lineNumbers = PROMPT_RANGE_REGEX.exec(meta)[1]
+            .split(',')
+            .map((v) => v.split('-').map((y) => parseInt(y, 10)));
+        return (index) => {
+            const lineNumber = index + firstLine;
+            const inRange = lineNumbers.some(([start, end]) =>
+                end
+                    ? lineNumber >= start && lineNumber <= end
+                    : lineNumber === start
+            );
+            return inRange;
+        };
+    } else {
+        return () => false;
+    }
+}
+
 /**
  * Determines whether a codeblock should show line numbers, and if so, which line to start at. 
  * @param {string} metastring Metastring that follows the triple backticks.
@@ -58,13 +83,14 @@ const processProps = (props) => {
 
 	const hlProps = {...defaultProps, code: children, language, theme};
     const showLineNumbers = shouldShowLineNumbers(metastring);
-	const shouldHighlightLine = calculateLinesToHighlight(metastring, showLineNumbers);
+    const shouldHighlightLine = calculateLinesToHighlight(metastring, showLineNumbers);
+    const shouldShowPromptForLine = calculatePromptLines(metastring, showLineNumbers);
 	const title =
 		metastring &&
 		CODE_TITLE_REGEX.test(metastring) &&
 		CODE_TITLE_REGEX.exec(metastring)[1];
 
-	return [hlProps, showLineNumbers, shouldHighlightLine, title];
+	return [hlProps, showLineNumbers, shouldHighlightLine, shouldShowPromptForLine, title];
 };
 
 /**
@@ -74,7 +100,7 @@ const processProps = (props) => {
 const CodeBlock = (props) => {
     const preRef = useRef(null);
     const [overflowWidth, setOverflowWidth] = useState();
-	const [hlProps, showLineNumbers, shouldHighlightLine, title] = processProps(
+	const [hlProps, showLineNumbers, shouldHighlightLine, shouldShowPromptForLine, title] = processProps(
 		props
 	);
 	const preStyle = {
@@ -112,6 +138,7 @@ const CodeBlock = (props) => {
                             }
                             
                             let highlightLine = shouldHighlightLine(i) ? 'highlight-line' : '';
+                            let showPrompt = shouldShowPromptForLine(i);
 
 							return (
 								<div
@@ -142,6 +169,7 @@ const CodeBlock = (props) => {
 									{!showLineNumbers && (
 										<span className="no-line-numbers" />
 									)}
+                                    {showPrompt && <span className="terminal-prompt">$ </span>}
 									{/* LINE CONTENTS */}
 									{line.map((token, key) => (
 										<span

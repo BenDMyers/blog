@@ -20,15 +20,56 @@ My favorite terminal trick, for both my home and work computers, is creating sho
 
 Pick a directory you use often, and a memorable alias you'll use to hop to that directory instantly. In my case, I want to go to my `~/blog` directory whenever I use my `blog` alias.
 
-Open your terminal and type:
+Let's give it a shot! In your terminal, run the following commands:
 
-```shell {promptLines: 1-3}
-alias blog="cd ~/blog"
-cd some/other/directory/
-blog
+```shell
+~$ alias blog="cd ~/blog"
+~$ cd some/other/directory/
+~/some/other/directory$  blog
+~/blog$
 ```
 
-Let's test this out now. 
+No matter which working directory we're in, issuing the `blog` command now takes us directly to `~/blog`. Mission accomplished! We can close our terminal and call it a day.
+
+Next time, we can just open up our terminal and...
+
+```console
+~$ blog
+-bash: blog: command not found
+~$
+```
+
+... oh.
+
+Aliases only last as long as the terminal session. Since manually reestablishing our aliases every time we open the terminal would be a bit of a hassle,
+
+```bash {numberLines: true}:title=.bashrc
+# Add a new alias
+# USAGE: a <new alias> <command>
+function a() {
+    if [[ "$#" -ne 2 ]]
+    then
+        echo "USAGE: a <alias> <expression>"
+        return 0
+    elif [[ -n "$(alias $1 2>/dev/null)" ]]
+    then
+        echo "Alias already exists!"
+        return 0
+    fi
+
+    echo -e "alias $1=\"$2\"
+$(cat ~/.bashrc)" > ~/.bashrc
+    source ~/.bashrc
+    echo "Alias was added successfully!"
+}
+
+# Creates an alias to jump to current directory
+# USAGE: ad <new alias>
+function ad() {
+    dir=$(pwd)
+    a "$1" "cd $dir"
+}
+```
 
 ## 🦇 The Windows Way
 

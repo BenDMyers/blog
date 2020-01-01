@@ -9,6 +9,7 @@ pre.codeblock {
     min-width: 100%;
     font-size: 15px;
     margin-bottom: 0;
+    line-height: 2.15;
 }
 pre.codeblock div.token-line {
 	min-width: 100%;

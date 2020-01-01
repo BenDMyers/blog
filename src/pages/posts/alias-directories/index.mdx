@@ -1,12 +1,14 @@
 ---
 title: "Hack Your Bash: Aliasing Directories"
 date: 2020-01-01
-description: The terminal hack I use all day to speed up development. Includes a Unix version and a Windows version.
+description: "New year, new terminal: the trick I use all day to speed up development. Includes a Unix version and a Windows version."
 cover: 'https://images.pexels.com/photos/2255355/pexels-photo-2255355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 coveralt: Hands typing on a keyboard, next to a cup of coffee.
 emoji: ⚡
 tags: ["bash"]
 ---
+
+<TOC />
 
 ## Introduction
 
@@ -16,7 +18,9 @@ My team at work manages six projects. Each project has its own repository. Addit
 
 My favorite terminal trick, for both my home and work computers, is creating short, memorable aliases to `cd` to my most frequent directories. If I want to write a new post, I just type `blog` and I'm in my Gatsby codebase. If I need to tweak the response from a mock server, I type `mock`, and I can start poking around my Express.js code. I rarely have to worry about long, complex relative paths.
 
-## 🐧 The Unix Way
+***
+
+## The Unix Way
 
 Pick a directory you use often, and a memorable alias you'll use to hop to that directory instantly. In my case, I want to go to my `~/blog` directory whenever I use my `blog` alias.
 
@@ -98,7 +102,7 @@ function ad() {
         return 0
     fi
 
-    echo -e "alias $1=\"$(pwd)\"" >> ~/.bashrc
+    echo -e "alias $1=\"cd $(pwd)\"" >> ~/.bashrc
     source ~/.bashrc
     echo "Alias was added successfully."
 }
@@ -121,6 +125,39 @@ Alias was added successfully.
 
 `ad` has so thoroughly integrated itself into my day-to-day development work that I don't often create a new directory without instantly creating an alias for it.
 
-## 🦇 The Windows Way
+***
 
-windows i guess
+## The Windows Way
+
+Just as with the Unix steps, you'll want to pick a frequently used directory and a memorable command you'll use to hop to that directory. In my case, I want to run `blog` to hop to `C:\Ben\blog`.
+
+In Windows, you can create aliases to use in Command Prompt with the `doskey` command. Open up Command Prompt and run the following:
+
+```console
+C:\> doskey  blog=cd  C:\Ben\blog
+C:\> blog
+C:\Ben\blog>
+```
+
+It works like a charm! However, if you close and reopen Command Prompt, you'll run into a bit of a problem:
+
+```console
+C:\> blog
+'blog' is not recognized as an internal or external command,
+operable program or batch file.
+```
+
+### Persisting Doskey Aliases
+
+Hello
+
+```batch {numberLines: true}:title=aliases.bat
+@echo off
+doskey blog=cd C:\Ben\blog\
+```
+
+### An Open Invitation
+
+## Conclusion
+
+Tweaking my terminal makes programming a more delightful experience for me, and it can for you, too.

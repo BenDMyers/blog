@@ -84,7 +84,7 @@ var theme /*: PrismTheme */ = {
             },
         },
         {
-            types: ["function"],
+            types: ["function", "label"],
             style: {
                 color: colors.function,
             },

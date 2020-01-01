@@ -16,7 +16,9 @@ I admit it. I'm a sucker for creating little shortcuts and scripts to speed up w
 
 My team at work manages six projects. Each project has its own repository. Additionally, we have repositories for developer tools made by the team. Combine that with any other directories we use on a daily basis, and `cd` quickly becomes our most frequent command.
 
-My favorite terminal trick, for both my home and work computers, is creating short, memorable aliases to `cd` to my most frequent directories. If I want to write a new post, I just type `blog` and I'm in my Gatsby codebase. If I need to tweak the response from a mock server, I type `mock`, and I can start poking around my Express.js code. I rarely have to worry about long, complex relative paths.
+My favorite terminal trick, for both my home and work computers, is creating short, memorable aliases to `cd` to my most frequent directories. If I want to write a new post, I just type `blog` and I'm in my Gatsby codebase. If I need to tweak the response from a mock server, I type `mock`, and I can start poking around my Express.js code. I rarely have to worry about long, complex relative paths. The terminal feels snappier, more intuitive, and—best of all—more *fun*.
+
+If this is as appealing to you as it is to me, read on to find out how to alias your directories [the Unix way](#the-unix-way) or [the Windows way](#the-windows-way).
 
 ***
 
@@ -55,6 +57,8 @@ When you start a new interactive shell, your terminal runs a file called `.bashr
 ~$ code  ~/.bashrc
 ~$
 ```
+
+(If `.bashrc` doesn't exist, go ahead and create it!)
 
 We can drop our new alias in and save:
 
@@ -147,17 +151,98 @@ C:\> blog
 operable program or batch file.
 ```
 
+Just as with the Unix `alias` command, `doskey` aliases don't persist. Instead, we have to put them in a persistent batch file.
+
 ### Persisting Doskey Aliases
 
-Hello
+Whereas Unix has `.bashrc` that runs with every new terminal session, Windows has no such files. We'll need to create our own.
+
+Create a `.bat` file. You can call it whatever—`aliases.bat`, `scripts.bat`, `doskey.bat`…—so long as it works for you. I'll call mine `aliases.bat` and place it in the home directory.
+
+Inside this batch file, I'll put:
 
 ```batch {numberLines: true}:title=aliases.bat
 @echo off
 doskey blog=cd C:\Ben\blog\
 ```
 
-### An Open Invitation
+(That `@echo off` is to make sure the terminal doesn't vomit out the whole `aliases.bat` file whenever you start a new session)
+
+The next step is making sure Command Prompt knows to run your batch file whenever you start a new terminal session.
+
+1. **Open the Registry Editor.** Open up the Start menu, and search for _regedit_. Click the _Registry Editor_ result.
+
+2. **Navigate to the Command Processor settings.**  This can be found at *HKEY_CURRENT_USER* → *Software* → *Microsoft* → *Command Processor*.
+
+3. **Add an *AutoRun* value.** Right-click inside *Command Processor* and choose *New* → *String Value*. Give the new property the name `AutoRun`. Make the value the absolute path to your batch file of aliases.
+
+Open a new session of Command Prompt, and try out your new aliases!
+
+```console
+C:\> blog
+C:\Ben\blog>
+```
+
+You're good to go!
+
+### Adding Doskey Aliases on the Fly
+
+I like having an alias for just about any directory or workspace I might come back to. Manually modifying `aliases.bat` and restarting my terminal every time I create a directory would interrupt my flow, however. Instead, I have a batch script that automatically creates a persistent `doskey` alias to the current working directory whenever I use the `ad` command.
+
+1. **Create a folder to store your scripts in.** I called my folder `C:\Ben\Batch`, but you can call it `Scripts` or `Commands` or any other meaningful name.
+
+2. **Add your scripts folder to your PATH.** If you haven't done this before, check out [Ryan Hoffman's quick guide](https://www.architectryan.com/2018/03/17/add-to-the-path-on-windows-10/).
+
+3. **Create an `ad.bat` inside your scripts folder.** By calling this file `ad.bat`, you ensure that the file is executed whenever you run the command `ad`. Paste the following into `ad.bat`.
+
+```batch {numberLines: true}{23-24}:title=ad.bat
+@echo off
+SETLOCAL
+
+REM Verify exactly one argument was passed
+if "%~1"=="" goto usage
+if not "%~2"=="" goto usage
+
+REM Verify alias doesn't already exist
+for /f "tokens=*" %%a in ('doskey /macros:all ^| findstr %1=') do set foundAlias=%%a
+if not "%foundAlias%"=="" goto alias_exists
+
+goto add_alias
+
+:usage
+echo USAGE: ad ^<alias^>
+exit /b 1
+
+:alias_exists
+echo Alias already exists!
+exit /b 1
+
+:add_alias
+echo.doskey %1=cd %cd% >>"C:\Ben\aliases.bat"
+call "C:\Ben\aliases.bat"
+echo Alias was added successfully!
+exit /b 0
+```
+
+4. **Replace the paths in lines 23 and 24 with the absolute path to your `aliases.bat`.**
+
+5. **Make sure your `aliases.bat` file ends in a trailing newline.** You'll only need to do this once, unless you manually add stuff to your `aliases.bat` later, but this tripped me up for an embarassingly long time.
+
+6. **Open a new session of Command Prompt and alias a directory.**
+
+```console
+C:\> cd  Ben\Advent_Of_Code_2019
+C:\Ben\Advent_Of_Code_2019> ad  advent
+Alias was added successfully!
+C:\Ben\Advent_Of_Code_2019> cd  ../..
+C:\> advent
+C:\Ben\Advent_Of_Code_2019>
+```
+
+I'm still very new to batch scripting, so if you find a problem with this script or a way to improve it, [please reach out](https://www.twitter.com/BenDMyers).
+
+***
 
 ## Conclusion
 
-Tweaking my terminal makes programming a more delightful experience for me, and it can for you, too.
+Tweaking my terminal makes programming a more delightful experience for me, and it can for you, too. By aliasing `cd` commands to your most frequently used directories, you cut down on having to juggle potentially long absolute or relative paths. Using the terminal becomes faster, more intuitive, and personal. What's not to love?

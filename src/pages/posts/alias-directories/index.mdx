@@ -1,6 +1,6 @@
 ---
 title: "Hack Your Bash: Aliasing Directories"
-date: 2019-12-08
+date: 2020-01-01
 description: The terminal hack I use all day to speed up development. Includes a Unix version and a Windows version.
 cover: 'https://images.pexels.com/photos/2255355/pexels-photo-2255355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
 coveralt: Hands typing on a keyboard, next to a cup of coffee.
@@ -25,7 +25,7 @@ Let's give it a shot! In your terminal, run the following commands:
 ```shell
 ~$ alias blog="cd ~/blog"
 ~$ cd some/other/directory/
-~/some/other/directory$  blog
+~/some/other/directory$ blog
 ~/blog$
 ```
 
@@ -41,15 +41,56 @@ Next time, we can just open up our terminal and...
 
 ... oh.
 
-Aliases only last as long as the terminal session. Since manually reestablishing our aliases every time we open the terminal would be a bit of a hassle,
+Aliases only last as long as the terminal session. Since manually reestablishing our aliases every time we open the terminal would be a bit of a hassle, let's find a way to make our aliases persist.
+
+### Persisting Bash Aliases
+
+When you start a new interactive shell, your terminal runs a file called `.bashrc`, found in your root directory. Open `~/.bashrc` in your editor of choice. I'm using VS Code, but you could also use vi, emacs, nano, Atom, or whatever other editor floats your boat:
+
+```shell
+~$ code  ~/.bashrc
+~$
+```
+
+We can drop our new alias in and save:
 
 ```bash {numberLines: true}:title=.bashrc
-# Add a new alias
-# USAGE: a <new alias> <command>
-function a() {
-    if [[ "$#" -ne 2 ]]
+alias blog="cd ~/blog"
+```
+
+Back in our terminal, we tell our terminal to rerun `.bashrc` and receive our new aliases:
+
+```shell
+~$ source ~/.bashrc
+~$ blog
+~/blog$
+```
+
+In future terminal sessions, you won't even have to run `source`, since the terminal takes care of that for you. You'll be able to just run `blog` to your heart's content.
+
+### But Wait! I Have a Mac!
+
+The default macOS Terminal inexplicably treats *every* terminal session as a login session. This means that instead of running `~/.bashrc` on every session, the macOS Terminal runs `~/.bash_profile`. Cue facepalm.
+
+You *can* account for this by just stuffing your aliases in `.bash_profile`. However, if you think you might want to use a different terminal at some point, the more resilient approach would be to have your `.bash_profile` source `.bashrc` on every login:
+
+```bash {numberLines: true}:title=.bash_profile
+if [ -r ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+```
+
+For more information, [read this handy <i>Scripting OS X</i> guide to `.bash_profile` and `.bashrc`](https://scriptingosx.com/2017/04/about-bash_profile-and-bashrc-on-macos/).
+
+### Adding Bash Aliases on the Fly
+
+We can use Bash scripting to be even cuter about aliasing our directories. We'll create a quick command in our `.bashrc` file, called `ad`, that creates a persistent alias for the current directory.
+
+```bash {numberLines: true}{12-13}:title=.bashrc
+function ad() {
+    if [[ "$#" -ne 1 ]]
     then
-        echo "USAGE: a <alias> <expression>"
+        echo "USAGE: ad <alias>"
         return 0
     elif [[ -n "$(alias $1 2>/dev/null)" ]]
     then
@@ -57,19 +98,28 @@ function a() {
         return 0
     fi
 
-    echo -e "alias $1=\"$2\"
-$(cat ~/.bashrc)" > ~/.bashrc
+    echo -e "alias $1=\"$(pwd)\"" >> ~/.bashrc
     source ~/.bashrc
-    echo "Alias was added successfully!"
+    echo "Alias was added successfully."
 }
 
-# Creates an alias to jump to current directory
-# USAGE: ad <new alias>
-function ad() {
-    dir=$(pwd)
-    a "$1" "cd $dir"
-}
+alias blog="cd ~/blog"
 ```
+
+The interesting lines are 12 and 13 — the rest is just sanity checks.
+
+Let's give our new `ad` command a whirl! If you're using an old terminal session, update your terminal's aliases with `source ~/.bashrc`. Then try using `ad`:
+
+```shell
+~$ cd ./codebase/Advent_Of_Code_2019
+~/codebase/Advent_Of_Code_2019$ ad  advent
+Alias was added successfully.
+~/codebase/Advent_Of_Code_2019$ cd ~
+~$ advent
+~/codebase/Advent_Of_Code_2019$
+```
+
+`ad` has so thoroughly integrated itself into my day-to-day development work that I don't often create a new directory without instantly creating an alias for it.
 
 ## 🦇 The Windows Way
 

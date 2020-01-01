@@ -41,6 +41,11 @@ pre.codeblock span.terminal-prompt {
     font-weight: bold;
 }
 
+pre.codeblock.language-console div.token-line :not(.terminal-prompt) + span.token.plain:empty::after,
+pre.codeblock.language-shell div.token-line :not(.terminal-prompt) + span.token.plain:empty::after {
+    content: ' ';
+}
+
 pre.codeblock .highlight-line {
 	background-color: var(--codeblock-highlighted-line);
 	box-shadow: inset var(--codeblock-highlighted-line-indicator-width) 0 0 0

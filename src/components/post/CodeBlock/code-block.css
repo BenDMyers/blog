@@ -6,7 +6,10 @@ pre.codeblock {
 	speak-as: literal-punctuation;
 	white-space: pre;
 	display: inline-block;
-	min-width: 100%;
+    min-width: 100%;
+    font-size: 15px;
+    margin-bottom: 0;
+    line-height: 2.15;
 }
 pre.codeblock div.token-line {
 	min-width: 100%;
@@ -24,6 +27,24 @@ pre.codeblock span.line-number {
 
 pre.codeblock span.no-line-numbers {
 	margin-right: 20px;
+}
+
+pre.codeblock span.terminal-working-directory {
+    color: #888888;
+    user-select: none;
+    font-style: italic;
+    padding-right: 5px;
+}
+
+pre.codeblock span.terminal-prompt {
+    color: #8a8a8a;
+    user-select: none;
+    font-weight: bold;
+}
+
+pre.codeblock.language-console div.token-line :not(.terminal-prompt) + span.token.plain:empty::after,
+pre.codeblock.language-shell div.token-line :not(.terminal-prompt) + span.token.plain:empty::after {
+    content: ' ';
 }
 
 pre.codeblock .highlight-line {
@@ -61,4 +82,8 @@ div.codeblock-title {
 	pre.codeblock div.token-line {
 		width: 100% !important;
 	}
+}
+
+section.post-contents pre.codeblock + p {
+    margin-top: 1.5%;
 }

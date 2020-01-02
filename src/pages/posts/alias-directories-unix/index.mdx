@@ -1,0 +1,130 @@
+---
+title: "New Year, New Terminal: Alias Your Directories the Unix Way"
+date: 2020-01-01
+description: "The trick I use all day to speed up development and make my Unix terminal delightful."
+cover: 'https://images.pexels.com/photos/2255355/pexels-photo-2255355.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+coveralt: Hands typing on a keyboard, next to a cup of coffee.
+emoji: ⚡
+tags: ["bash"]
+---
+
+_This article covers how to alias your directories on Windows. You may be interested in [the Windows way](https://blog.benmyers.dev/alias-directories-windows/)._
+
+## Introduction
+
+I admit it. I'm a sucker for creating little shortcuts and scripts to speed up work in my terminal. There's just something oddly thrilling about typing a few characters and kicking off several commands. I recently read Chiamaka Ikeanyi's [Avoiding Shell Hell: Aliases to the Rescue](https://chiamakaikeanyi.dev/avoiding-shell-hell-aliases-to-the-rescue/), and I was inspired to share some alias tricks I use on a daily basis.
+
+My team at work manages six projects. Each project has its own repository. Additionally, we have repositories for developer tools made by the team. Combine that with any other directories we use on a daily basis, and `cd` quickly becomes our most frequent command.
+
+My favorite terminal trick, for both my home and work computers, is creating short, memorable aliases to `cd` to my most frequent directories. If I want to write a new post, I just type `blog` and I'm in my Gatsby codebase. If I need to tweak the response from a mock server, I type `mock`, and I can start poking around my Express.js code. I rarely have to worry about long, complex relative paths. The terminal feels snappier, more intuitive, and—best of all—more *fun*.
+
+## Creating Aliases
+
+Pick a directory you use often, and a memorable alias you'll use to hop to that directory instantly. In my case, I want to go to my `~/blog` directory whenever I use my `blog` alias.
+
+Let's give it a shot! In your terminal, run the following commands:
+
+```shell
+~$ alias blog="cd ~/blog"
+~$ cd some/other/directory/
+~/some/other/directory$ blog
+~/blog$
+```
+
+No matter which working directory we're in, issuing the `blog` command now takes us directly to `~/blog`. Mission accomplished! We can close our terminal and call it a day.
+
+Next time, we can just open up our terminal and...
+
+```console
+~$ blog
+-bash: blog: command not found
+~$
+```
+
+... oh.
+
+Aliases only last as long as the terminal session. Since manually reestablishing our aliases every time we open the terminal would be a bit of a hassle, let's find a way to make our aliases persist.
+
+## Persisting Bash Aliases
+
+When you start a new interactive shell, your terminal runs a file called `.bashrc`, found in your root directory. Open `~/.bashrc` in your editor of choice. I'm using VS Code, but you could also use vi, emacs, nano, Atom, or whatever other editor floats your boat:
+
+```shell
+~$ code  ~/.bashrc
+~$
+```
+
+(If `.bashrc` doesn't exist, go ahead and create it!)
+
+We can drop our new alias in and save:
+
+```bash {numberLines: true}:title=.bashrc
+alias blog="cd ~/blog"
+```
+
+Back in our terminal, we tell our terminal to rerun `.bashrc` and receive our new aliases:
+
+```shell
+~$ source ~/.bashrc
+~$ blog
+~/blog$
+```
+
+In future terminal sessions, you won't even have to run `source`, since the terminal takes care of that for you. You'll be able to just run `blog` to your heart's content.
+
+## But Wait! I Have a Mac!
+
+The default macOS Terminal inexplicably treats *every* terminal session as a login session. This means that instead of running `~/.bashrc` on every session, the macOS Terminal runs `~/.bash_profile`. Cue facepalm.
+
+You *can* account for this by just stuffing your aliases in `.bash_profile`. However, if you think you might want to use a different terminal at some point, the more resilient approach would be to have your `.bash_profile` source `.bashrc` on every login:
+
+```bash {numberLines: true}:title=.bash_profile
+if [ -r ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+```
+
+For more information, [read this handy <i>Scripting OS X</i> guide to `.bash_profile` and `.bashrc`](https://scriptingosx.com/2017/04/about-bash_profile-and-bashrc-on-macos/).
+
+## Adding Bash Aliases on the Fly
+
+We can use Bash scripting to be even cuter about aliasing our directories. I like having an alias for just about any directory or workspace I might come back to. Manually modifying `.bashrc` and re-sourcing every time I create a directory would interrupt my flow, however. Instead, I have a quick script that automatically creates a persistent alias to the current working directory whenever I use the `ad` command.
+
+Copy the following into your `~/.bashrc`:
+
+```bash {numberLines: true}{12-13}:title=.bashrc
+function ad() {
+    if [[ "$#" -ne 1 ]]
+    then
+        echo "USAGE: ad <alias>"
+        return 0
+    elif [[ -n "$(alias $1 2>/dev/null)" ]]
+    then
+        echo "Alias already exists!"
+        return 0
+    fi
+
+    echo -e "alias $1=\"cd $(pwd)\"" >> ~/.bashrc
+    source ~/.bashrc
+    echo "Alias was added successfully."
+}
+```
+
+The interesting lines are 12 and 13 — the rest is just sanity checks.
+
+Let's give our new `ad` command a whirl! If you're using an old terminal session, update your terminal's aliases with `source ~/.bashrc`. Then try using `ad`:
+
+```shell
+~$ cd ./codebase/Advent_Of_Code_2019
+~/codebase/Advent_Of_Code_2019$ ad  advent
+Alias was added successfully.
+~/codebase/Advent_Of_Code_2019$ cd ~
+~$ advent
+~/codebase/Advent_Of_Code_2019$
+```
+
+`ad` has so thoroughly integrated itself into my day-to-day development work that I don't often create a new directory without instantly creating an alias for it.
+
+## Conclusion
+
+Tweaking my terminal makes programming a more delightful experience for me, and it can for you, too. By aliasing `cd` commands to your most frequently used directories, you cut down on having to juggle potentially long absolute or relative paths. Using the terminal becomes faster, more intuitive, and personal. What's not to love?

@@ -1,14 +1,17 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Highlight, {defaultProps} from 'prism-react-renderer';
-import theme from 'prism-react-renderer/themes/oceanicNext';
+// import theme from 'prism-react-renderer/themes/oceanicNext';
+import theme from './oneDarkPro';
 
 import './code-block.css';
 import {rhythm} from '../../../utils/typography';
 import CodeBlockTitle from './CodeBlockTitle';
 
 const HIGHLIGHT_RANGE_REGEX = /{([\d,-]+)}/;
-const CODE_TITLE_REGEX = /title=(\w+.?\w*)/;
+const CODE_TITLE_REGEX = /title=([\w|_|-|\d|.]+)/;
 const START_LINE_NUMBER_REGEX = /{numberLines: (\d+)/;
+
+const PROMPT_REGEX = /[\w-/~\\:]*[$%#>]/;
 
 const calculateLinesToHighlight = (meta, showLineNumbers) => {
     let firstLine = 1;
@@ -58,7 +61,7 @@ const processProps = (props) => {
 
 	const hlProps = {...defaultProps, code: children, language, theme};
     const showLineNumbers = shouldShowLineNumbers(metastring);
-	const shouldHighlightLine = calculateLinesToHighlight(metastring, showLineNumbers);
+    const shouldHighlightLine = calculateLinesToHighlight(metastring, showLineNumbers);
 	const title =
 		metastring &&
 		CODE_TITLE_REGEX.test(metastring) &&
@@ -66,6 +69,17 @@ const processProps = (props) => {
 
 	return [hlProps, showLineNumbers, shouldHighlightLine, title];
 };
+
+const toPrompt = (token) => {
+    const matches = token.match(/([\w-/~\\:]*)([$%#>])/);
+    const [, workingDirectory, prompt] = matches;
+    return (
+        <>
+            {workingDirectory && <span className="terminal-working-directory">{workingDirectory}</span>}
+            <span className="terminal-prompt">{prompt} </span>
+        </>
+    );
+}
 
 /**
  * Displays a syntax-highlighted block of code
@@ -92,6 +106,11 @@ const CodeBlock = (props) => {
             setOverflowWidth(preRef.current.scrollWidth);
         }
     }, [(preRef.current && preRef.current.scrollWidth)])
+
+    const tokenIsPrompt = (token, index) => {
+        const {language} = hlProps;
+        return index === 0 && (language === 'shell' || language === 'console') && PROMPT_REGEX.test(token.content);
+    }
 
 	return (
 		<>
@@ -143,12 +162,32 @@ const CodeBlock = (props) => {
 										<span className="no-line-numbers" />
 									)}
 									{/* LINE CONTENTS */}
-									{line.map((token, key) => (
-										<span
-											key={key}
-                                            {...getTokenProps({token, key})}
-										/>
-									))}
+									{line.map((token, index) => {
+                                        // console.log(token.content);
+                                        if(tokenIsPrompt(token, index)) {
+                                            let [promptToken, ...furtherTokens] = token.content.split(' ');
+                                            const prompt = toPrompt(promptToken)
+                                            return (
+                                                <>
+                                                    {prompt}
+                                                    {furtherTokens.map((furtherToken, furtherTokenIndex) => (
+                                                        <span
+                                                            key={`${index}-${furtherTokenIndex}`}
+                                                            {...getTokenProps({
+                                                                token: {...token, content: furtherToken},
+                                                                key: `${index}-${furtherTokenIndex}`
+                                                            })}
+                                                        />))}
+                                                </>
+                                            );
+                                        }
+										return (
+                                            <span
+                                                key={index}
+                                                {...getTokenProps({token, key: index})}
+                                            />
+                                        );
+									})}
 								</div>
 							);
 						})}

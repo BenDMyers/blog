@@ -3,6 +3,7 @@ import {useHover} from 'use-hooks';
 import {useFocus} from 'use-events';
 import {FaAnchor} from 'react-icons/fa';
 import GitHubSlugger from 'github-slugger';
+import removeEmojis from '../../utils/remove-emojis';
 
 export const Anchor = (props) => {
 	let [isFocused, bind] = useFocus();
@@ -24,7 +25,7 @@ export const Anchor = (props) => {
 
 function toSluggable(children) {
 	if (typeof children === 'string') {
-		return children;
+		return removeEmojis(children);
 	} else if (Array.isArray(children)) {
 		return children.reduce((acc, child) => {
 			return acc + toSluggable(child);

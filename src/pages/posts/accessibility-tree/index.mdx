@@ -94,6 +94,7 @@ You can see all three of these in just about any screenreader announcement:
     src="/checkbox-announcement.png"
     alt={`VoiceOver announcement, which reads "checked, Unsubscribe, checkbox"`}
     caption="A humble checkbox, as announced by VoiceOver"
+    adaptive
 />
 
 ### Accessibility APIs As a Middleman
@@ -157,7 +158,7 @@ Understanding the flow of a webpage's contents from browser to assistive technol
 We know that there are three key players in the flow of web contents to assistive technologies: the browser, the operating system accessibility API, and the assistive technology itself. This gives us three possible places to introduce discrepancies:
 
 - Operating system accessibility APIs could provide different building blocks.
-- Browsers could use assemble their accessibility trees differently.
+- Browsers could assemble their accessibility trees differently.
 - Assistive technologies could interpret those building blocks in different ways.
 
 These differences are, honestly, minute most of the time. However, bugs that affect certain combinations of browsers and assistive technologies are prevalent enough that you should be testing your sites on many different combinations.

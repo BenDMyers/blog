@@ -2,6 +2,7 @@ import React from 'react';
 import {useFocus} from 'use-events';
 import {useHover} from 'use-hooks';
 import {Anchor} from '../AnchoredHeadings';
+import {prepareSlug} from '../../../utils/remove-emojis';
 import './table-of-contents.css';
 
 const TableOfContents = (props) => {
@@ -11,10 +12,11 @@ const TableOfContents = (props) => {
 			return node.items.map(toListItem);
 		}
 
-		const children = node.items && node.items.map(toListItem);
+        const children = node.items && node.items.map(toListItem);
+        const url = prepareSlug(node.url);
 		return (
 			<li key={node.title}>
-				<a href={node.url}>{node.title}</a>
+				<a href={url}>{node.title}</a>
 				{children && <ol>{children}</ol>}
 			</li>
 		);

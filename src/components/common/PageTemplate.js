@@ -10,7 +10,8 @@ import './styles.css';
 
 const layoutStyles = {
 	maxWidth: rhythm(36),
-	padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`
+    padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
+    paddingTop: '0rem'
 };
 
 /**
@@ -20,7 +21,6 @@ const layoutStyles = {
 const Page = (props) => {
 	return (
 		<div className="layout" style={layoutStyles}>
-			<BlogHeader pathname={props.location.pathname} />
 			<DarkModeToggle />
 			<SEO title={props.title} description={props.description} />
 			<main>{props.children}</main>

@@ -2,9 +2,10 @@ import {rhythm} from '../../../utils/typography';
 
 export default (cover) => {
 	const className = `post-header ${cover ? 'with-cover' : 'without-cover'}`;
-	const style = {};
+    const style = {};
+    const coverImage = cover && cover.split('|')[0];
 	cover &&
-		(style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${cover})`) &&
+		(style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${coverImage})`) &&
 		// This ugliness is to make sure the cover photo expands to fill the entire container width,
 		// ignoring padding. I hate it as much as you do.
 		(style.width = `calc(100% + ${rhythm(3 / 4)} + ${rhythm(3 / 4)})`) &&

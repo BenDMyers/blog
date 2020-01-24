@@ -18,6 +18,8 @@ const PostHeader = (props) => {
 				<time itemProp="datePublished" dateTime={props.date}>
 					{moment(props.date).format('LL')}
 				</time>
+                &nbsp;&middot;&nbsp;
+                <a href="https://blog.benmyers.dev">Ben Myers</a>
 			</p>
 		</header>
 	);

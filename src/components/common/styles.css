@@ -14,13 +14,13 @@
 	--layout-box-shadow-amount: 0.35;
 	--link-color: #229abf;
 	--link-effect-color: #0580a6;
-	--link-focus-outline-color: rgba(5, 128, 166, 0.5);
+	--link-focus-outline-color: rgba(5, 128, 166, 0.75);
 	--monospace-font: 'Oxygen Mono';
 	--purple-accent: rgb(131, 52, 255);
 	--table-of-contents-background-color: white;
 	--text-color: black;
 	--theme-color: #f31455;
-	--theme-color-focus-outline: rgba(191, 15, 65, 0.5);
+	--theme-color-focus-outline: rgba(191, 15, 65, 0.75);
 	--theme-color-link-effect: #bf0f41;
 }
 

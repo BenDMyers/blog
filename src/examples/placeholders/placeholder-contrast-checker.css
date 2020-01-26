@@ -1,10 +1,5 @@
 div.placeholder-contrast-checker--sliders {
-    display: flex;
     font-family: 'Montserrat', sans-serif;
-}
-
-div.placeholder-contrast-checker--sliders .color-input {
-    width: 33%;
 }
 
 div.placeholder-contrast-checker--demo {
@@ -22,4 +17,24 @@ div.placeholder-contrast-checker--demo--input {
     border-radius: .25rem;
     font-family: 'Montserrat', sans-serif;
     margin: 2em auto;
+}
+
+@media screen and (min-width: 768px) {
+    div.placeholder-contrast-checker--sliders {
+        display: flex;
+    }
+	div.placeholder-contrast-checker--sliders .color-input {
+        width: 33%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+	div.placeholder-contrast-checker--sliders .color-input {
+        width: 80%;
+        margin-bottom: 5%;
+    }
+
+    div.placeholder-contrast-checker--demo--input {
+        width: 100%;
+    }
 }

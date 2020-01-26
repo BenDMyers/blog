@@ -4,7 +4,7 @@ import './placeholder-contrast-checker.css'
 
 const PlaceholderContrastChecker = (props) => {
     const [inputBackground, setInputBackground] = useState('rgba(255, 255, 255, 1)');
-    const [placeholderColor, setPlaceholderColor] = useState('rgba(119, 119, 119, 1)');
+    const [placeholderColor, setPlaceholderColor] = useState('rgba(119, 119, 119, 0.8)');
     const [valueColor, setValueColor] = useState('rgba(0, 0, 0, 1)');
 
     return (
@@ -18,7 +18,7 @@ const PlaceholderContrastChecker = (props) => {
                 <ColorInput
                     showColorBox={false}
                     useAlpha
-                    defaultValue={{ r: 119, g: 119, b: 119 }}
+                    defaultValue={{ r: 119, g: 119, b: 119, a: 0.8 }}
                     onChange={(newColor) => {setPlaceholderColor(toRgba(newColor))}}
                 />
                 <ColorInput

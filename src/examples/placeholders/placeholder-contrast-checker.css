@@ -1,3 +1,11 @@
+div.placeholder-contrast-checker {
+    --placeholder-contrast-checker-separator-color: rgba(119, 119, 119, 0.25);
+}
+
+.dark-mode div.placeholder-contrast-checker {
+    --placeholder-contrast-checker-separator-color: rgba(119, 119, 119, 0.5);
+}
+
 div.placeholder-contrast-checker--sliders {
     font-family: 'Montserrat', sans-serif;
 }
@@ -19,12 +27,44 @@ div.placeholder-contrast-checker--demo--input {
     margin: 2em auto;
 }
 
+div.placeholder-contrast-checker--results {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    display: flex;
+}
+
+div.placeholder-contrast-checker--ratio {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 300%;
+    line-height: 100%;
+}
+
+div.placeholder-contrast-checker--result--background-comparison {
+    width: 33%;
+}
+
+div.placeholder-contrast-checker--result--background-comparison:not(:nth-child(1)) {
+    border-left: 1px solid var(--placeholder-contrast-checker-separator-color);
+}
+
+div.placeholder-contrast-checker--result--background-comparison b {
+    font-size: smaller;
+    line-height: 150%;
+    display: block;
+}
+
 @media screen and (min-width: 768px) {
     div.placeholder-contrast-checker--sliders {
         display: flex;
     }
-	div.placeholder-contrast-checker--sliders .color-input {
+
+    div.placeholder-contrast-checker--sliders .color-input {
         width: 33%;
+    }
+
+    div.placeholder-contrast-checker--sliders .color-input:not(:nth-child(1)) {
+        border-left: 1px solid var(--placeholder-contrast-checker-separator-color);
+        padding-left: 1em;
     }
 }
 

@@ -8,46 +8,76 @@ emoji: 👻
 tags: ["web accessibility", "accessibility", "web development", "placeholders"]
 ---
 
+import PlaceholderContrastChecker from '../../../examples/placeholders/placeholder-contrast-checker';
 import '../../../examples/placeholders/placeholder-examples.css';
 
 ## Introduction
 
 Since its introduction in HTML5, the `placeholder` attribute has become commonplace in web forms.
 
-```html {numberLines: true}
-<input placeholder="First name" />
-```
+<!-- > ```html -->
+<!-- <input placeholder="First name" /> -->
+<!-- ``` -->
 
-<!-- {/* <div className="placeholders--container">
-    <input className="post-placeholder-input" placeholder="First name" />
-    <label>Cell Phone</label>
-    <input className="post-placeholder-input" placeholder="(555) 555-5555" type="password" />
-</div>
-<br />
+Placeholders are commonly used to provide example values or expected formats:
+
 <div className="placeholders--container">
-    <input className="post-placeholder-input" placeholder="First name" />
-    <label>Cell Phone</label>
-    <input className="post-placeholder-input" placeholder="(555) 555-5555" type="tel" />
-</div> */} -->
+    <form aria-label="Dummy form that uses placeholders to illustrate sample values">
+        <label for="placeholder-ex-1--name">Name</label>
+        <input id="placeholder-ex-1--name" className="post-placeholder-input" placeholder="John Doe" />
+        <label for="placeholder-ex-1--cellphone">Cell Phone</label>
+        <input id="placeholder-ex-1--cellphone" className="post-placeholder-input" placeholder="(555) 555-5555" type="tel" />
+    </form>
+</div>
 
-However, for many disabled users, placeholders are rather... _ghostlike_.
+Some websites decide to forgo form labels in favor of placeholders, in the name of minimalism.
 
-* Hard 
-* Prone to disappearing when 
+<div className="placeholders--container">
+    <form aria-label="Dummy shipping address form that uses placeholders in place of labels">
+        <div className="placeholders--header">Enter a shipping address</div>
+        <input className="post-placeholder-input" placeholder="Name" />
+        <input className="post-placeholder-input" placeholder="Address line 1" />
+        <input className="post-placeholder-input" placeholder="Address line 2" />
+        <div className="placeholders--grid placeholders--grid--col-3">
+            <input className="post-placeholder-input" placeholder="City" />
+            <input className="post-placeholder-input" placeholder="State" />
+            <input className="post-placeholder-input" placeholder="ZIP" />
+        </div>
+    </form>
+</div>
 
-That considered, placeholders are kind of ghostlike! This ghostliness is generally
+However, for many users, especially those with disabilities, placeholders are rather... _ghostlike_.
+
+* They're tricky to see, perhaps translucent.
+* They may not announce their presence.
+* They're prone to disappearing the moment you try to interact with them.
+
+Left unchecked, these things can pose significant usability problems for your users.
 
 ## Color Contrast
 
+Browsers default to giving placeholders a muted appearance, whether by making them a light gray or by reducing their opacity. For example, the default placeholder in Google Chrome is black with 54% opacity.<Fn fn="chromeopacity" /> This muted appearance signals to users that this text here isn't a _real_ value.—
+
+This mutedness
+
+<p>
+    <PlaceholderContrastChecker />
+</p>
+
 ## Assistive Technology Support
+
+woo screenreader
 
 ## Cognitive Disabilities and Changing Context
 
-## Content
+<Blockquote attribution={<>Marius Pontmercy, <i>Les Misérables</i></>}>
+    <div>A ghost, you say? A ghost, maybe.</div>
+    <div>She was just like a ghost to me.</div>
+    <div>One minute there, then she was gone!</div>
+</Blockquote>
 
-## Conclusion
+## Revisiting Usability
 
-<!-- Hidden descriptions -->
-<div id="" style="display: none;">
-
-</div>
+<FootnotesContainer>
+    <Footnote fn="chromeopacity" author="Chrome Platform Status" title="Apply opacity for the default style of INPUT/TEXTAREA placeholder" url="https://www.chromestatus.com/feature/5415963870625792" />
+</FootnotesContainer>

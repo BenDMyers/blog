@@ -7,9 +7,9 @@ input.post-placeholder-input {
     color: #495057;
     background-color: #fff;
     background-clip: padding-box;
-    border: 1px solid #ced4da;
+    border: 1px solid #aeb4ba;
     border-radius: .25rem;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out, background-color .5s ease-in;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -17,10 +17,6 @@ input.post-placeholder-input:focus {
     box-shadow: 0 0 5px var(--link-color);
     border-color: var(--link-color);
     outline: none;
-}
-
-section.post-contents label {
-    font-size: smaller;
 }
 
 div.placeholders--container {
@@ -31,7 +27,7 @@ div.placeholders--container {
     padding: 20px;
     font-family: 'Montserrat', sans-serif;
     -webkit-transition: background-color 0.5s ease-in, color 0.5s ease-in;
-    transition: background-color 0.5s ease-in, color 0.5s ease-in;
+    transition: background-color 0.5s ease-in;
 }
 
 .dark-mode div.placeholders--container {
@@ -39,19 +35,23 @@ div.placeholders--container {
 }
 
 div.placeholders--container label {
+    font-size: smaller;
 	display: block;
-	font-weight: bold;
+    font-weight: bold;
+    transition: color 0.15s ease-in;
 }
 
 div.placeholders--container input {
-	display: block;
 	margin-bottom: 20px;
 	padding-left: 10px;
-    width: 100%;
 }
 
 div.placeholders--container p {
 	padding-left: 0;
+}
+
+div.placeholders--container form {
+	margin-bottom: 0;
 }
 
 @media screen and (max-width: 768px) {
@@ -59,14 +59,35 @@ div.placeholders--container p {
 		width: auto;
 		margin-left: 10%;
 		margin-right: 10%;
+    }
+    
+    div.placeholders--header {
+        line-height: 100%;
+        margin-bottom: 7.5%;
 	}
 }
 
 .dark-mode div.placeholders--container input {
     color: white;
     background-color: #333;
+    /* border: 1px solid rgb(206, 212, 218); */
 }
 
 .dark-mode div.placeholders--container input::placeholder {
 	color: #888888;
+}
+
+div.placeholders--header {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 700;
+	font-size: 150%;
+}
+
+div.placeholders--grid {
+    display: grid;
+    grid-column-gap: 10px;
+}
+
+div.placeholders--grid.placeholders--grid--col-3 {
+    grid-template-columns: repeat(3, 1fr);
 }

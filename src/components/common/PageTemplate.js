@@ -8,19 +8,23 @@ import {rhythm} from '../../utils/typography';
 
 import './styles.css';
 
-const layoutStyles = {
-	maxWidth: rhythm(36),
-    padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`,
-    paddingTop: '0rem'
-};
-
 /**
  * The structure for every page on the blog.
  * Contains a header, contents, and a footer. Simple.
  */
 const Page = (props) => {
+    const layoutStyles = {
+        maxWidth: rhythm(36),
+        padding: `${rhythm(1.5)} ${rhythm(3 / 4)}`
+    };
+
+    if (props.location.pathname !== `${__PATH_PREFIX__}/`) {
+        layoutStyles.paddingTop = '0rem';
+    }
+
 	return (
 		<div className="layout" style={layoutStyles}>
+            {(props.location.pathname === `${__PATH_PREFIX__}/`) && <BlogHeader pathname={props.location.pathname} />}
 			<DarkModeToggle />
 			<SEO title={props.title} description={props.description} />
 			<main>{props.children}</main>

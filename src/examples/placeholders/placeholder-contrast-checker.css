@@ -1,0 +1,25 @@
+div.placeholder-contrast-checker--sliders {
+    display: flex;
+    font-family: 'Montserrat', sans-serif;
+}
+
+div.placeholder-contrast-checker--sliders .color-input {
+    width: 33%;
+}
+
+div.placeholder-contrast-checker--demo {
+    text-align: center;
+}
+
+div.placeholder-contrast-checker--demo--input {
+    display: block;
+    width: 75%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    background-clip: padding-box;
+    border: 1px solid #aeb4ba;
+    border-radius: .25rem;
+    font-family: 'Montserrat', sans-serif;
+    margin: 2em auto;
+}

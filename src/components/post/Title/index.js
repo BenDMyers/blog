@@ -4,6 +4,7 @@ import {rhythm} from '../../../utils/typography';
 import cover from './cover';
 
 import './PostHeader.css';
+import {Link} from 'gatsby';
 
 /**
  * The post title, superimposed on an image.
@@ -19,7 +20,7 @@ const PostHeader = (props) => {
 					{moment(props.date).format('LL')}
 				</time>
                 &nbsp;&middot;&nbsp;
-                <a href="https://blog.benmyers.dev">Ben Myers</a>
+                <Link to="/">Ben Myers</Link>
 			</p>
 		</header>
 	);

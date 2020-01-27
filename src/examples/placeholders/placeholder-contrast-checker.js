@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
-import ColorInput, { toRgba } from '../../components/post/ColorInput';
+import HslInput, { toHsla } from '../../components/post/ColorInput/hsl-input';
+import RgbInput, { toRgba } from '../../components/post/ColorInput/rgb-input';
 import './placeholder-contrast-checker.css'
 import blend from '../../utils/blend';
 import colorContrast from '../../utils/color-contrast';
@@ -17,18 +18,18 @@ const PlaceholderContrastChecker = (props) => {
     return (
         <div className="placeholder-contrast-checker">
             <div className="placeholder-contrast-checker--sliders">
-                <ColorInput
+                <RgbInput
                     showColorBox={false}
                     defaultValue={{ r: 255, g: 255, b: 255 }}
                     onChange={(newColor) => {setInputBackground(newColor)}}
                 />
-                <ColorInput
+                <RgbInput
                     showColorBox={false}
                     useAlpha
                     defaultValue={{ r: 119, g: 119, b: 119, a: 0.8 }}
                     onChange={(newColor) => {setPlaceholderColor(newColor)}}
                 />
-                <ColorInput
+                <RgbInput
                     showColorBox={false}
                     defaultValue={{ r: 0, g: 0, b: 0 }}
                     onChange={(newColor) => {setValueColor(newColor)}}
@@ -60,6 +61,11 @@ const PlaceholderContrastChecker = (props) => {
                     </div>
                 </div>
             </div>
+            <HslInput
+                showColorBox={false}
+                defaultValue={{ h: 0, s: 0, l: 0.47 }}
+                onChange={(newColor) => {}}
+            />
         </div>
     );
 }

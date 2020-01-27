@@ -6,7 +6,7 @@ import './color-input.css';
  * props.showColorBox
  * props.useAlpha
  */
-const ColorInput = (props) => {
+const RgbInput = (props) => {
     function colorReducer(color, {type, value}) {
         switch(type) {
             case 'red':
@@ -33,7 +33,7 @@ const ColorInput = (props) => {
     const redStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.r / 255}, red), color-stop(${color.r / 255}, var(--slider-background)))`};
     const greenStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.g / 255}, green), color-stop(${color.g / 255}, var(--slider-background)))` };
     const blueStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.b / 255}, blue), color-stop(${color.b / 255}, var(--slider-background)))` };
-    const alphaStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.a}, black), color-stop(${color.a}, var(--slider-background)))` };
+    const alphaStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.a}, #777777), color-stop(${color.a}, var(--slider-background)))` };
 
     let formattedAlpha = Number(color.a).toFixed(2);
 
@@ -105,10 +105,10 @@ const ColorInput = (props) => {
     );
 }
 
-ColorInput.defaultProps = {
+RgbInput.defaultProps = {
     showColorBox: true
 }
 
 export function toRgba({r, g, b, a}) {return `rgba(${r}, ${g}, ${b}, ${a})`}
 
-export default ColorInput;
+export default RgbInput;

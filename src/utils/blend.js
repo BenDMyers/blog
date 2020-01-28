@@ -1,6 +1,5 @@
 const blend = (foreground, background) => {
     const alpha = foreground.a;
-    console.log({foreground, background, alpha})
 
     return {
         r: Math.round(foreground.r * alpha) + Math.round(background.r * (1 - alpha)),

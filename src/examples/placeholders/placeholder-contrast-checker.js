@@ -4,44 +4,91 @@ import RgbInput, { toRgba } from '../../components/post/ColorInput/rgb-input';
 import './placeholder-contrast-checker.css'
 import blend from '../../utils/blend';
 import colorContrast from '../../utils/color-contrast';
+import { rgbToHsl, hslToRgb } from '../../utils/color-convert';
+
+const USE_RGB = true;
+const USE_HSL = false;
 
 const PlaceholderContrastChecker = (props) => {
+    const [sliderMode, setSliderMode] = useState(USE_RGB);
     const [inputBackground, setInputBackground] = useState({r: 255, g: 255, b: 255, a: 1});
-    const [placeholderColor, setPlaceholderColor] = useState({r: 119, g: 119, b: 119, a: 0.8});
+    const [placeholderColor, setPlaceholderColor] = useState({r: 120, g: 120, b: 120, a: 0.8});
     const [valueColor, setValueColor] = useState({r: 0, g: 0, b: 0, a: 1});
 
-    const effectivePlaceholderColor = blend(placeholderColor, inputBackground);
-    const placeholderBackgroundContrast = colorContrast(effectivePlaceholderColor, inputBackground);
-    const placeholderValueContrast = colorContrast(effectivePlaceholderColor, valueColor);
-    const valueBackgroundContrast = colorContrast(valueColor, inputBackground);
+    const rgbSafeInputBackground = (sliderMode === USE_RGB) ? inputBackground : hslToRgb(inputBackground);
+    const rgbSafePlaceholderColor = (sliderMode === USE_RGB) ? placeholderColor : hslToRgb(placeholderColor);
+    const rgbSafeValueColor = (sliderMode === USE_RGB) ? valueColor : hslToRgb(valueColor);
+
+    console.log(sliderMode, inputBackground, rgbSafeInputBackground, rgbSafePlaceholderColor, rgbSafeValueColor)
+
+    const effectivePlaceholderColor = blend(rgbSafePlaceholderColor, rgbSafeInputBackground);
+    const placeholderBackgroundContrast = colorContrast(effectivePlaceholderColor, rgbSafeInputBackground);
+    const placeholderValueContrast = colorContrast(effectivePlaceholderColor, rgbSafeValueColor);
+    const valueBackgroundContrast = colorContrast(rgbSafeValueColor, rgbSafeInputBackground);
+
+    let ColorSlider = (sliderMode === USE_RGB) ? RgbInput : HslInput;
+
+    const handleSliderModeChange = (event) => {
+        if (event.target.value === 'HSL') {
+            setSliderMode(USE_HSL);
+            setInputBackground(rgbToHsl(inputBackground));
+            setPlaceholderColor(rgbToHsl(placeholderColor));
+            setValueColor(rgbToHsl(valueColor));
+        } else if (event.target.value === 'RGB') {
+            setSliderMode(USE_RGB);
+            setInputBackground(hslToRgb(inputBackground));
+            setPlaceholderColor(hslToRgb(placeholderColor));
+            setValueColor(hslToRgb(valueColor));
+        }
+    }
 
     return (
         <div className="placeholder-contrast-checker">
+            <form aria-label="Choose slider mode" onChange={handleSliderModeChange}>
+                <label>
+                    <input
+                        type="radio"
+                        name="slidermode"
+                        value="RGB"
+                        defaultChecked={sliderMode === USE_RGB}
+                    />
+                    RGB
+                </label>
+                <label>
+                    <input 
+                        type="radio"
+                        name="slidermode"
+                        value="HSL"
+                        defaultChecked={sliderMode === USE_HSL}
+                    />
+                    HSL
+                </label>
+            </form>
             <div className="placeholder-contrast-checker--sliders">
-                <RgbInput
+                <ColorSlider
                     showColorBox={false}
-                    defaultValue={{ r: 255, g: 255, b: 255 }}
+                    defaultValue={inputBackground}
                     onChange={(newColor) => {setInputBackground(newColor)}}
                 />
-                <RgbInput
+                <ColorSlider
                     showColorBox={false}
                     useAlpha
-                    defaultValue={{ r: 119, g: 119, b: 119, a: 0.8 }}
+                    defaultValue={placeholderColor}
                     onChange={(newColor) => {setPlaceholderColor(newColor)}}
                 />
-                <RgbInput
+                <ColorSlider
                     showColorBox={false}
-                    defaultValue={{ r: 0, g: 0, b: 0 }}
+                    defaultValue={valueColor}
                     onChange={(newColor) => {setValueColor(newColor)}}
                 />
             </div>
             <div className="placeholder-contrast-checker--demo">
                 <div
                     className="placeholder-contrast-checker--demo--input"
-                    style={{backgroundColor: toRgba(inputBackground)}}
+                    style={{backgroundColor: toRgba(rgbSafeInputBackground)}}
                 >
-                    <span style={{color: toRgba(placeholderColor)}}>My hovercraft </span>
-                    <span style={{color: toRgba(valueColor)}}>is full of eels</span>
+                    <span style={{color: toRgba(rgbSafePlaceholderColor)}}>My hovercraft </span>
+                    <span style={{color: toRgba(rgbSafeValueColor)}}>is full of eels</span>
                 </div>
             </div>
             <div className="placeholder-contrast-checker--results">
@@ -61,11 +108,6 @@ const PlaceholderContrastChecker = (props) => {
                     </div>
                 </div>
             </div>
-            <HslInput
-                showColorBox={false}
-                defaultValue={{ h: 0, s: 0, l: 0.47 }}
-                onChange={(newColor) => {}}
-            />
         </div>
     );
 }

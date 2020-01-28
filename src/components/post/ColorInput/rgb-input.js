@@ -28,8 +28,6 @@ const RgbInput = (props) => {
     const {r, g, b, a=1} = props.defaultValue;
     const [color, dispatch] = useReducer(colorReducer, {r, g, b, a});
 
-    console.log(color.a, typeof color.a)
-
     const redStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.r / 255}, red), color-stop(${color.r / 255}, var(--slider-background)))`};
     const greenStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.g / 255}, green), color-stop(${color.g / 255}, var(--slider-background)))` };
     const blueStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.b / 255}, blue), color-stop(${color.b / 255}, var(--slider-background)))` };

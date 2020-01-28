@@ -36,8 +36,8 @@ const HslInput = (props) => {
 
     const alphaStyle = { backgroundImage: `-webkit-gradient(linear, left top, right top, color-stop(${color.a}, #777777), color-stop(${color.a}, var(--slider-background)))` };
 
-    console.log(color, lightnessStyle)
-
+    let formattedSaturation = Number(color.s).toFixed(2);
+    let formattedLightness = Number(color.l).toFixed(2);
     let formattedAlpha = Number(color.a).toFixed(2);
 
     return (
@@ -56,7 +56,7 @@ const HslInput = (props) => {
                         style={hueStyle}
                     />
                 </label>
-                <span aria-hidden="true" style={{display: 'inline'}}>{color.h}</span>
+                <span aria-hidden="true" style={{display: 'inline'}}>{color.h}&deg;</span>
             </div>
             <div className="range-with-labels">
                 <label>
@@ -71,7 +71,7 @@ const HslInput = (props) => {
                         style={saturationStyle}
                     />
                 </label>
-                <span aria-hidden="true" style={{display: 'inline'}}>{color.s}</span>
+                <span aria-hidden="true" style={{display: 'inline'}}>{formattedSaturation}</span>
             </div>
             <div className="range-with-labels">
                 <label>
@@ -86,7 +86,7 @@ const HslInput = (props) => {
                         style={lightnessStyle}
                     />
                 </label>
-                <span aria-hidden="true" style={{display: 'inline'}}>{color.l}</span>
+                <span aria-hidden="true" style={{display: 'inline'}}>{formattedLightness}</span>
             </div>
             {props.useAlpha && (<div className="range-with-labels">
                 <label>

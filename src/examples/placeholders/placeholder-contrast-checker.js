@@ -115,7 +115,7 @@ const PlaceholderContrastChecker = (props) => {
                         <b>Placeholder Against Actual Value</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(placeholderValueContrast)}</strong>:1</div>
                     </div>
                     <div className="placeholder-contrast-checker--result--description">
-                        <strong>{placeholderValueContrast >= 3 ? 'Passes' : 'Fails'}</strong> WCAG's requirement of <strong>3:1</strong> contrast for text against adjacent text.
+                        <strong>{placeholderValueContrast >= 3 ? 'Passes' : 'Fails'}</strong> WCAG's similar requirements of <strong>3:1</strong> contrast for adjacent text.
                     </div>
                 </div>
                 <div className="placeholder-contrast-checker--result--background-comparison">

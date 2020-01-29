@@ -1,6 +1,6 @@
 ---
 title: "Placeholders: The Web's Unfriendly Ghosts"
-date: 2020-01-27
+date: 2020-02-01
 description: The popular pizza chain has a big part to play in the unseen war over the web.
 cover: 'https://i.imgur.com/v4MxSea.png'
 coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
@@ -13,7 +13,7 @@ import '../../../examples/placeholders/placeholder-examples.css';
 
 ## Introduction
 
-Since its introduction in HTML5, the `placeholder` attribute has become commonplace in web forms.
+Since its introduction in HTML5, the `placeholder` attribute has become a staple of web forms.
 
 <!-- > ```html -->
 <!-- <input placeholder="First name" /> -->
@@ -56,13 +56,33 @@ Left unchecked, these things can pose significant usability problems for your us
 
 ## Color Contrast
 
-Browsers default to giving placeholders a muted appearance, whether by making them a light gray or by reducing their opacity. For example, the default placeholder in Google Chrome is black with 54% opacity.<Fn fn="chromeopacity" /> This muted appearance signals to users that this text here isn't a _real_ value.—
+Placeholders need to visually indicate that they are a hint, and not a real, given value. To distinguish placeholder text from filled-in values, designers and default browser styles alike will give placeholders a muted appearance. This muted appearance is usually accomplished by either setting the placeholder to a light gray or by reducing its opacity. Google Chrome, for instance, uses black at 54% opacity.<Fn fn="chromeopacity" />
 
-This mutedness
+In doing so, however, we risk our placeholders becoming too muted to be legible. This is especially an issue for visually impaired users. If our placeholder is too hard to read, it won't help anyone. How do we ensure that our placeholder is legible yet still distinct from a filled-in value?
+
+The industry standard for digital accessibility requirements, the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/), includes requirements for color contrast. Namely, [Success Criterion 1.4.3](https://www.w3.org/TR/WCAG21/#contrast-minimum) states that text must stand out from its background with a color contrast ratio of 4.5:1. The exceptions to this guideline are large or bolded text, disabled form fields, logos, and purely decorative text. Placeholders are informational, so they aren't exempted. As WCAG guidance states,
+
+<Blockquote attribution={<a href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html">Understanding Success Criterion 1.4.3: Contrast (Minimum)</a>}>
+    The minimum contrast success criterion (1.4.3) applies to text in the page, including placeholder text and text that is shown when a pointer is hovering over an object or when an object has keyboard focus. If any of these are used in a page, the text needs to provide sufficient contrast.
+</Blockquote>
+
+The 4.5:1 requirement ensures that the placeholder is legible, but how do we ensure it is distinct enough from the field's filled-in value? WCAG doesn't give direct guidance on placeholder distinctness, but comparable requirements may give us a helpful benchmark to strive for. One such requirement holds that [links must stand out from their surrounding text with a contrast ratio of 3:1](https://www.w3.org/WAI/WCAG21/Techniques/general/G183). Similarly, [Success Criterion 1.4.11](https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html) states that adjacent form controls are also required meet 3:1. So, while it's not official WCAG guidance that placeholders should stand out from regular values by a ratio of 3:1, requirements for adjacent elements hint that it wouldn't be a bad place to start.
+
+What does this mean for us as developers and designers? It means that when we're using a textbox, we need to make sure that,
+
+1. The placeholder stands out from the background by 4.5:1.
+2. The placeholder stands out from a filled-in value by about 3:1.
+3. The filled-in value stands out from the background by 3:1.
+
+Juggling the above requirements can be a challenge, especially when you consider constraints such as brand guidelines. Try playing around with the textbox's background color, placeholder color, and filled-in value color below, and see how many (or how few?) color combinations pass all three criteria.
 
 <div className="margins">
     <PlaceholderContrastChecker />
 </div>
+
+Given a solid white input background, what is the _lightest_ a placeholder can be and still stand out? If the input's actual values are pure black, what is the _darkest_ a placeholder can get?
+
+Better yet, given a pure white textbox with pure black values, how many shades of gray meet the above requirements for legibility and distinctness? From my math, that's the grays from `#5A5A5A` (or `rgb(90, 90, 90)`) to `#767676` (or `rgb(118, 118, 118)`). That's only about a tenth of the entire grayscale.
 
 ## Assistive Technology Support
 
@@ -77,6 +97,7 @@ woo screenreader
 </Blockquote>
 
 ## Revisiting Usability
+
 
 <FootnotesContainer>
     <Footnote fn="chromeopacity" author="Chrome Platform Status" title="Apply opacity for the default style of INPUT/TEXTAREA placeholder" url="https://www.chromestatus.com/feature/5415963870625792" />

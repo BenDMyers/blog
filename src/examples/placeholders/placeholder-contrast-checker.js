@@ -87,24 +87,33 @@ const PlaceholderContrastChecker = (props) => {
                     className="placeholder-contrast-checker--demo--input"
                     style={{backgroundColor: toRgba(rgbSafeInputBackground)}}
                 >
-                    <span style={{color: toRgba(rgbSafePlaceholderColor)}}>My hovercraft </span>
-                    <span style={{color: toRgba(rgbSafeValueColor)}}>is full of eels</span>
+                    <span style={{color: toRgba(rgbSafePlaceholderColor)}}>I'm a placeholder </span>
+                    <span style={{color: toRgba(rgbSafeValueColor)}}>and I'm a real value.</span>
                 </div>
             </div>
             <div className="placeholder-contrast-checker--results">
                 <div className="placeholder-contrast-checker--result--background-comparison">
                     <div>
-                        <b>Placeholder–Background Contrast</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(placeholderBackgroundContrast)}</strong>:1</div>
+                        <b>Placeholder Against Background</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(placeholderBackgroundContrast)}</strong>:1</div>
+                    </div>
+                    <div className="placeholder-contrast-checker--result--description">
+                        <strong>{placeholderBackgroundContrast >= 4.5 ? 'Passes' : 'Fails'}</strong> WCAG's requirement of <strong>4.5:1</strong> contrast for text against a background.
                     </div>
                 </div>
                 <div className="placeholder-contrast-checker--result--background-comparison">
                     <div>
-                        <b>Placeholder–Value Contrast</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(placeholderValueContrast)}</strong>:1</div>
+                        <b>Placeholder Against Actual Value</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(placeholderValueContrast)}</strong>:1</div>
+                    </div>
+                    <div className="placeholder-contrast-checker--result--description">
+                        <strong>{placeholderValueContrast >= 3 ? 'Passes' : 'Fails'}</strong> WCAG's requirement of <strong>3:1</strong> contrast for text against adjacent text.
                     </div>
                 </div>
                 <div className="placeholder-contrast-checker--result--background-comparison">
                     <div>
-                        <b>Value–Background Contrast</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(valueBackgroundContrast)}</strong>:1</div>
+                        <b>Actual Value Against Background</b> <div className="placeholder-contrast-checker--ratio"><strong>{truncate(valueBackgroundContrast)}</strong>:1</div>
+                    </div>
+                    <div className="placeholder-contrast-checker--result--description">
+                        <strong>{valueBackgroundContrast >= 4.5 ? 'Passes' : 'Fails'}</strong> WCAG's requirement of <strong>4.5:1</strong> contrast for text against a background.
                     </div>
                 </div>
             </div>

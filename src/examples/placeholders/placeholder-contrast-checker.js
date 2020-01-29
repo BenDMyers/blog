@@ -44,22 +44,32 @@ const PlaceholderContrastChecker = (props) => {
 
     return (
         <div className="placeholder-contrast-checker">
-            <form aria-label="Choose slider mode" onChange={handleSliderModeChange}>
-                <label>
+            <form
+                className="placeholder-contrast-checker--mode-toggle"
+                aria-label="Choose slider mode"
+                onChange={handleSliderModeChange}
+            >
+                <label
+                    className={`placeholder-contrast-checker--mode-toggle--tab ${sliderMode === USE_RGB ? 'slider-mode-selected' : 'slider-mode-unselected' }`}
+                >
                     <input
                         type="radio"
                         name="slidermode"
                         value="RGB"
                         defaultChecked={sliderMode === USE_RGB}
+                        className="placeholder-contrast-checker--mode-toggle--radio screenreader"
                     />
                     RGB
                 </label>
-                <label>
+                <label
+                    className={`placeholder-contrast-checker--mode-toggle--tab ${sliderMode === USE_HSL ? 'slider-mode-selected' : 'slider-mode-unselected'}`}
+                >
                     <input 
                         type="radio"
                         name="slidermode"
                         value="HSL"
                         defaultChecked={sliderMode === USE_HSL}
+                        className="placeholder-contrast-checker--mode-toggle--radio screenreader"
                     />
                     HSL
                 </label>

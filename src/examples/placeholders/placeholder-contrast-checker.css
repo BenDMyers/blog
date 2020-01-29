@@ -8,7 +8,7 @@ div.placeholder-contrast-checker {
 
 div.placeholder-contrast-checker--sliders {
     font-family: 'Montserrat', sans-serif;
-    margin: 0 2em;
+    margin-left: 2em;
 }
 
 div.placeholder-contrast-checker--demo {
@@ -59,6 +59,18 @@ div.placeholder-contrast-checker--result--description {
     margin: 1em 2em;
 }
 
+form.placeholder-contrast-checker--mode-toggle {
+    margin-right: calc(3em);
+    text-align: right;
+    background-color: var(--layout-color);
+}
+
+label.placeholder-contrast-checker--mode-toggle--tab {
+    padding: 0.5em 0.5em;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+}
+
 @media screen and (min-width: 768px) {
     div.placeholder-contrast-checker--sliders {
         display: flex;
@@ -88,4 +100,29 @@ div.placeholder-contrast-checker--result--description {
         font-size: 250%;
         text-align: center;
     }
+}
+
+label.placeholder-contrast-checker--mode-toggle--tab::before {
+    content: '';
+    background: #fff;
+    box-shadow: 0px 0px 2px 2px rgba(34, 36, 38, 0.25);
+    background-color: rgba(255, 255, 255, .8);
+    display: inline-block;
+    box-sizing: border-box;
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    margin-right: 0.25em;
+    cursor: pointer;
+    transition: all .1s ease-out;
+    border-radius: 100%;
+}
+
+label.placeholder-contrast-checker--mode-toggle--tab.slider-mode-selected::before {
+    background-color: var(--theme-color);
+    box-shadow: 0px 0px 2px 2px rgba(34, 36, 38, 0.25), inset 0 0 0 .15em rgba(255, 255, 255, .95);
+}
+
+label.placeholder-contrast-checker--mode-toggle--tab.slider-mode-selected:focus-within::before {
+    box-shadow: 0px 0px 2px 2px rgba(34, 36, 38, 0.25), inset 0 0 0 .15em rgba(255, 255, 255, .95), 0px 0px 2px 2px var(--link-color);
 }

@@ -84,7 +84,7 @@ Disabled users will use a variety of assistive technologies to navigate your pag
 
 <!-- Some stuff here about how screenreaders don't present placeholders -->
 
-As you might imagine, not presenting placeholders can make some forms confusing and frustrating. When designers and developers rely on placeholders to convey an expected format like <i>MM/DD/YYYY</i>, blind screenreader users would have no clue. Worse, when placeholders are used in lieu of labels, blind users have no way of knowing what the field is even for.
+As you might imagine, not presenting placeholders can make some forms confusing and frustrating. When designers and developers rely on placeholders to convey an expected format like <i>MM/DD/YYYY</i>, blind screenreader users would have no clue. Worse, when placeholders are used in lieu of labels, these users have no way of knowing what the field is even for.
 
 ## Cognitive Disabilities and Changing Context
 
@@ -98,6 +98,40 @@ woo context
 
 ## Revisiting Usability
 
+Placeholders are often used to communicate important information about how to format a field's value, or even what the field is meant to represent. This can pose issues for many disabled users who can't read the placeholder, and it can be frustrating for others when the placeholders disappear.
+
+To be accessible, we need to pull relevant information out from the placeholder into a format exposed to all, such as a `<label>`—
+
+```html {numberLines: true}
+<label for="name-field">Name</label>
+<input id="name-field" type="text" />
+```
+
+—or via an element linked to with `aria-describedby`:
+
+```html {numberLines: true}
+<label for="expiration-date">Expiration date</label>
+<div id="expiration-date-format">(MM/YYYY)</div>
+<input
+    id="expiration-date"
+    aria-describedby="expiration-date-format"
+/>
+```
+
+This raises a vital question, though: if all important context has been pulled out of the placeholder... what's left? What could we or should we put in our placeholders? Is something like...
+
+```html {numberLines: true}{5}
+<label for="name-field">
+<input
+    id="name-field"
+    type="text"
+    placeholder="John Doe"
+/>
+```
+
+... even valuable? Or does it just add needless clutter?
+
+I don't have that answer for you. Ultimately, that will depend on your application and your branding requirements.
 
 <FootnotesContainer>
     <Footnote fn="chromeopacity" author="Chrome Platform Status" title="Apply opacity for the default style of INPUT/TEXTAREA placeholder" url="https://www.chromestatus.com/feature/5415963870625792" />

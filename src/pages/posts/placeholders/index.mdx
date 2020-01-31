@@ -1,0 +1,141 @@
+---
+title: "Placeholders: The Web's Unfriendly Ghosts"
+date: 2020-02-01
+description: The popular pizza chain has a big part to play in the unseen war over the web.
+cover: 'https://i.imgur.com/v4MxSea.png'
+coveralt: A chain of dominoes is stood up. The first one, which resembles the Domino's Pizza logo, is falling down and knocking the rest of the chain over.
+emoji: 👻
+tags: ["web accessibility", "accessibility", "web development", "placeholders"]
+---
+
+import PlaceholderContrastChecker from '../../../examples/placeholders/placeholder-contrast-checker';
+import '../../../examples/placeholders/placeholder-examples.css';
+
+## Introduction
+
+Since its introduction in HTML5, the `placeholder` attribute has become a staple of web forms.
+
+<!-- > ```html -->
+<!-- <input placeholder="First name" /> -->
+<!-- ``` -->
+
+Placeholders are commonly used to provide example values or expected formats:
+
+<div className="placeholders--container">
+    <form aria-label="Dummy form that uses placeholders to illustrate sample values">
+        <label for="placeholder-ex-1--name">Name</label>
+        <input id="placeholder-ex-1--name" className="post-placeholder-input" placeholder="John Doe" />
+        <label for="placeholder-ex-1--cellphone">Cell Phone</label>
+        <input id="placeholder-ex-1--cellphone" className="post-placeholder-input" placeholder="(555) 555-5555" type="tel" />
+    </form>
+</div>
+
+Some websites decide to forgo form labels in favor of placeholders, in the name of minimalism.
+
+<div className="placeholders--container">
+    <form aria-label="Dummy shipping address form that uses placeholders in place of labels">
+        <div className="placeholders--header">Enter a shipping address</div>
+        <input className="post-placeholder-input" placeholder="Name" />
+        <input className="post-placeholder-input" placeholder="Address line 1" />
+        <input className="post-placeholder-input" placeholder="Address line 2" />
+        <div className="placeholders--grid placeholders--grid--col-3">
+            <input className="post-placeholder-input" placeholder="City" />
+            <input className="post-placeholder-input" placeholder="State" />
+            <input className="post-placeholder-input" placeholder="ZIP" />
+        </div>
+    </form>
+</div>
+
+However, for many users, especially those with disabilities, placeholders are rather... _ghostlike_.
+
+* They're tricky to see, perhaps translucent.
+* They may not announce their presence.
+* They're prone to disappearing the moment you try to interact with them.
+
+Left unchecked, these things can pose significant usability problems for your users.
+
+## Color Contrast
+
+To distinguish placeholder text from filled-in values, designers and default browser styles alike will give placeholders a muted appearance, typically by making it gray or by reducing its opacity. In doing so, however, we risk our placeholders becoming too muted to be legible. This is especially an issue for visually impaired users.
+
+When we style textboxes with placeholders, we have to consider [color contrast ratios](https://www.w3.org/WAI/WCAG21/Techniques/general/G18#procedure) for three pairs of colors:
+
+1. The real, filled-in value has to stand out from the textbox.
+2. The placeholder also has to stand out from the textbox.
+3. The placeholder has to stand out from the real, filled-in value.
+
+The industry standard for web accessibility requirements, the [Web Content Accessibility Guidelines (WCAG) 2.0 AA](https://www.w3.org/WAI/standards-guidelines/wcag/), defines a minimum contrast ratio of **4.5:1** for text against a background.<Fn fn="contrast" /> There are exceptions to this—large or bold text only needs to meet 3:1—but they rarely apply for textboxes in the wild. This means that when we're picking colors for our textboxes, we need both the placeholder and the filled-in value to have a ratio of 4.5:1 against the textbox itself.
+
+The Web Content Accessibility Guidelines don't have any direct guidance for making sure that your placeholders stand out from real values, but they _do_ have some comparable requirements. One requirement states that text differentiated by color, such as links, must stand out from their surrounding text with a contrast ratio of 3:1.<Fn fn="linkcontrast" /> A similar requirement holds that form controls must stand out from their surroundings, also with a contrast ratio of 3:1.<Fn fn="controlcontrast" /> I think we can apply these guidelines for adjacent elements to our placeholder text, not as a requirement but as a helpful, suggested benchmark. To ensure that our placeholders don't look like filled-in values, let's ensure that we pick placeholder and value colors that have a contrast ratio of **3:1**.
+
+Juggling the above requirements can be a challenge, especially when you consider constraints such as brand guidelines. Try playing around with the textbox's background color, placeholder color, and filled-in value color below, and see how many (or how few?) color combinations pass all three criteria.
+
+<div className="margins">
+    <PlaceholderContrastChecker />
+</div>
+
+Given a solid white input background, what is the _lightest_ a placeholder can be and still stand out? If the input's actual values are pure black, what is the _darkest_ a placeholder can get?
+
+Better yet, given a pure white textbox with pure black values, how many shades of gray meet the above requirements for legibility and distinctness? From my math, that's the grays from `#5A5A5A` (or `rgb(90, 90, 90)`) to `#767676` (or `rgb(118, 118, 118)`). That's only about a tenth of the entire grayscale spectrum.
+
+## Assistive Technology Support
+
+Disabled users will use a variety of assistive technologies to navigate your page. One such assistive technology is a screenreader, which is a program that announce program contents to their users, either aloud or via a [braille display](https://en.wikipedia.org/wiki/Refreshable_braille_display). They're often used by people who are blind, visually impaired, dyslexic, or non-native speakers. [Browsers determine how page contents should be exposed to such assistive technologies.](https://blog.benmyers.dev/accessibility-tree/)
+
+<!-- Some stuff here about how screenreaders don't present placeholders -->
+
+As you might imagine, not presenting placeholders can make some forms confusing and frustrating. When designers and developers rely on placeholders to convey an expected format like <i>MM/DD/YYYY</i>, blind screenreader users would have no clue. Worse, when placeholders are used in lieu of labels, these users have no way of knowing what the field is even for.
+
+## Cognitive Disabilities and Changing Context
+
+<!-- {/* <Blockquote attribution={<>Marius Pontmercy, <i lang="fr">Les Misérables</i></>}>
+    <div>A ghost, you say? A ghost, maybe.</div>
+    <div>She was just like a ghost to me.</div>
+    <div>One minute there, then she was gone!</div>
+</Blockquote> -->
+
+woo context
+
+## Revisiting Usability
+
+Placeholders are often used to communicate important information about how to format a field's value, or even what the field is meant to represent. This can pose issues for many disabled users who can't read the placeholder, and it can be frustrating for others when the placeholders disappear.
+
+To be accessible, we need to pull relevant information out from the placeholder into a format exposed to all, such as a `<label>`—
+
+```html {numberLines: true}
+<label for="name-field">Name</label>
+<input id="name-field" type="text" />
+```
+
+—or via an element linked to with `aria-describedby`:
+
+```html {numberLines: true}
+<label for="expiration-date">Expiration date</label>
+<div id="expiration-date-format">(MM/YYYY)</div>
+<input
+    id="expiration-date"
+    aria-describedby="expiration-date-format"
+/>
+```
+
+This raises a vital question, though: if all important context has been pulled out of the placeholder... what's left? What could we or should we put in our placeholders? Is something like...
+
+```html {numberLines: true}{5}
+<label for="name-field">
+<input
+    id="name-field"
+    type="text"
+    placeholder="John Doe"
+/>
+```
+
+... even valuable? Or does it just add needless clutter?
+
+I don't have that answer for you. Ultimately, that will depend on your application and your branding requirements.
+
+<FootnotesContainer>
+    <Footnote fn="chromeopacity" author="Chrome Platform Status" title="Apply opacity for the default style of INPUT/TEXTAREA placeholder" url="https://www.chromestatus.com/feature/5415963870625792" />
+    <Footnote fn="contrast" author="Web Accessibility Initiative" title="Understanding Success Criterion 1.4.3: Contrast (Minimum)" url="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum" />
+    <Footnote fn="linkcontrast" author="Web Accessibility Initiative" title="Using a contrast ratio of 3:1 with surrounding text..." url="https://www.w3.org/WAI/WCAG21/Techniques/general/G183" />
+    <Footnote fn="controlcontrast" author="Web Accessibility Initiative" title="Understanding Success Criterion 1.4.11: Non-text Contrast" url="https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html" />
+</FootnotesContainer>

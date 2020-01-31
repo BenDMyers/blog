@@ -4,6 +4,7 @@ import {rhythm} from '../../../utils/typography';
 import cover from './cover';
 
 import './PostHeader.css';
+import {Link} from 'gatsby';
 
 /**
  * The post title, superimposed on an image.
@@ -18,6 +19,8 @@ const PostHeader = (props) => {
 				<time itemProp="datePublished" dateTime={props.date}>
 					{moment(props.date).format('LL')}
 				</time>
+                &nbsp;&middot;&nbsp;
+                <Link to="/">Ben Myers</Link>
 			</p>
 		</header>
 	);

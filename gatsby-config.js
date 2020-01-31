@@ -146,6 +146,7 @@ module.exports = {
                         `,
 						normalize: ({query: {site, allMdx}}) => {
 							return allMdx.edges.map((edge) => {
+                                let [banner, cover = banner] = edge.node.frontmatter.cover.split('|');
 								return {
 									title: edge.node.frontmatter.title,
 									date: edge.node.frontmatter.date,
@@ -154,7 +155,7 @@ module.exports = {
 										edge.node.fields.slug,
 									html: edge.node.html,
 									excerpt: edge.node.frontmatter.description,
-									bannerImage: edge.node.frontmatter.cover
+									bannerImage: cover
 								};
 							});
 						}

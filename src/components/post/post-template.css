@@ -142,3 +142,7 @@ section.post-contents .vaporwave {
     font-style: italic;
     letter-spacing: 0.3em;
 }
+
+section.post-contents div.margins {
+    margin-left: 3%;
+}

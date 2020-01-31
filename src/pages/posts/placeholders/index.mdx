@@ -56,23 +56,17 @@ Left unchecked, these things can pose significant usability problems for your us
 
 ## Color Contrast
 
-Placeholders need to visually indicate that they are a hint, and not a real, given value. To distinguish placeholder text from filled-in values, designers and default browser styles alike will give placeholders a muted appearance. This muted appearance is usually accomplished by either setting the placeholder to a light gray or by reducing its opacity. Google Chrome, for instance, uses black at 54% opacity.<Fn fn="chromeopacity" />
+To distinguish placeholder text from filled-in values, designers and default browser styles alike will give placeholders a muted appearance, typically by making it gray or by reducing its opacity. In doing so, however, we risk our placeholders becoming too muted to be legible. This is especially an issue for visually impaired users.
 
-In doing so, however, we risk our placeholders becoming too muted to be legible. This is especially an issue for visually impaired users. If our placeholder is too hard to read, it won't help anyone. How do we ensure that our placeholder is legible yet still distinct from a filled-in value?
+When we style textboxes with placeholders, we have to consider [color contrast ratios](https://www.w3.org/WAI/WCAG21/Techniques/general/G18#procedure) for three pairs of colors:
 
-The industry standard for digital accessibility requirements, the [Web Content Accessibility Guidelines (WCAG)](https://www.w3.org/WAI/standards-guidelines/wcag/), includes requirements for color contrast. Namely, [Success Criterion 1.4.3](https://www.w3.org/TR/WCAG21/#contrast-minimum) states that text must stand out from its background with a color contrast ratio of 4.5:1. The exceptions to this guideline are large or bolded text, disabled form fields, logos, and purely decorative text. Placeholders are informational, so they aren't exempted. As WCAG guidance states,
+1. The real, filled-in value has to stand out from the textbox.
+2. The placeholder also has to stand out from the textbox.
+3. The placeholder has to stand out from the real, filled-in value.
 
-<Blockquote attribution={<a href="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum.html">Understanding Success Criterion 1.4.3: Contrast (Minimum)</a>}>
-    The minimum contrast success criterion (1.4.3) applies to text in the page, including placeholder text and text that is shown when a pointer is hovering over an object or when an object has keyboard focus. If any of these are used in a page, the text needs to provide sufficient contrast.
-</Blockquote>
+The industry standard for web accessibility requirements, the [Web Content Accessibility Guidelines (WCAG) 2.0 AA](https://www.w3.org/WAI/standards-guidelines/wcag/), defines a minimum contrast ratio of **4.5:1** for text against a background.<Fn fn="contrast" /> There are exceptions to this—large or bold text only needs to meet 3:1—but they rarely apply for textboxes in the wild. This means that when we're picking colors for our textboxes, we need both the placeholder and the filled-in value to have a ratio of 4.5:1 against the textbox itself.
 
-The 4.5:1 requirement ensures that the placeholder is legible, but how do we ensure it is distinct enough from the field's filled-in value? WCAG doesn't give direct guidance on placeholder distinctness, but comparable requirements may give us a helpful benchmark to strive for. One such requirement holds that [links must stand out from their surrounding text with a contrast ratio of 3:1](https://www.w3.org/WAI/WCAG21/Techniques/general/G183). Similarly, [Success Criterion 1.4.11](https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html) states that adjacent form controls are also required meet 3:1. So, while it's not official WCAG guidance that placeholders should stand out from regular values by a ratio of 3:1, requirements for adjacent elements hint that it wouldn't be a bad place to start.
-
-What does this mean for us as developers and designers? It means that when we're using a textbox, we need to make sure that,
-
-1. The placeholder stands out from the background by 4.5:1.
-2. The placeholder stands out from a filled-in value by about 3:1.
-3. The filled-in value stands out from the background by 3:1.
+The Web Content Accessibility Guidelines don't have any direct guidance for making sure that your placeholders stand out from real values, but they _do_ have some comparable requirements. One requirement states that text differentiated by color, such as links, must stand out from their surrounding text with a contrast ratio of 3:1.<Fn fn="linkcontrast" /> A similar requirement holds that form controls must stand out from their surroundings, also with a contrast ratio of 3:1.<Fn fn="controlcontrast" /> I think we can apply these guidelines for adjacent elements to our placeholder text, not as a requirement but as a helpful, suggested benchmark. To ensure that our placeholders don't look like filled-in values, let's ensure that we pick placeholder and value colors that have a contrast ratio of **3:1**.
 
 Juggling the above requirements can be a challenge, especially when you consider constraints such as brand guidelines. Try playing around with the textbox's background color, placeholder color, and filled-in value color below, and see how many (or how few?) color combinations pass all three criteria.
 
@@ -90,15 +84,20 @@ woo screenreader
 
 ## Cognitive Disabilities and Changing Context
 
-<Blockquote attribution={<>Marius Pontmercy, <i lang="fr">Les Misérables</i></>}>
+<!-- {/* <Blockquote attribution={<>Marius Pontmercy, <i lang="fr">Les Misérables</i></>}>
     <div>A ghost, you say? A ghost, maybe.</div>
     <div>She was just like a ghost to me.</div>
     <div>One minute there, then she was gone!</div>
-</Blockquote>
+</Blockquote> -->
+
+woo context
 
 ## Revisiting Usability
 
 
 <FootnotesContainer>
     <Footnote fn="chromeopacity" author="Chrome Platform Status" title="Apply opacity for the default style of INPUT/TEXTAREA placeholder" url="https://www.chromestatus.com/feature/5415963870625792" />
+    <Footnote fn="contrast" author="Web Accessibility Initiative" title="Understanding Success Criterion 1.4.3: Contrast (Minimum)" url="https://www.w3.org/WAI/WCAG21/Understanding/contrast-minimum" />
+    <Footnote fn="linkcontrast" author="Web Accessibility Initiative" title="Using a contrast ratio of 3:1 with surrounding text..." url="https://www.w3.org/WAI/WCAG21/Techniques/general/G183" />
+    <Footnote fn="controlcontrast" author="Web Accessibility Initiative" title="Understanding Success Criterion 1.4.11: Non-text Contrast" url="https://www.w3.org/WAI/WCAG21/Understanding/non-text-contrast.html" />
 </FootnotesContainer>

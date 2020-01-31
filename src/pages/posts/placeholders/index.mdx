@@ -76,11 +76,15 @@ Juggling the above requirements can be a challenge, especially when you consider
 
 Given a solid white input background, what is the _lightest_ a placeholder can be and still stand out? If the input's actual values are pure black, what is the _darkest_ a placeholder can get?
 
-Better yet, given a pure white textbox with pure black values, how many shades of gray meet the above requirements for legibility and distinctness? From my math, that's the grays from `#5A5A5A` (or `rgb(90, 90, 90)`) to `#767676` (or `rgb(118, 118, 118)`). That's only about a tenth of the entire grayscale.
+Better yet, given a pure white textbox with pure black values, how many shades of gray meet the above requirements for legibility and distinctness? From my math, that's the grays from `#5A5A5A` (or `rgb(90, 90, 90)`) to `#767676` (or `rgb(118, 118, 118)`). That's only about a tenth of the entire grayscale spectrum.
 
 ## Assistive Technology Support
 
-woo screenreader
+Disabled users will use a variety of assistive technologies to navigate your page. One such assistive technology is a screenreader, which is a program that announce program contents to their users, either aloud or via a [braille display](https://en.wikipedia.org/wiki/Refreshable_braille_display). They're often used by people who are blind, visually impaired, dyslexic, or non-native speakers. [Browsers determine how page contents should be exposed to such assistive technologies.](https://blog.benmyers.dev/accessibility-tree/)
+
+<!-- Some stuff here about how screenreaders don't present placeholders -->
+
+As you might imagine, not presenting placeholders can make some forms confusing and frustrating. When designers and developers rely on placeholders to convey an expected format like <i>MM/DD/YYYY</i>, blind screenreader users would have no clue. Worse, when placeholders are used in lieu of labels, blind users have no way of knowing what the field is even for.
 
 ## Cognitive Disabilities and Changing Context
 

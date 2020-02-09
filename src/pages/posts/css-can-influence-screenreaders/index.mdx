@@ -60,7 +60,7 @@ Be sure to test each of the following on many different browsers and with many d
 
 ### CSS-Generated Content
 
-The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker) pseudo-element,<Fn fn="caniuse" /> which injects a bullet point, number, or other indicator before a list item.
+The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://www.w3.org/TR/css-lists-3/) pseudo-element,<Fn fn="caniuse" /> which injects a bullet point, number, or other indicator before a list item.
 
 We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) and [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) pseudo-elements to inject content.
 
@@ -72,7 +72,19 @@ button.edit::before {
 
 <EditButton />
 
-If you navigate to the above button with a screenreader, you'll likely hear something like "button, pencil, Edit," assuming your screenreader supports emojis. Browsers interpret the content defined in pseudo-elements as... content. It impacts how sighted users experience the page (and users don't really care whether their content is _real_ content or _pseudo_ content), so it makes sense to expose it to screenreaders.
+If you navigate to the above button with a screenreader, you'll likely hear something like "button, pencil, Edit," assuming your screenreader supports emojis. Lately, browsers interpret the content defined in pseudo-elements as... content. It impacts how sighted users experience the page (and users don't really care whether their content is _real_ content or _pseudo_ content), so browsers judge that they need to expose it to screenreaders.
+
+This judgment call comes from the <abbr title="World Wide Web Consortium">W3C</abbr> specs for determining an element's [accessible name](http://localhost:8000/aria/#name), i.e. how it's announced by screenreaders:
+
+<Blockquote attribution={<a href="https://www.w3.org/TR/accname-1.1/#step2F.ii">Accessible Name and Description Computation 1.1, Step 2(F)(ii)</a>}>
+    <>
+    <p>Check for CSS generated textual content associated with the current node and include it in the accumulated text. The CSS <code>:before</code> and <code>:after</code> pseudo elements can provide textual content for elements that have a content model.</p>
+    <ul>
+        <li>For <code>:before</code> pseudo elements, User agents <em>MUST</em> prepend CSS textual content, without a space, to the textual content of the current node.</li>
+        <li>For <code>:after</code> pseudo elements, User agents <em>MUST</em> append CSS textual content, without a space, to the textual content of the current node.</li>
+    </ul>
+    </>
+</Blockquote>
 
 ### Hidden Content
 
@@ -90,14 +102,20 @@ Another example of considerations of CSS when determining semantics would be tab
 
 Browsers like Chrome<Fn fn="chrome" /> and Firefox<Fn fn="firefox" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid|...` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="adrian" />
 
-Apparently, `display` loves nullifying elements' semantics...
+Apparently, `display` loves changing if and how elements are announced by screenreaders...
 
 ## An Obligatory Mention of the CSS Speech Module
 
+It doesn't quite fit into this post's theme of browsers optimizing accessibility trees, but a post about how CSS can influence screenreaders would be remiss without a mention of CSS Speech.
+
 ## Conclusion
+
+With CSS, there is a gray area, for better or for worse, between content and its presentation. When CSS bleeds into content, it can convey important information that might be lost to screenreader users. Browsers have gotten really smart about how they expose that information to screenreaders, but that means that our styles can change screenreader users' experience in unexpected ways. As always, be sure to test with many screenreaders on many browsers and many platforms.
 
 ## Footnotes
 
 https://webaim.org/blog/screen-readers-and-css/
 
 https://caniuse.com/#feat=css-marker-pseudo
+
+https://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html#TheTweet

@@ -1,0 +1,97 @@
+---
+title: "CSS Can Influence Screenreaders"
+date: 2020-02-10
+description: How CSS bleeds into content and influences screenreader announcements.
+cover: 'https://i.imgur.com/Qyc472t.jpg'
+coveralt: Apples with a bunch of bananas
+emoji: 🍌
+tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
+---
+
+import EditButton from '../../../examples/css-impacts-screenreaders/EditButton';
+
+## Introduction
+
+Let's say we're building a shopping list app. Consider the two following snippets:
+
+```html {numberLines: true}
+<ul>
+    <li>Apples</li>
+    <li>Bananas</li>
+</ul>
+```
+
+```html {numberLines: true}
+<ul style="list-style: none;">
+    <li>Apples</li>
+    <li>Bananas</li>
+</ul>
+```
+
+The latter snippet applies the `list-style: none;` CSS rule to hide those default bullets, presumably so we can add other styles to make the list prettier. Being dutiful accessibility testers, let's run our screenreaders over the two lists. Pause for a moment and ask yourself: **do you expect any difference between how the two lists are announced? Why or why not?**
+
+I was able to test the two lists with [NVDA](https://www.nvaccess.org/download/) for Windows and [VoiceOver](https://www.apple.com/accessibility/mac/vision/) for macOS. I ran NVDA against the lists on Chrome, Firefox, and even Internet Explorer. I ran VoiceOver against Chrome and Safari. Here's what I found:
+
+* When I tested against the first, bulleted list, the screenreaders always told me how many items were in the list and preluded each list item with "bullet."
+
+* When I tested against the second, bulletless list, the screenreaders never said "bullet."
+
+* Most surprisingly, Safari with VoiceOver didn't treat the bulletless list as a list at all, omitting any announcements about how many items were in the list.
+
+This is initially shocking and perplexing, because it seems to conflict with our mental model of CSS, one that's likely been instilled in us since we started learning web development: HTML is for content, and CSS is for visual appearance. It's the separation of content and presentation. Here, by changing what screenreaders announce, it feels like CSS is encroaching on content territory.
+
+What is happening here? Should we worry about every CSS rule possibly changing screenreader announcements?
+
+## Smart Browsers
+
+Screenreaders aren't actually looking at the CSS.
+
+Browsers package up an alternate version of the DOM, called the [accessibility tree](/accessibility-tree), which it then exposes to screenreaders and other assistive technologies by way of the user's operating system. Every element in the tree is defined as a set of properties that describe the element's purpose and functionality. Screenreaders peruse the tree to know what to announce. Thanks to the hard work of browsers' developers, browsers have gotten really smart at building the tree. They can account for web developers' tricks—whether best practices or bad habits—and curate a more usable accessibility tree.
+
+As much as the web development community talks about the separation of content and presentation, the truth is that it's not that easy. Between using pseudo-elements and toggling `display: none;` on elements to show or hide them, it's clear there can be a bit of a gray area between content and its presentation. This gray area provides a key space for browsers to optimize their accessibility trees, giving all screenreader users the same experience of the content as sighted users.
+
+## Potential Impacts
+
+What kinds of CSS-based optimizations or modifications do browsers make to the accessibility tree? Below, I've listed a few kinds that I know of. I'm sure it's not exhaustive. More importantly, these impacts will depend heavily on the user's choice of operating system, browser, and assistive technology. On the WebAIM blog, John Northup cautions us,
+
+> "It’s tempting to assert that if you do <i>x</i>, 'the screen reader' will announce <i>y</i>. Sometimes it really is just that simple, but in a surprising number of situations, it just isn’t that absolute." <i><Fn fn="webaim" /></i>
+
+Be sure to test each of the following on many different browsers and with many different screenreaders.
+
+### CSS-Generated Content
+
+The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://developer.mozilla.org/en-US/docs/Web/CSS/::marker) pseudo-element,<Fn fn="caniuse" /> which injects a bullet point, number, or other indicator before a list item.
+
+We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) and [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) pseudo-elements to inject content.
+
+```css {numberLines: true}
+button.edit::before {
+    content: "✏️ ";
+}
+```
+
+<EditButton />
+
+If you navigate to the above button with a screenreader, you'll likely hear something like "button, pencil, Edit," assuming your screenreader supports emojis. Browsers interpret the content defined in pseudo-elements as... content. It impacts how sighted users experience the page (and users don't really care whether their content is _real_ content or _pseudo_ content), so it makes sense to expose it to screenreaders.
+
+### Hidden Content
+
+Sometimes, we find ourselves wanting to hide something visually, but still expose it to screenreaders, usually to provide a hint for context that would be obvious visually. In these cases, it's tempting to specify `display: none;`. That would hide the contents, but still leave them in the DOM. Mission accomplished, right?
+
+However, `display: none;` is generally used as a toggle, to save the trouble of recreating and reinserting content on command. For instance, you could use `display: none;` for inactive tab panels or for whichever slides the carousel is not showing at the moment. When `display: none;` is applied to an element, the assumption is generally that users will _not_ be able to experience that element, and often that it would be confusing or misleading for them to.
+
+Browsers take `display: none;`, as well as similar rules such as `visibility: hidden;` and `width: 0px; height: 0px;`, as cues that the elements aren't meant to be read by _anyone_, and will remove the relevant elements from the accessibility tree accordingly. This is why we resort to tricks such as [placing the elements far off screen](https://webaim.org/techniques/css/invisiblecontent/#offscreen) or [clipping the elements to be really small](https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html#hiding-content-visually) to expose information to screenreader users only.
+
+### Redefining Semantics
+
+In the Safari test of the bulletless list, VoiceOver stopped treating the list as a list.
+
+## An Obligatory Mention of the CSS Speech Module
+
+## Conclusion
+
+## Footnotes
+
+https://webaim.org/blog/screen-readers-and-css/
+
+https://caniuse.com/#feat=css-marker-pseudo

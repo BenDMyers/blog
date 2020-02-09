@@ -82,9 +82,15 @@ However, `display: none;` is generally used as a toggle, to save the trouble of 
 
 Browsers take `display: none;`, as well as similar rules such as `visibility: hidden;` and `width: 0px; height: 0px;`, as cues that the elements aren't meant to be read by _anyone_, and will remove the relevant elements from the accessibility tree accordingly. This is why we resort to tricks such as [placing the elements far off screen](https://webaim.org/techniques/css/invisiblecontent/#offscreen) or [clipping the elements to be really small](https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html#hiding-content-visually) to expose information to screenreader users only.
 
-### Redefining Semantics
+### Nullifying Semantics
 
-In the Safari test of the bulletless list, VoiceOver stopped treating the list as a list.
+When a user reaches a list in Safari, VoiceOver will usually say something like "list, 2 items." When the user navigates between items, VoiceOver tells them where they are in the list, e.g. "1 of 2." However, as we saw earlier, applying `list-style: none;` to the list changed the user's experience entirely. VoiceOver no longer said "list, 2 items," nor did it tell the user how far into the list they were. Instead, it just treated every item as a plain text node. It seems as though Safari's engineers decided lists without bullets or other markers aren't listy enough, and decided to instead nullify the list's semantics.
+
+Another example of considerations of CSS when determining semantics would be tables. Even though tables are supposed to represent tabular data, developers used to (and still sometimes do) put pieces of the page into a table in order to define the layout in terms of rows and columns. In these cases, table semantics are inaccurate.
+
+Browsers like Chrome<Fn fn="chrome" /> and Firefox<Fn fn="firefox" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid|...` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="adrian" />
+
+Apparently, `display` loves nullifying elements' semantics...
 
 ## An Obligatory Mention of the CSS Speech Module
 

@@ -1,6 +1,6 @@
 ---
 title: "CSS Can Influence Screenreaders"
-date: 2020-02-10
+date: 2020-02-11
 description: How CSS bleeds into content and influences screenreader announcements.
 cover: 'https://i.imgur.com/Qyc472t.jpg'
 coveralt: Apples with a bunch of bananas
@@ -54,13 +54,13 @@ As much as the web development community talks about the separation of content a
 
 What kinds of CSS-based optimizations or modifications do browsers make to the accessibility tree? Below, I've listed a few kinds that I know of. I'm sure it's not exhaustive. More importantly, these impacts will depend heavily on the user's choice of operating system, browser, and assistive technology. On the WebAIM blog, John Northup cautions us,
 
-> "It’s tempting to assert that if you do <i>x</i>, 'the screen reader' will announce <i>y</i>. Sometimes it really is just that simple, but in a surprising number of situations, it just isn’t that absolute." <i><Fn fn="webaim" /></i>
+> "It’s tempting to assert that if you do <i>x</i>, 'the screen reader' will announce <i>y</i>. Sometimes it really is just that simple, but in a surprising number of situations, it just isn’t that absolute." <i><Fn fn="1" /></i>
 
 Be sure to test each of the following on many different browsers and with many different screenreaders.
 
 ### CSS-Generated Content
 
-The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://www.w3.org/TR/css-lists-3/) pseudo-element,<Fn fn="caniuse" /> which injects a bullet point, number, or other indicator before a list item.
+The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://www.w3.org/TR/css-lists-3/) pseudo-element,<Fn fn="2" /> which injects a bullet point, number, or other indicator before a list item.
 
 We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) and [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) pseudo-elements to inject content.
 
@@ -100,7 +100,7 @@ When a user reaches a list in Safari, VoiceOver will usually say something like 
 
 Another example of considerations of CSS when determining semantics would be tables. Even though tables are supposed to represent tabular data, developers used to (and still sometimes do) put pieces of the page into a table in order to define the layout in terms of rows and columns. In these cases, table semantics are inaccurate.
 
-Browsers like Chrome<Fn fn="chrome" /> and Firefox<Fn fn="firefox" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="tpg" /><Fn fn="adrian" />
+Browsers like Chrome<Fn fn="chrome" /> and Firefox<Fn fn="firefox" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="3" /><Fn fn="4" />
 
 Apparently, `display` loves changing if and how elements are announced by screenreaders...
 
@@ -110,7 +110,7 @@ It doesn't quite fit into this post's theme of browsers optimizing accessibility
 
 CSS2 contained specs for [aural stylesheets](https://www.w3.org/TR/CSS21/aural.html#aural-media-group), which could define speech synthesis properties for screenreaders and any other device that would read a webpage aloud. These properties included volume, pitch, family (i.e. which voice was even used), audio cues that could be announced before and after elements, and more. This was replaced by the [`speech` media type](https://www.w3.org/TR/CSS21/media.html%23media-types) in CSS 2.1, which had no defined properties or values. It was just a reserved keyword.
 
-In 2012, <abbr title="World Wide Web Consortium">W3C</abbr> released the [CSS Speech Module](https://www.w3.org/TR/2018/NOTE-css3-speech-20180605/) for CSS3 as a Candidate Recommendation to get implementation experience and feedback before formally recommending it. The module was fairly similar to the old aural stylesheets of CSS2, with some additions.<Fn fn="joch" /> For instance, the new `speak-as` property dictated how verbose speech synthesizers would be when reading out an element—e.g. spelling out every letter, reading digits individually, or announcing every punctuation mark. Additionally, we could distinguish regular content and live alerts with different voices. However, the module received limited support, and was retired in 2018.<Fn fn="w3c" />
+In 2012, <abbr title="World Wide Web Consortium">W3C</abbr> released the [CSS Speech Module](https://www.w3.org/TR/2018/NOTE-css3-speech-20180605/) for CSS3 as a Candidate Recommendation to get implementation experience and feedback before formally recommending it. The module was fairly similar to the old aural stylesheets of CSS2, with some additions.<Fn fn="5" /> For instance, the new `speak-as` property dictated how verbose speech synthesizers would be when reading out an element—e.g. spelling out every letter, reading digits individually, or announcing every punctuation mark. Additionally, we could distinguish regular content and live alerts with different voices. However, the module received limited support, and was retired in 2018.<Fn fn="6" />
 
 As of February 2020, it seems like the CSS Speech Module might be making a comeback with a [new Candidate Recommendation](https://drafts.csswg.org/css-speech-1/). If this recommendation sees a more widespread adoption, we can expect to use CSS to influence screenreaders even more.
 
@@ -118,16 +118,11 @@ As of February 2020, it seems like the CSS Speech Module might be making a comeb
 
 With CSS, there is a gray area, for better or for worse, between content and its presentation. When CSS bleeds into content, it can convey important information that might be lost to screenreader users. Browsers have gotten really smart about how they expose that information to screenreaders, but that means that our styles can change screenreader users' experience in unexpected ways. As always, be sure to test with many screenreaders on many browsers and many platforms.
 
-## Footnotes
-
-https://webaim.org/blog/screen-readers-and-css/
-
-https://caniuse.com/#feat=css-marker-pseudo
-
-https://developer.paciellogroup.com/blog/2018/03/short-note-on-what-css-display-properties-do-to-table-semantics/
-
-https://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html#TheTweet
-
-https://medium.com/@Zwenza/the-css-speech-module-8672a87a4764
-
-https://www.w3.org/standards/history/css3-speech
+<FootnotesContainer>
+    <Footnote fn="1" author="John Northup" publication="WebAIM" title="Screen Readers and CSS: Are We Going Out of Style (and into Content)?" url="https://webaim.org/blog/screen-readers-and-css/" />
+    <Footnote fn="2" author="Can I use..." title="CSS ::marker pseudo-element" url="https://caniuse.com/#feat=css-marker-pseudo" />
+    <Footnote fn="3" author="Steve Faulkner" publication="The Paciello Group" title="Short note on what CSS display properties do to table semantics" url="https://developer.paciellogroup.com/blog/2018/03/short-note-on-what-css-display-properties-do-to-table-semantics/" />
+    <Footnote fn="4" author="Adrian Roselli" title="Tables, CSS Display Properties, and ARIA" url="https://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html#TheTweet" />
+    <Footnote fn="5" author="David Jöch" title="The CSS Speech Module" url="https://medium.com/@Zwenza/the-css-speech-module-8672a87a4764" />
+    <Footnote fn="6" author="W3C" title="CSS Speech Module Publication History" url="https://www.w3.org/standards/history/css3-speech" />
+</FootnotesContainer>

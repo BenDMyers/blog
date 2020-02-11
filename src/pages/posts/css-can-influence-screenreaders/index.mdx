@@ -119,7 +119,7 @@ Browsers take `display: none;`, as well as similar rules such as `visibility: hi
 
 ### Nullifying Semantics
 
-When a user reaches a list in Safari, VoiceOver will usually say something like "list, 2 items." When the user navigates between items, VoiceOver tells them where they are in the list, e.g. "1 of 2." However, as we saw earlier, applying `list-style: none;` to the list changed the user's experience entirely. VoiceOver no longer said "list, 2 items," nor did it tell the user how far into the list they were. Instead, it just treated every item as a plain text node. It seems as though Safari's engineers decided lists without bullets or other markers aren't listy enough, and decided to instead nullify the list's semantics.
+When a user reaches a list in Safari, VoiceOver will usually say something like "list, 2 items." When the user navigates between items, VoiceOver tells them where they are in the list, e.g. "1 of 2." However, as we saw earlier, applying `list-style: none;` to the list changed the user's experience entirely. VoiceOver no longer said "list, 2 items," nor did it tell the user how far into the list they were. Instead, it just treated every item as a plain text node. It seems as though Safari's engineers decided lists without bullets or other markers aren't listy enough, and decided to instead nullify the list's semantics. Alternatively, it could be a bug.
 
 Tables are another area where CSS can lead to changed semantics. Even though tables are supposed to represent tabular data, developers used to (and still sometimes do) put pieces of the page into a table in order to define the layout in terms of rows and columns. In these cases, table semantics are inaccurate.
 

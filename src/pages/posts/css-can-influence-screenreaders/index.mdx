@@ -41,6 +41,8 @@ I was able to test the two lists with [NVDA](https://www.nvaccess.org/download/)
 
 * Most surprisingly, Safari with VoiceOver didn't treat the bulletless list as a list at all, omitting any announcements about how many items were in the list.
 
+... Huh.
+
 As we keep building our hypothetical shopping list app, we implement a feature to let users add new items, complete with a shiny new "Add" button. Say we'll even set it to be all uppercase with CSS.
 
 <SideBySide>
@@ -58,17 +60,17 @@ As we keep building our hypothetical shopping list app, we implement a feature t
     </div>
 </SideBySide>
 
-Upon testing the page with screenreaders, our screenreader's readout confirms that the screenreader is receiving the "ADD" text in all caps. Usually, it's totally fine for a screenreader to receive a word in all caps—they're usually smart enough to realize it's just a capitalized word. If you navigate to the above button with VoiceOver, however, you'll learn that VoiceOver has confused the capitalized "ADD" button for the acronym A.D.D.
+Upon testing the page with screenreaders, our screenreader's readout confirms that it is receiving the "ADD" text in all caps. Usually, it's totally fine for a screenreader to receive a word in all caps—they're usually smart enough to realize it's just a capitalized word. If you navigate to the above button with VoiceOver, however, you'll learn that VoiceOver has confused the capitalized "ADD" button for the acronym A.D.D.—something it _definitely_ wouldn't have done if we hadn't changed the CSS.
 
-These cases of CSS messing with our screenreader announcements are initially shocking, perplexing, and maybe even appalling. They seem to conflict with our mental model of CSS, one that's likely been instilled in us since we started learning web development: HTML is for content, and CSS is for visual appearance. It's the separation of content and presentation. Here, by changing what screenreaders announce, it feels like CSS is encroaching on content territory.
+These cases of CSS messing with our screenreader announcements are initially shocking, perplexing, and maybe even appalling. After all, they seem to conflict with our mental model of CSS, one that's likely been instilled in us since we started learning web development: HTML is for content, and CSS is for visual appearance. It's the separation of content and presentation. Here, by changing what screenreaders announce, it feels like CSS is encroaching on content territory.
 
-What is happening here? Should we worry about every CSS rule possibly changing screenreader announcements?
+What is happening here? Do we need to worry about every CSS rule changing screenreader announcements?
 
 ## Smart Browsers
 
 Screenreaders aren't actually looking at the CSS.
 
-Browsers package up an alternate version of the DOM, called the [accessibility tree](/accessibility-tree), which it then exposes to screenreaders and other assistive technologies by way of the user's operating system. Every element in the tree is defined as a set of properties that describe the element's purpose and functionality. Screenreaders peruse the tree to know what to announce. Thanks to the hard work of browsers' developers, browsers have gotten really smart at building the tree. They can account for web developers' tricks—whether best practices or bad habits—and curate a more usable accessibility tree.
+Browsers package up an alternate version of the DOM, called the [accessibility tree](/accessibility-tree), which it passes to the user's operating system for screenreaders and other assistive technology to consume. Every element in the tree is defined as a set of properties that describe the element's purpose and functionality. Screenreaders peruse the tree to know what to announce. Thanks to the hard work of browser engineers, browsers have gotten really smart about building the tree. They can account for web developers' tricks—whether best practices or bad habits—and curate a more usable accessibility tree.
 
 As much as the web development community talks about the separation of content and presentation, the truth is that it's not that easy. Between using pseudo-elements and toggling `display: none;` on elements to show or hide them, it's clear there can be a bit of a gray area between content and its presentation. This gray area provides a key space for browsers to optimize their accessibility trees, giving all screenreader users the same experience of the content as sighted users.
 
@@ -82,7 +84,7 @@ Be sure to test each of the following on many different browsers and with many d
 
 ### CSS-Generated Content
 
-The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://www.w3.org/TR/css-lists-3/) pseudo-element,<Fn fn="2" /> which injects a bullet point, number, or other indicator before a list item.
+The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://www.w3.org/TR/css-lists-3/#markers) pseudo-element,<Fn fn="2" /> which injects a bullet point, number, or other indicator before a list item.
 
 We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) and [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) pseudo-elements to inject content.
 

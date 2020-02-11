@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import {Breadcrumb} from 'gatsby-plugin-breadcrumb';
 
 import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
@@ -57,6 +58,12 @@ const PostTemplate = (props) => {
             <PostSeo {...post.frontmatter} />
             <article>
                 <Title {...post.frontmatter} />
+                <div style={{paddingLeft: '3%', paddingBottom: '2%'}}>
+                    <Breadcrumb
+                        crumbs={props.pageContext.breadcrumb.crumbs}
+                        crumbLabel={post.frontmatter.title}
+                    />
+                </div>
                 <section className="post-contents">
                     <MDXProvider components={layoutComponents}>
                         <MDXRenderer>{post.body}</MDXRenderer>

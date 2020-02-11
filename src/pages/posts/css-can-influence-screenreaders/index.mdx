@@ -8,13 +8,13 @@ emoji: 🍌
 tags: ["web accessibility", "accessibility", "web development", "accessibility tree"]
 ---
 
-import EditButton from '../../../examples/css-impacts-screenreaders/EditButton';
 import ListItemsSnippet from '../../../examples/css-impacts-screenreaders/listItemsSnippet';
 import ListItemsStyleSnippet from '../../../examples/css-impacts-screenreaders/listItemsStyleSnippet';
 import ListItemsDemo from '../../../examples/css-impacts-screenreaders/listItemsDemo';
 import ListItemsStyleDemo from '../../../examples/css-impacts-screenreaders/listItemsStyleDemo';
 import AddButtonSnippet from '../../../examples/css-impacts-screenreaders/addButtonSnippet';
 import AddButtonStyleSnippet from '../../../examples/css-impacts-screenreaders/addButtonStyleSnippet';
+import PseudoSnippet from '../../../examples/css-impacts-screenreaders/pseudoSnippet';
 
 ## Introduction
 
@@ -86,13 +86,12 @@ The clearest instance of CSS-as-content is _pseudo-elements_, which can inject c
 
 We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) and [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) pseudo-elements to inject content.
 
-```css {numberLines: true}
-button.edit::before {
-    content: "✏️ ";
-}
-```
-
-<EditButton />
+<SideBySide>
+    <div><PseudoSnippet /></div>
+    <div style="text-align: center;" class="demo">
+        <button class="edit" style="margin: 10px;">Edit</button>
+    </div>
+</SideBySide>
 
 If you navigate to the above button with a screenreader, you'll likely hear something like "button, pencil, Edit," assuming your screenreader supports emojis. Lately, browsers interpret the content defined in pseudo-elements as... content. It impacts how sighted users experience the page (and users don't really care whether their content is _real_ content or _pseudo_ content), so browsers judge that they need to expose it to screenreaders.
 

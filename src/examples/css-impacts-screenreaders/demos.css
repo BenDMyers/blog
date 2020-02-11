@@ -3,6 +3,7 @@ div.demo {
     font-family: 'Montserrat', sans-serif;
     padding-top: 2.5%;
     padding-bottom: 2.5%;
+    height: 100%;
 }
 
 .dark-mode div.demo {

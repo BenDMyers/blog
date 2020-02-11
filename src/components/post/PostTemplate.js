@@ -58,7 +58,7 @@ const PostTemplate = (props) => {
             <PostSeo {...post.frontmatter} />
             <article>
                 <Title {...post.frontmatter} />
-                <div style={{paddingLeft: '3%', paddingBottom: '2%'}}>
+                <div aria-roledescription="breadcrumbs" style={{paddingLeft: '3%', paddingBottom: '2%'}}>
                     <Breadcrumb
                         crumbs={props.pageContext.breadcrumb.crumbs}
                         crumbLabel={post.frontmatter.title}

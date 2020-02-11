@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
+import {Breadcrumb} from 'gatsby-plugin-breadcrumb';
 
 import Bio from '../common/Bio';
 import Page from '../common/PageTemplate';
@@ -14,6 +15,7 @@ import FootnotesContainer from './Footnotes/FootnotesContainer';
 import Lorem from './Lorem';
 import PostNav from './PostNav';
 import PostSeo from './PostSeo';
+import SideBySide from './SideBySide';
 import Tabs from './Tabs';
 import TabbedCodeBlock from './Tabs/TabbedCodeBlock';
 import TOC from './TableOfContents';
@@ -38,6 +40,7 @@ const PostTemplate = (props) => {
         hr: () => <hr role="presentation" />,
         Lorem,
         pre: (props) => <CodeBlock {...props} />,
+        SideBySide,
         Tabs,
         TabbedCodeBlock,
         TOC: (props) => <TOC headings={post.tableOfContents} {...props} />,
@@ -55,6 +58,12 @@ const PostTemplate = (props) => {
             <PostSeo {...post.frontmatter} />
             <article>
                 <Title {...post.frontmatter} />
+                <div aria-roledescription="breadcrumbs" style={{paddingLeft: '3%', paddingBottom: '2%'}}>
+                    <Breadcrumb
+                        crumbs={props.pageContext.breadcrumb.crumbs}
+                        crumbLabel={post.frontmatter.title}
+                    />
+                </div>
                 <section className="post-contents">
                     <MDXProvider components={layoutComponents}>
                         <MDXRenderer>{post.body}</MDXRenderer>

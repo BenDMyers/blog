@@ -1,0 +1,153 @@
+---
+title: "CSS Can Influence Screenreaders"
+date: 2020-02-11
+description: How CSS bleeds into content and influences screenreader announcements.
+cover: 'https://i.imgur.com/Qyc472t.jpg'
+coveralt: Apples with a bunch of bananas
+emoji: 🍌
+tags: ["web accessibility", "accessibility", "web development", "accessibility tree", "css"]
+---
+
+import ListItemsSnippet from '../../../examples/css-impacts-screenreaders/listItemsSnippet';
+import ListItemsStyleSnippet from '../../../examples/css-impacts-screenreaders/listItemsStyleSnippet';
+import ListItemsDemo from '../../../examples/css-impacts-screenreaders/listItemsDemo';
+import ListItemsStyleDemo from '../../../examples/css-impacts-screenreaders/listItemsStyleDemo';
+import AddButtonSnippet from '../../../examples/css-impacts-screenreaders/addButtonSnippet';
+import AddButtonStyleSnippet from '../../../examples/css-impacts-screenreaders/addButtonStyleSnippet';
+import PseudoSnippet from '../../../examples/css-impacts-screenreaders/pseudoSnippet';
+
+## Introduction
+
+Let's say we're building a shopping list app. As we build out the app, we decide to style the list, stripping out the bullets that the browser gives us by default.
+
+<SideBySide>
+    <div>
+        <ListItemsSnippet />
+        <ListItemsDemo />
+    </div>
+    <div>
+        <ListItemsStyleSnippet />
+        <ListItemsStyleDemo />
+    </div>
+</SideBySide>
+
+Being dutiful accessibility testers, let's run our screenreaders over the two lists. Pause for a moment and ask yourself: **do you expect any difference between how the two lists are announced? Why or why not?**
+
+I was able to test the two lists with [NVDA](https://www.nvaccess.org/download/) for Windows and [VoiceOver](https://www.apple.com/accessibility/mac/vision/) for macOS. I ran NVDA against the lists on Chrome, Firefox, and even Internet Explorer. I ran VoiceOver against Chrome and Safari. Here's what I found:
+
+* When I tested against the first, bulleted list, the screenreaders always told me how many items were in the list and preluded each list item with "bullet."
+
+* When I tested against the second, bulletless list, the screenreaders never said "bullet."
+
+* Most surprisingly, Safari with VoiceOver didn't treat the bulletless list as a list at all, omitting any announcements about how many items were in the list.
+
+... Huh.
+
+As we keep building our hypothetical shopping list app, we implement a feature to let users add new items, complete with a shiny new "Add" button. We'll even set it to be all uppercase with CSS.
+
+<SideBySide>
+    <div>
+        <AddButtonSnippet />
+        <div class="demo" style="text-align: center;">
+            <button style="margin: 10px; width: 5rem;">Add</button>
+        </div>
+    </div>
+    <div>
+        <AddButtonStyleSnippet />
+        <div class="demo" style="text-align: center;">
+            <button style="margin: 10px; width: 5rem; text-transform: uppercase;">Add</button>
+        </div>
+    </div>
+</SideBySide>
+
+Upon testing the page with screenreaders, our screenreader's readout confirms that it is receiving the "ADD" text in all caps. Usually, it's totally fine for a screenreader to receive a word in all caps—they're usually smart enough to realize it's just a capitalized word. If you navigate to the above button with VoiceOver, however, you'll learn that VoiceOver has confused the capitalized "ADD" button for the acronym A.D.D.—something it _definitely_ wouldn't have done if we hadn't changed the CSS.
+
+These cases of CSS messing with our screenreader announcements are initially shocking, perplexing, and maybe even appalling. After all, they seem to conflict with our mental model of CSS, one that's likely been instilled in us since we started learning web development: HTML is for content, and CSS is for visual appearance. It's the separation of content and presentation. Here, by changing what screenreaders announce, it feels like CSS is encroaching on content territory.
+
+What is happening here? Do we need to worry about every CSS rule changing screenreader announcements?
+
+## Smart Browsers
+
+Screenreaders aren't actually looking at the CSS.
+
+Browsers package up an alternate version of the DOM, called the [accessibility tree](/accessibility-tree), which it passes to the user's operating system for screenreaders and other assistive technology to consume. Every element in the tree is defined as a set of properties that describe the element's purpose and functionality. Screenreaders peruse the tree to know what to announce. Thanks to the hard work of browser engineers, browsers have gotten really smart about building the tree. They can account for web developers' tricks—whether best practices or bad habits—and curate a more usable accessibility tree.
+
+As much as the web development community talks about the separation of content and presentation, the truth is that it's not that easy. Between using pseudo-elements and toggling `display: none;` on elements to show or hide them, it's clear there can be a bit of a gray area between content and its presentation. This gray area provides a key space for browsers to optimize their accessibility trees, giving all screenreader users the same experience of the content as sighted users.
+
+## CSS's Potential Influences on Screenreaders
+
+What kinds of CSS-based optimizations or modifications do browsers make to the accessibility tree? Below, I've listed a few kinds that I know of. I'm sure it's not exhaustive. More importantly, these impacts will depend heavily on the user's choice of operating system, browser, and assistive technology. On the WebAIM blog, John Northup cautions us,
+
+> "It’s tempting to assert that if you do <i>x</i>, 'the screen reader' will announce <i>y</i>. Sometimes it really is just that simple, but in a surprising number of situations, it just isn’t that absolute." <i><Fn fn="1" /></i>
+
+Be sure to test each of the following on many different browsers and with many different screenreaders.
+
+### CSS-Generated Content
+
+The clearest instance of CSS-as-content is _pseudo-elements_, which can inject content into the page without adding it to the DOM. For instance, Firefox and Safari both support the [`::marker`](https://www.w3.org/TR/css-lists-3/#markers) pseudo-element,<Fn fn="2" /> which injects a bullet point, number, or other indicator before a list item.
+
+We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CSS/::before) and [`::after`](https://developer.mozilla.org/en-US/docs/Web/CSS/::after) pseudo-elements to inject content.
+
+<SideBySide>
+    <div><PseudoSnippet /></div>
+    <div style="text-align: center;" class="demo">
+        <button class="edit" style="margin: 10px;">Edit</button>
+    </div>
+</SideBySide>
+
+If you navigate to the above button with a screenreader, you'll likely hear something like "button, pencil, Edit," assuming your screenreader supports emojis. Lately, browsers interpret the content defined in pseudo-elements as... content. It impacts how sighted users experience the page (and users don't really care whether their content is _real_ content or _pseudo_ content), so browsers judge that they need to expose it to screenreaders.
+
+This judgment call comes from the <abbr title="World Wide Web Consortium">W3C</abbr> specs for determining an element's [accessible name](http://localhost:8000/aria/#name), i.e. how it's announced by screenreaders:
+
+<Blockquote attribution={<a href="https://www.w3.org/TR/accname-1.1/#step2F.ii">Accessible Name and Description Computation 1.1, Step 2(F)(ii)</a>}>
+    <>
+    <p>Check for CSS generated textual content associated with the current node and include it in the accumulated text. The CSS <code>:before</code> and <code>:after</code> pseudo elements can provide textual content for elements that have a content model.</p>
+    <ul>
+        <li>For <code>:before</code> pseudo elements, User agents <em>MUST</em> prepend CSS textual content, without a space, to the textual content of the current node.</li>
+        <li>For <code>:after</code> pseudo elements, User agents <em>MUST</em> append CSS textual content, without a space, to the textual content of the current node.</li>
+    </ul>
+    </>
+</Blockquote>
+
+### Hidden Content
+
+Sometimes, we find ourselves wanting to hide something visually, but still expose it to screenreaders, usually to provide a hint for context that would be obvious visually. In these cases, it's tempting to specify `display: none;`. That would hide the contents, but still leave them in the DOM. Mission accomplished, right?
+
+However, `display: none;` is generally used as a toggle, to save the trouble of recreating and reinserting content on command. For instance, you could use `display: none;` for inactive tab panels or for whichever slides the carousel is not showing at the moment. When `display: none;` is applied to an element, the assumption is generally that users will _not_ be able to experience that element, and often that it would be confusing or misleading for them to.
+
+Browsers take `display: none;`, as well as similar rules such as `visibility: hidden;` and `width: 0px; height: 0px;`, as cues that the elements aren't meant to be read by _anyone_, and will remove the relevant elements from the accessibility tree accordingly. This is why we resort to tricks such as [placing the elements far off screen](https://webaim.org/techniques/css/invisiblecontent/#offscreen) or [clipping the elements to be really small](https://www.scottohara.me/blog/2017/04/14/inclusively-hidden.html#hiding-content-visually) to expose information to screenreader users only.
+
+### Nullifying Semantics
+
+When a user reaches a list in Safari, VoiceOver will usually say something like "list, 2 items." When the user navigates between items, VoiceOver tells them where they are in the list, e.g. "1 of 2." However, as we saw earlier, applying `list-style: none;` to the list changed the user's experience entirely. VoiceOver no longer said "list, 2 items," nor did it tell the user how far into the list they were. Instead, it just treated every item as a plain text node. It seems as though Safari's engineers decided lists without bullets or other markers aren't listy enough, and decided to instead nullify the list's semantics. Alternatively, it could be a bug.
+
+Tables are another area where CSS can lead to changed semantics. Even though tables are supposed to represent tabular data, developers used to (and still sometimes do) put pieces of the page into a table in order to define the layout in terms of rows and columns. In these cases, table semantics are inaccurate.
+
+Browsers like Chrome<Fn fn="5" /> and Firefox<Fn fn="6" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="3" /><Fn fn="4" />
+
+Apparently, `display` loves changing if and how elements are announced by screenreaders...
+
+## An Obligatory Mention of the CSS Speech Module
+
+It doesn't quite fit into this post's theme of browsers optimizing accessibility trees, but a post about how CSS can influence screenreaders would be remiss without a mention of CSS Speech.
+
+CSS2 contained specs for [aural stylesheets](https://www.w3.org/TR/CSS21/aural.html#aural-media-group), which could define speech synthesis properties for screenreaders and any other device that would read a webpage aloud. These properties included volume, pitch, family (i.e. which voice was even used), audio cues that could be announced before and after elements, and more. This was replaced by the [`speech` media type](https://www.w3.org/TR/CSS21/media.html%23media-types) in CSS 2.1, which had no defined properties or values. It was just a reserved keyword.
+
+In 2012, <abbr title="World Wide Web Consortium">W3C</abbr> released the [CSS Speech Module](https://www.w3.org/TR/2018/NOTE-css3-speech-20180605/) for CSS3 as a Candidate Recommendation to get implementation experience and feedback before formally recommending it. The module was fairly similar to the old aural stylesheets of CSS2, with some additions.<Fn fn="7" /> For instance, the new `speak-as` property dictated how verbose speech synthesizers would be when reading out an element—e.g. spelling out every letter, reading digits individually, or announcing every punctuation mark. Additionally, we could distinguish regular content and live alerts with different voices. However, the module received limited support, and was retired in 2018.<Fn fn="8" />
+
+As of February 2020, it seems like the CSS Speech Module might be making a comeback with a [new Candidate Recommendation](https://drafts.csswg.org/css-speech-1/). If this recommendation sees a more widespread adoption, we can expect to use CSS to influence screenreaders even more.
+
+## Conclusion
+
+With CSS, there is a gray area, for better or for worse, between content and its presentation. When CSS bleeds into content, it can convey important information that might be lost to screenreader users. Browsers have gotten really smart about how they expose that information to screenreaders, but that means that our styles can change screenreader users' experience in unexpected ways. As always, be sure to test with many screenreaders on many browsers and many platforms.
+
+<FootnotesContainer>
+    <Footnote fn="1" author="John Northup" publication="WebAIM" title="Screen Readers and CSS: Are We Going Out of Style (and into Content)?" url="https://webaim.org/blog/screen-readers-and-css/" />
+    <Footnote fn="2" author="Can I use..." title="CSS ::marker pseudo-element" url="https://caniuse.com/#feat=css-marker-pseudo" />
+    <Footnote fn="3" author="Steve Faulkner" publication="The Paciello Group" title="Short note on what CSS display properties do to table semantics" url="https://developer.paciellogroup.com/blog/2018/03/short-note-on-what-css-display-properties-do-to-table-semantics/" />
+    <Footnote fn="4" author="Adrian Roselli" title="Tables, CSS Display Properties, and ARIA" url="https://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html#TheTweet" />
+    <Footnote fn="5" title="Chromium source code" url="https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/accessibility/AXTable.cpp" />
+    <Footnote fn="6" title="Firefox source code" url="https://dxr.mozilla.org/mozilla-central/source/accessible/generic/TableAccessible.cpp" />
+    <Footnote fn="7" author="David Jöch" title="The CSS Speech Module" url="https://medium.com/@Zwenza/the-css-speech-module-8672a87a4764" />
+    <Footnote fn="8" title="CSS Speech Module Publication History" url="https://www.w3.org/standards/history/css3-speech" />
+</FootnotesContainer>

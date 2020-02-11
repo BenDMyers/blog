@@ -1,5 +1,5 @@
 .post-header {
-	padding: 10%;
+    padding: 10% 12.5%;
 	text-align: center;
 	font-family: 'Lato';
 	margin-bottom: 3%;
@@ -16,7 +16,29 @@ p.post-header-date {
 	font-style: italic;
 	font-weight: bold;
 	font-size: 150%;
-	color: #e7e7e7;
+    /* color: #e7e7e7; */
+    color: #cccccc;
+    margin-top: 1%;
+}
+
+p.post-header-date a span.name {
+    color: #cccccc;
+    text-decoration: underline;
+    text-decoration-color: var(--theme-color);
+}
+
+p.post-header-date a:hover {
+    opacity: 0.7;
+}
+
+p.post-header-date a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+p.post-header-date a:focus span.name {
+    outline: 3px dashed var(--theme-color-focus-outline);
+    text-decoration: none;
 }
 
 .post-header.with-cover {
@@ -35,4 +57,15 @@ p.post-header-date {
 	p.post-header-date {
 		font-size: 100%;
 	}
+}
+
+.post-header + section.post-contents h2 {
+    margin-top: 6%;
+}
+
+.post-header .header-avatar {
+    vertical-align: middle;
+    margin-top: -1%;
+    box-shadow: 2px 1.5px 5px 2px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
 }

@@ -52,7 +52,8 @@ var theme /*: PrismTheme */ = {
                 "attr-name",
                 "deleted",
                 "primitive",
-                "hexcode"
+                "hexcode",
+                "class"
             ],
             style: {
                 color: colors.primitive,
@@ -72,7 +73,7 @@ var theme /*: PrismTheme */ = {
             },
         },
         {
-            types: ["operator", "entity", "url", "class-name"],
+            types: ["operator", "entity", "url", "class-name", "pseudo-element", "pseudo-class"],
             style: {
                 color: colors.operator,
             },
@@ -84,7 +85,7 @@ var theme /*: PrismTheme */ = {
             },
         },
         {
-            types: ["function", "label"],
+            types: ["function", "label", "id"],
             style: {
                 color: colors.function,
             },

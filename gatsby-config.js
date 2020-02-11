@@ -90,7 +90,14 @@ module.exports = {
 					`gatsby-remark-smartypants`
 				]
 			}
-		},
+        },
+        {
+            resolve: `gatsby-plugin-breadcrumb`,
+            options: {
+                useAutoGen: true,
+            },
+            useClassNames: true
+        },
 		`gatsby-transformer-sharp`,
 		`gatsby-plugin-sharp`,
 		{

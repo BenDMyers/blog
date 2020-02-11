@@ -13,6 +13,7 @@
     "@weknow/gatsby-remark-codepen": "^0.1.0",
     "gatsby": "^2.15.26",
     "gatsby-image": "^2.2.21",
+    "gatsby-plugin-breadcrumb": "^7.0.0",
     "gatsby-plugin-feed": "^2.3.13",
     "gatsby-plugin-feed-generator": "^2.0.3",
     "gatsby-plugin-google-analytics": "^2.1.17",

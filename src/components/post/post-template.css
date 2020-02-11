@@ -142,3 +142,21 @@ section.post-contents .vaporwave {
     font-style: italic;
     letter-spacing: 0.3em;
 }
+
+div.breadcrumb a.breadcrumb__link {
+    font-size: 14px !important;
+    color: var(--link-color) !important;
+}
+
+div.breadcrumb a.breadcrumb__link:focus {
+    color: var(--link-effect-color) !important;
+}
+
+div.breadcrumb a.breadcrumb__link:hover {
+    color: var(--link-effect-color) !important;
+    text-decoration: underline !important;
+}
+
+div.breadcrumb span.breadcrumb__separator {
+    font-size: 14px !important;
+}

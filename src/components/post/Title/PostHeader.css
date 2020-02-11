@@ -37,7 +37,7 @@ p.post-header-date a:focus {
 }
 
 p.post-header-date a:focus span.name {
-    outline: 2px dashed var(--theme-color-focus-outline);
+    outline: 3px dashed var(--theme-color-focus-outline);
     text-decoration: none;
 }
 

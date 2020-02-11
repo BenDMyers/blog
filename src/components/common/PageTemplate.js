@@ -18,9 +18,11 @@ const layoutStyles = {
  * Contains a header, contents, and a footer. Simple.
  */
 const Page = (props) => {
+    let isHomepage = props.location.pathname === '/';
+    let pageClass = isHomepage ? 'home' : '';
 	return (
-		<div className="layout" style={layoutStyles}>
-			<BlogHeader pathname={props.location.pathname} />
+		<div className={`layout ${pageClass}`} style={layoutStyles}>
+			{isHomepage && <BlogHeader pathname={props.location.pathname} />}
 			<DarkModeToggle />
 			<SEO title={props.title} description={props.description} />
 			<main>{props.children}</main>

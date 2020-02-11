@@ -48,6 +48,10 @@ body.dark-mode {
 	transition: background-color 0.5s ease-in, color 0.5s ease-in;
 }
 
+.layout:not(.home) {
+    padding-top: 0 !important;
+}
+
 body {
 	background-color: var(--background-color);
 	font-family: 'Roboto Slab', serif;

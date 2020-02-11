@@ -14,6 +14,7 @@ import FootnotesContainer from './Footnotes/FootnotesContainer';
 import Lorem from './Lorem';
 import PostNav from './PostNav';
 import PostSeo from './PostSeo';
+import SideBySide from './SideBySide';
 import Tabs from './Tabs';
 import TabbedCodeBlock from './Tabs/TabbedCodeBlock';
 import TOC from './TableOfContents';
@@ -38,6 +39,7 @@ const PostTemplate = (props) => {
         hr: () => <hr role="presentation" />,
         Lorem,
         pre: (props) => <CodeBlock {...props} />,
+        SideBySide,
         Tabs,
         TabbedCodeBlock,
         TOC: (props) => <TOC headings={post.tableOfContents} {...props} />,

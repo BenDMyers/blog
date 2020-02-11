@@ -28,6 +28,15 @@ Let's say we're building a shopping list app. Consider the two following snippet
 </ul>
 ```
 
+<SideBySide>
+    <div>
+        <button>Hello</button>
+    </div>
+    <div>
+        <button>Goodbye</button>
+    </div>
+</SideBySide>
+
 The latter snippet applies the `list-style: none;` CSS rule to hide those default bullets, presumably so we can add other styles to make the list prettier. Being dutiful accessibility testers, let's run our screenreaders over the two lists. Pause for a moment and ask yourself: **do you expect any difference between how the two lists are announced? Why or why not?**
 
 I was able to test the two lists with [NVDA](https://www.nvaccess.org/download/) for Windows and [VoiceOver](https://www.apple.com/accessibility/mac/vision/) for macOS. I ran NVDA against the lists on Chrome, Firefox, and even Internet Explorer. I ran VoiceOver against Chrome and Safari. Here's what I found:

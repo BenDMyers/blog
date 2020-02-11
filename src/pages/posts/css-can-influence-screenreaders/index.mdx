@@ -9,35 +9,29 @@ tags: ["web accessibility", "accessibility", "web development", "accessibility t
 ---
 
 import EditButton from '../../../examples/css-impacts-screenreaders/EditButton';
+import ListItemsSnippet from '../../../examples/css-impacts-screenreaders/listItemsSnippet';
+import ListItemsStyleSnippet from '../../../examples/css-impacts-screenreaders/listItemsStyleSnippet';
+import ListItemsDemo from '../../../examples/css-impacts-screenreaders/listItemsDemo';
+import ListItemsStyleDemo from '../../../examples/css-impacts-screenreaders/listItemsStyleDemo';
+import AddButtonSnippet from '../../../examples/css-impacts-screenreaders/addButtonSnippet';
+import AddButtonStyleSnippet from '../../../examples/css-impacts-screenreaders/addButtonStyleSnippet';
 
 ## Introduction
 
-Let's say we're building a shopping list app. Consider the two following snippets:
-
-```html {numberLines: true}
-<ul>
-    <li>Apples</li>
-    <li>Bananas</li>
-</ul>
-```
-
-```html {numberLines: true}
-<ul style="list-style: none;">
-    <li>Apples</li>
-    <li>Bananas</li>
-</ul>
-```
+Let's say we're building a shopping list app. As we build out the app, we decide to style the list, stripping out the bullets that the browser gives us by default.
 
 <SideBySide>
     <div>
-        <button>Hello</button>
+        <ListItemsSnippet />
+        <ListItemsDemo />
     </div>
     <div>
-        <button>Goodbye</button>
+        <ListItemsStyleSnippet />
+        <ListItemsStyleDemo />
     </div>
 </SideBySide>
 
-The latter snippet applies the `list-style: none;` CSS rule to hide those default bullets, presumably so we can add other styles to make the list prettier. Being dutiful accessibility testers, let's run our screenreaders over the two lists. Pause for a moment and ask yourself: **do you expect any difference between how the two lists are announced? Why or why not?**
+Being dutiful accessibility testers, let's run our screenreaders over the two lists. Pause for a moment and ask yourself: **do you expect any difference between how the two lists are announced? Why or why not?**
 
 I was able to test the two lists with [NVDA](https://www.nvaccess.org/download/) for Windows and [VoiceOver](https://www.apple.com/accessibility/mac/vision/) for macOS. I ran NVDA against the lists on Chrome, Firefox, and even Internet Explorer. I ran VoiceOver against Chrome and Safari. Here's what I found:
 
@@ -49,17 +43,20 @@ I was able to test the two lists with [NVDA](https://www.nvaccess.org/download/)
 
 As we keep building our hypothetical shopping list app, we implement a feature to let users add new items, complete with a shiny new "Add" button. Say we'll even set it to be all uppercase with CSS.
 
-```html {numberLines: true}
-<button>
-    Add
-</button>
-```
-
-```html {numberLines: true}
-<button style="text-transform: uppercase;">
-    Add
-</button>
-```
+<SideBySide>
+    <div>
+        <AddButtonSnippet />
+        <div class="demo" style="text-align: center;">
+            <button style="margin: 10px; width: 5rem;">Add</button>
+        </div>
+    </div>
+    <div>
+        <AddButtonStyleSnippet />
+        <div class="demo" style="text-align: center;">
+            <button style="margin: 10px; width: 5rem; text-transform: uppercase;">Add</button>
+        </div>
+    </div>
+</SideBySide>
 
 Upon testing the page with screenreaders, our screenreader's readout confirms that the screenreader is receiving the "ADD" text in all caps. Usually, it's totally fine for a screenreader to receive a word in all caps—they're usually smart enough to realize it's just a capitalized word. If you navigate to the above button with VoiceOver, however, you'll learn that VoiceOver has confused the capitalized "ADD" button for the acronym A.D.D.
 

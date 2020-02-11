@@ -3,7 +3,7 @@ div.side-by-side {
     margin: 0px auto;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 63rem) {
 	div.side-by-side {
         display: flex;
     }
@@ -13,25 +13,32 @@ div.side-by-side {
     }
 
     div.side-by-side--left {
-        border: 1px solid tomato;
+        /* border: 1px solid tomato; */
         margin-right: 1%;
     }
 
     div.side-by-side--right {
-        border: 1px solid turquoise;
+        /* border: 1px solid turquoise; */
         margin-left: 1%;
     }
 }
 
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 63rem) {
     div.side-by-side--left {
-        border: 1px solid greenyellow;
+        /* border: 1px solid greenyellow; */
         margin-bottom: 3%;
     }
 
     div.side-by-side--right {
-        border: 1px solid pink;
+        /* border: 1px solid pink; */
         margin-top: 3%;
     }
+}
+
+
+div.side-by-side pre.codeblock {
+    width: 100% !important;
+    margin: 0 !important;
+    display: block;
 }

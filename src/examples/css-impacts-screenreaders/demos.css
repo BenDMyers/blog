@@ -1,0 +1,50 @@
+div.demo {
+    background-color: #eee;
+    font-family: 'Montserrat', sans-serif;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+}
+
+.dark-mode div.demo {
+    background-color: #4f4f4f;
+}
+
+div.demo ul, div.demo li {
+    margin: 0;
+}
+
+div.demo button.edit::before {
+    content: "✏️ ";
+}
+
+div.demo button {
+	display: inline-block;
+	font-weight: bold;
+	text-align: center;
+	user-select: none;
+	border: 1px solid transparent;
+	padding: 0.5rem 0.75rem;
+	font-size: 1.25rem;
+	line-height: 1.5;
+	border-radius: 0.25rem;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+		border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+	color: #fff;
+	background-color: var(--theme-color);
+	border-color: var(--theme-color);
+	cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+div.demo button:hover {
+	color: #fff;
+	background-color: var(--theme-color-link-effect);
+	border-color: var(--theme-color-focus-outline);
+}
+
+div.demo button:focus {
+	outline: none;
+	-webkit-box-shadow: 0px 0px 5px 5px var(--link-color);
+	-moz-box-shadow: 0px 0px 5px 5px var(--link-color);
+	box-shadow: 0px 0px 5px 5px var(--link-color);
+}

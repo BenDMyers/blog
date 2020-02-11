@@ -21,7 +21,7 @@ p.post-header-date {
     margin-top: 1%;
 }
 
-p.post-header-date a {
+p.post-header-date a span.name {
     color: #cccccc;
     text-decoration: underline;
     text-decoration-color: var(--theme-color);
@@ -32,6 +32,11 @@ p.post-header-date a:hover {
 }
 
 p.post-header-date a:focus {
+    outline: none;
+    text-decoration: none;
+}
+
+p.post-header-date a:focus span.name {
     outline: 2px dashed var(--theme-color-focus-outline);
     text-decoration: none;
 }
@@ -56,4 +61,11 @@ p.post-header-date a:focus {
 
 .post-header + section.post-contents h2 {
     margin-top: 6%;
+}
+
+.post-header .header-avatar {
+    vertical-align: middle;
+    margin-top: -1%;
+    box-shadow: 2px 1.5px 5px 2px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
 }

@@ -97,7 +97,7 @@ We can also use the [`::before`](https://developer.mozilla.org/en-US/docs/Web/CS
 
 If you navigate to the above button with a screenreader, you'll likely hear something like "button, pencil, Edit," assuming your screenreader supports emojis. Lately, browsers interpret the content defined in pseudo-elements as... content. It impacts how sighted users experience the page (and users don't really care whether their content is _real_ content or _pseudo_ content), so browsers judge that they need to expose it to screenreaders.
 
-This judgment call comes from the <abbr title="World Wide Web Consortium">W3C</abbr> specs for determining an element's [accessible name](http://localhost:8000/aria/#name), i.e. how it's announced by screenreaders:
+This judgment call comes from the <abbr title="World Wide Web Consortium">W3C</abbr> specs for determining an element's [accessible name](http://blog.benmyers.dev/aria/#name), i.e. how it's announced by screenreaders:
 
 <Blockquote attribution={<a href="https://www.w3.org/TR/accname-1.1/#step2F.ii">Accessible Name and Description Computation 1.1, Step 2(F)(ii)</a>}>
     <>

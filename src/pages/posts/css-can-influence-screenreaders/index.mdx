@@ -123,7 +123,7 @@ When a user reaches a list in Safari, VoiceOver will usually say something like 
 
 Tables are another area where CSS can lead to changed semantics. Even though tables are supposed to represent tabular data, developers used to (and still sometimes do) put pieces of the page into a table in order to define the layout in terms of rows and columns. In these cases, table semantics are inaccurate.
 
-Browsers like Chrome<Fn fn="5" /> and Firefox<Fn fn="6" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="3" /><Fn fn="4" />
+Browsers like Chrome<Fn fn="3" /> and Firefox<Fn fn="4" /> will make an educated guess at whether a table is used for layout. One factor they consider is tablelike styling such as [zebra striping](https://www.w3schools.com/howto/howto_css_table_zebra.asp). On the other hand, specifying `display: block|flex|grid` on a table element seems to be an instant disqualifier for tablehood, and causes browsers to blow away the table's semantics.<Fn fn="5" /><Fn fn="6" />
 
 Apparently, `display` loves changing if and how elements are announced by screenreaders...
 
@@ -144,10 +144,10 @@ With CSS, there is a gray area, for better or for worse, between content and its
 <FootnotesContainer>
     <Footnote fn="1" author="John Northup" publication="WebAIM" title="Screen Readers and CSS: Are We Going Out of Style (and into Content)?" url="https://webaim.org/blog/screen-readers-and-css/" />
     <Footnote fn="2" author="Can I use..." title="CSS ::marker pseudo-element" url="https://caniuse.com/#feat=css-marker-pseudo" />
-    <Footnote fn="3" author="Steve Faulkner" publication="The Paciello Group" title="Short note on what CSS display properties do to table semantics" url="https://developer.paciellogroup.com/blog/2018/03/short-note-on-what-css-display-properties-do-to-table-semantics/" />
-    <Footnote fn="4" author="Adrian Roselli" title="Tables, CSS Display Properties, and ARIA" url="https://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html#TheTweet" />
-    <Footnote fn="5" title="Chromium source code" url="https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/accessibility/AXTable.cpp" />
-    <Footnote fn="6" title="Firefox source code" url="https://dxr.mozilla.org/mozilla-central/source/accessible/generic/TableAccessible.cpp" />
+    <Footnote fn="3" title="Chromium source code" url="https://chromium.googlesource.com/chromium/blink/+/master/Source/modules/accessibility/AXTable.cpp" />
+    <Footnote fn="4" title="Firefox source code" url="https://dxr.mozilla.org/mozilla-central/source/accessible/generic/TableAccessible.cpp" />
+    <Footnote fn="5" author="Steve Faulkner" publication="The Paciello Group" title="Short note on what CSS display properties do to table semantics" url="https://developer.paciellogroup.com/blog/2018/03/short-note-on-what-css-display-properties-do-to-table-semantics/" />
+    <Footnote fn="6" author="Adrian Roselli" title="Tables, CSS Display Properties, and ARIA" url="https://adrianroselli.com/2018/02/tables-css-display-properties-and-aria.html#TheTweet" />
     <Footnote fn="7" author="David Jöch" title="The CSS Speech Module" url="https://medium.com/@Zwenza/the-css-speech-module-8672a87a4764" />
     <Footnote fn="8" title="CSS Speech Module Publication History" url="https://www.w3.org/standards/history/css3-speech" />
 </FootnotesContainer>

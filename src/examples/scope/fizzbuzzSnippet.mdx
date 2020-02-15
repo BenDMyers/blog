@@ -1,0 +1,23 @@
+import './scope-examples.css';
+
+```js {numberLines: true}
+const LIMIT = 100;
+
+function fizzBuzz() {
+	for (let i = 1; i <= LIMIT; i++) {
+		let output = '';
+
+		if (i % 3 === 0) {
+			output += 'Fizz';
+		}
+
+		if (i % 5 === 0) {
+			output += 'Buzz';
+		}
+
+		console.log(output || i);
+	}
+}
+
+fizzBuzz();
+```

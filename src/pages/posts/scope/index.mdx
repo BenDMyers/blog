@@ -1,0 +1,52 @@
+---
+title: "Lexical and Dynamic Scope"
+date: 2020-02-21
+description: description here
+cover: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Russian_Dolls.jpg/1280px-Russian_Dolls.jpg'
+coveralt: A series of increasingly small matryoshka dolls.
+emoji: 🔎
+tags: []
+---
+
+import FizzbuzzSnippet from '../../../examples/scope/fizzbuzzSnippet';
+import IntroductionBashSnippet from '../../../examples/scope/introductionBashSnippet';
+import IntroductionJavascriptSnippet from '../../../examples/scope/introductionJavascriptSnippet';
+
+<p style="margin-top: 0;"><i>Cover image courtesy of <a href="https://commons.wikimedia.org/wiki/File:Russian_Dolls.jpg">Lachlan Fearnley</a>.</i></p>
+
+## Introduction
+
+Consider the following JavaScript and Bash snippets:
+
+<SideBySide>
+    <IntroductionJavascriptSnippet />
+    <IntroductionBashSnippet />
+</SideBySide>
+
+Ask yourself: **what value will the JavaScript code log? Why will it log that?** Let's turn to the Bash snippet. With the exception of some slight syntax differences, it looks pretty similar to the JavaScript code. **What will the Bash script log? Is it different from the JavaScript code? Why or why not?**
+
+Feel free to run both snippets for yourself. When we run the JavaScript snippet, it logs `"Ben"`. The Bash code, however, echoes `"Myers"` instead.
+
+Why are these two results different? To understand that, we'll need to understand scope.
+
+## What Is Scope?
+
+<p><dfn>Scope</dfn> refers to which variables and functions are accessible at a given point during a program's execution.</p>
+
+Languages can define different kinds of scopes. These scopes could include
+
+Scopes can nest like [matryoshka dolls](https://en.wikipedia.org/wiki/Matryoshka_doll). We can have an `if` block inside of a `for` loop inside of a function inside the global scope, as in this JavaScript implementation of [FizzBuzz](https://en.wikipedia.org/wiki/Fizz_buzz):
+
+<div id="nestedScopesExample">
+	<FizzbuzzSnippet />
+</div>
+
+## Lexical Scope Versus Dynamic Scope
+
+## Closures and Modules
+
+woo closures
+
+## Conclusion
+
+woo goodbye

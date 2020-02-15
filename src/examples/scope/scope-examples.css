@@ -1,0 +1,42 @@
+#nestedScopesExample {
+	--nest-border: var(--codeblock-highlighted-line-indicator-width);
+	--nest-global: #ef596f;
+	--nest-function: #e5c07b;
+	--nest-loop: #89ca78;
+	--nest-if: #2bbac5;
+
+	/* --nest-global-bg: rgb(22,8,10);
+	--nest-function-bg: rgb(41,25,20);
+	--nest-loop-bg: rgb(50,41,29);
+	--nest-if-bg: rgb(49,54,44); */
+
+	--nest-global-bg: hsl(351, 37%, 6%);
+	--nest-function-bg: hsl(14, 24%, 12%);
+	--nest-loop-bg: hsl(34, 17%, 15%);
+	--nest-if-bg: hsl(90, 0%, 19%);
+}
+
+#nestedScopesExample pre.codeblock div.token-line {
+	box-shadow: inset var(--nest-border) 0 0 0 var(--nest-global);
+	/* background-color: var(--nest-global-bg); */
+}
+
+#nestedScopesExample pre.codeblock div.token-line:nth-child(n+3):nth-child(-n+17) {
+	box-shadow: inset calc(var(--nest-border)) 0 0 0 var(--nest-global), inset calc(2*var(--nest-border)) 0 0 0 var(--nest-function);
+	/* background-color: var(--nest-function-bg); */
+}
+
+#nestedScopesExample pre.codeblock div.token-line:nth-child(n+4):nth-child(-n+16) {
+	box-shadow: inset calc(var(--nest-border)) 0 0 0 var(--nest-global), inset calc(2*var(--nest-border)) 0 0 0 var(--nest-function), inset calc(3*var(--nest-border)) 0 0 0 var(--nest-loop);
+	/* background-color: var(--nest-loop-bg); */
+}
+
+#nestedScopesExample pre.codeblock div.token-line:nth-child(n+7):nth-child(-n+9),
+#nestedScopesExample pre.codeblock div.token-line:nth-child(n+11):nth-child(-n+13) {
+	box-shadow: inset calc(var(--nest-border)) 0 0 0 var(--nest-global), inset calc(2*var(--nest-border)) 0 0 0 var(--nest-function), inset calc(3*var(--nest-border)) 0 0 0 var(--nest-loop), inset calc(4*var(--nest-border)) 0 0 0 var(--nest-if);
+	/* background-color: var(--nest-if-bg); */
+}
+
+#nestedScopesExample .line-number {
+	margin-left: calc(20px + calc(calc(4*var(--nest-border))));
+}

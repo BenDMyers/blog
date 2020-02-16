@@ -1,7 +1,7 @@
 ---
 title: "Lexical and Dynamic Scope"
 date: 2020-02-21
-description: description here
+description: A peek inside the matryoshka dolls that power your programming. Written mainly for JavaScript developers.
 cover: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Russian_Dolls.jpg/1280px-Russian_Dolls.jpg'
 coveralt: A series of increasingly small matryoshka dolls.
 emoji: 🔎
@@ -31,15 +31,35 @@ Why are these two results different? To understand that, we'll need to understan
 
 ## What Is Scope?
 
-<p><dfn>Scope</dfn> refers to which variables and functions are accessible at a given point during a program's execution.</p>
+<p><dfn>Scope</dfn> refers to which variables and functions are accessible at a given point during a program's execution. Languages can define different kinds of scopes. Depending on your language of choice, these scopes could include a global scope, block scopes for if-blocks and loops, function scopes that last until the end of the function invocation, and more. Once a scope reaches its end, variables and functions defined in that scope are no longer accessible.</p>
 
-Languages can define different kinds of scopes. These scopes could include
-
-Scopes can nest like [matryoshka dolls](https://en.wikipedia.org/wiki/Matryoshka_doll). We can have an `if` block inside of a `for` loop inside of a function inside the global scope, as in this JavaScript implementation of [FizzBuzz](https://en.wikipedia.org/wiki/Fizz_buzz):
+Scopes nest like [matryoshka dolls](https://en.wikipedia.org/wiki/Matryoshka_doll). We can have an if-block scope inside of a for-loop scope inside of a function scope inside the global scope, as in this JavaScript implementation of [FizzBuzz](https://en.wikipedia.org/wiki/Fizz_buzz):
 
 <div id="nestedScopesExample">
 	<FizzbuzzSnippet />
 </div>
+
+As the above snippet shows, variables can cascade down to nested scopes. We can use the globally defined `LIMIT` variable in the for-loop, and we can access the for-loop's `output` variable inside both of those if-blocks.
+
+This is a property of the <dfn>scope chain</dfn>. When a program accesses a variable, the engine will first see whether the current scope has declared that variable. If it has not, then it checks the parent scope, and then its parent scope, and its parent scope, and so forth until it reaches the outermost scope.
+
+This leads to a neat effect where you can locally define variables without messing with outer scopes' variables:
+
+```js {numberLines: true}
+let name = 'Ben';
+
+function setName() {
+	let name = 'Myers';
+	console.log(name); // logs "Myers"
+}
+
+setName();
+console.log(name); // still logs "Ben"
+```
+
+When the program reaches the `console.log` statement in line 5, the engine first checks whether `name` has been declared in `setName`'s scope. When it finds the declaration in line 4, it runs with it. It is therefore totally unconcerned with any prior declarations of `name`, like the one on line 1.
+
+The above examples, especially the FizzBuzz one, are a little deceptive in their simplicity. They demonstrate <!-- --> In practice, our programs aren't so orderly. We invoke 
 
 ## Lexical Scope Versus Dynamic Scope
 

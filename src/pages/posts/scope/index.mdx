@@ -1,6 +1,6 @@
 ---
 title: "Lexical and Dynamic Scope"
-date: 2020-02-21
+date: 2020-02-25
 description: A peek inside the matryoshka dolls that power your programming. Written mainly for JavaScript developers.
 cover: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Russian_Dolls.jpg/1280px-Russian_Dolls.jpg'
 coveralt: A series of increasingly small matryoshka dolls.
@@ -41,15 +41,15 @@ Scopes nest like [matryoshka dolls](https://en.wikipedia.org/wiki/Matryoshka_dol
 
 As the above snippet shows, variables can cascade down to nested scopes. We can use the globally defined `LIMIT` variable in the for-loop, and we can access the for-loop's `output` variable inside both of those if-blocks.
 
-This is a property of the <dfn>scope chain</dfn>. When a program accesses a variable, the engine will first see whether the current scope has declared that variable. If it has not, then it checks the parent scope, and then its parent scope, and its parent scope, and so forth until it reaches the outermost scope.
+This is the <dfn>scope chain</dfn>. When a program accesses a variable, the engine will first see whether the current scope has declared that variable. If it has not, then it checks the parent scope, and then its parent scope, and its parent scope, and so forth until it reaches the outermost scope.
 
-This leads to a neat effect where you can locally define variables without messing with outer scopes' variables:
+This means you can locally define variables without messing with outer scopes' variables:
 
 ```js {numberLines: true}
 let name = 'Ben';
 
 function setName() {
-	let name = 'Myers';
+	let name = 'Myers'; // creates local variable, doesn't override the global `name`
 	console.log(name); // logs "Myers"
 }
 
@@ -59,9 +59,125 @@ console.log(name); // still logs "Ben"
 
 When the program reaches the `console.log` statement in line 5, the engine first checks whether `name` has been declared in `setName`'s scope. When it finds the declaration in line 4, it runs with it. It is therefore totally unconcerned with any prior declarations of `name`, like the one on line 1.
 
-The above examples, especially the FizzBuzz one, are a little deceptive in their simplicity. They demonstrate <!-- --> In practice, our programs aren't so orderly. We invoke 
+Let's return to the JavaScript snippet from the introduction. Try to trace out its scopes.
+
+```js {numberLines: true}
+let name = 'Ben';
+
+function logName() {
+    console.log(name);
+}
+
+function setName() {
+    let name = 'Myers';
+    logName();
+}
+
+setName();
+```
+
+You may come to a sticking point: the invocation of `logName` inside `setName`. Does invoking `logName` create a new scope nested inside the `setName` scope? Or is `logName` nested in the global scope where it was declared? Would such a distinction even make a difference?
 
 ## Lexical Scope Versus Dynamic Scope
+
+When the JavaScript and Bash engines reach a line of code that references a variable or a function, they ask different questions of the code. The JavaScript engine asks, "Where was this code declared? In other words, where was this written?" On the other hand, Bash asks, "When was this executed?"
+
+Let's build up to our `setName` example, step by step, and see how JavaScript and Bash reached different results by asking these questions.
+
+We'll start small:
+
+```js {numberLines: true}{3}:title=JS
+
+let name = 'Ben';
+console.log(name);
+```
+
+```bash {numberLines: true}{3}:title=Bash
+#!/bin/bash
+name=Ben
+echo $name
+```
+
+When the JavaScript engine reaches the `name` reference in line 3, it asks itself,
+* __Okay, where was this code _written?___ In the global scope.
+* __Was a `name` variable declared in the global scope?__ Yes, on line 2.
+* __I'll use that.__
+
+When the Bash engine reaches its `name` reference in line 3, it instead asks,
+* __When was this code _executed?___ In the global scope.
+* __Was a `name` variable declared in the global scope?__ Yes, on line 2.
+* __I'll use that.__
+
+In this case, both languages happened to reach the same answer by asking different questions. However, playing only the global scope is uninterested. Let's add some complexity with functions.
+
+```js {numberLines: true}{5}:title=JS
+
+let name = 'Ben';
+
+function logName() {
+	console.log(name);
+}
+
+logName();
+```
+
+```bash {numberLines: true}{5}:title=Bash
+#!/bin/bash
+name=Ben
+
+logName() {
+	echo $name
+}
+
+logName
+```
+
+When the JavaScript engine reaches the `name` reference in line 5, it asks,
+* __Where was this code _written?___ Inside `logName`.
+* __Has `logName` declared a `name` variable?__ No.
+* __Okay, where was `logName` _declared?___ In the global scope.
+* __Has the global scope declared a `name`?__ Yes, on line 2.
+* __I'll use that.__
+
+Meanwhile, when Bash reaches the `name` reference in line 5, it asks,
+* __Where was this code _executed?___ Inside `logName`.
+* __Has `logName` declared a `name` variable?__ No.
+* __Okay, where did we _call_ `logName`?__ In the global scope.
+* __Has the global scope declared a `name`?__ Absolutely, on line 2.
+* __I'll use that.__
+
+Once again, the two languages reach the same answer by asking different questions.
+
+Try to map out the engines' thought process for our `setName` snippets when they reach the `name` reference on line 5.
+
+<SideBySide>
+    <IntroductionJavascriptSnippet />
+    <IntroductionBashSnippet />
+</SideBySide>
+
+The JavaScript engine asks,
+* __Where was this code written?__ Inside `logName`.
+* __Has `logName` declared a `name`?__ No.
+* __Where was `logName` declared?__ In the global scope.
+* __Has the global scope declared a `name`?__ Yes, on line 2.
+* __I'll use that.__
+
+In other words, JavaScript's implementation of scope does not care at all that `logName` was invoked by `setName`.
+
+Bash, meanwhile, asks,
+* __Where was this code executed?__ Inside `logName`.
+* __Has `logName` declared a `name`?__ No.
+* __Where was `logName` called?__ Inside `setName`.
+* __Has `setName` declared a `name`?__ Absolutely, on line 9.
+* __I'll use that.__
+
+At long last, we see how similar-seeming code can produce wildly different results across the two languages.
+
+JavaScript and other languages such as [the C family](https://www.geeksforgeeks.org/scope-rules-in-c/) and [Python](https://medium.com/@dannymcwaves/a-python-tutorial-to-understanding-scopes-and-closures-c6a3d3ba0937) use <dfn>lexical scope</dfn>, also called <dfn>static scope</dfn>, which means that scope nests according to where functions and variables are _declared_. When they encounter a reference to a variable, lexically scoped languages ask "Where was this written? Where was _that_ written?" and so forth until they find a variable declaration.
+
+In lexically scoped languages, variable references are predictable. For instance, `name` didn't change what it referred to based on whether `logName` was invoked in the global scope or inside `setName`. This predictability comes at the cost of more required overhead—generally implemented at compile time, hence the name _static_ scope—to keep track of references' scope.
+
+Bash, on the other hand, uses <dfn>dynamic scope</dfn>, where scope is nested based on the order of execution. In our snippets, the `logName` scope was nested inside `setName`, where it was invoked.
 
 ## Closures and Modules
 

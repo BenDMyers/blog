@@ -175,13 +175,17 @@ At long last, we see how similar-seeming code can produce wildly different resul
 
 JavaScript and other languages such as [the C family](https://www.geeksforgeeks.org/scope-rules-in-c/) and [Python](https://medium.com/@dannymcwaves/a-python-tutorial-to-understanding-scopes-and-closures-c6a3d3ba0937) use <dfn>lexical scope</dfn>, also called <dfn>static scope</dfn>, which means that scope nests according to where functions and variables are _declared_. When they encounter a reference to a variable, lexically scoped languages ask "Where was this written? Where was _that_ written?" and so forth until they find a variable declaration.
 
-In lexically scoped languages, variable references are predictable. For instance, `name` didn't change what it referred to based on whether `logName` was invoked in the global scope or inside `setName`. This predictability comes at the cost of more required overhead—generally implemented at compile time, hence the name _static_ scope—to keep track of references' scope.
+In lexically scoped languages, variable references are predictable. For instance, `name` didn't change what it referred to based on whether `logName` was invoked in the global scope or inside `setName`. This predictability comes at the cost of more required overhead, generally handled at compile time.
 
-Bash, on the other hand, uses <dfn>dynamic scope</dfn>, where scope is nested based on the order of execution. In our snippets, the `logName` scope was nested inside `setName`, where it was invoked.
+Bash, on the other hand, uses <dfn>dynamic scope</dfn>, where scope is nested based on the order of execution. In our snippets, the `logName` scope was nested inside `setName`'s scope, where it was invoked. Dynamic scope is handled at runtime, and [tends to require a little less overhead than lexical scope](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2000-109.pdf). It comes at a high cost of unpredictability—the same line of code in a function could refer to two different things depending on where the function was invoked, and subprograms could have the potential to unwittingly overwrite your variables. It's for this reason that the field has largely moved to lexically scoped languages.
 
 ## Closures and Modules
 
-woo closures
+In functional programming languages such as JavaScript, functions are <dfn>first-class citizens</dfn>, meaning they can be passed to and returned from other functions just as you would with any other value. Combine this with lexical scope, and you've got yourself a powerful tool.
+
+The set of all variables available in the scope chain is called the <dfn>lexical environment</dfn>.JavaScript functions can reference anything defined in their lexical environments. The combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because all functions are defined in a scope, every function creates a closure.
+
+> A package is most useful if its behavior is independent of the context of its use, thus reducing possible interference with other packages. <!-- Such a package is called _referentially transparent_. Intuitively, referential transparency requires that the meanings of parts of a program be apparent and not change, so that such meanings can be reliably depended upon. --> <i>[…]</i> In particular, names internal to one module should not affect or be affected by other modules — the external behavior of a module should be independent of the choice of names for its local identifiers.
 
 ## Conclusion
 

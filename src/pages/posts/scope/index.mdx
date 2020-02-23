@@ -11,6 +11,12 @@ tags: []
 import FizzbuzzSnippet from '../../../examples/scope/fizzbuzzSnippet';
 import IntroductionBashSnippet from '../../../examples/scope/introductionBashSnippet';
 import IntroductionJavascriptSnippet from '../../../examples/scope/introductionJavascriptSnippet';
+import MinimalBashSnippet from '../../../examples/scope/minimalBashSnippet';
+import MinimalJavascriptSnippet from '../../../examples/scope/minimalJavascriptSnippet';
+import LognameBashSnippet from '../../../examples/scope/lognameBashSnippet';
+import LognameJavascriptSnippet from '../../../examples/scope/lognameJavascriptSnippet';
+import SetnameBashSnippet from '../../../examples/scope/setnameBashSnippet';
+import SetnameJavascriptSnippet from '../../../examples/scope/setnameJavascriptSnippet';
 
 <p style="margin-top: 0;"><i>Cover image courtesy of <a href="https://commons.wikimedia.org/wiki/File:Russian_Dolls.jpg">Lachlan Fearnley</a>.</i></p>
 
@@ -86,17 +92,10 @@ Let's build up to our `setName` example, step by step, and see how JavaScript an
 
 We'll start small:
 
-```js {numberLines: true}{3}:title=JS
-
-let name = 'Ben';
-console.log(name);
-```
-
-```bash {numberLines: true}{3}:title=Bash
-#!/bin/bash
-name=Ben
-echo $name
-```
+<SideBySide>
+	<MinimalJavascriptSnippet />
+	<MinimalBashSnippet />
+</SideBySide>
 
 When the JavaScript engine reaches the `name` reference in line 3, it asks itself,
 * __Okay, where was this code _written?___ In the global scope.
@@ -108,29 +107,12 @@ When the Bash engine reaches its `name` reference in line 3, it instead asks,
 * __Was a `name` variable declared in the global scope?__ Yes, on line 2.
 * __I'll use that.__
 
-In this case, both languages happened to reach the same answer by asking different questions. However, playing only the global scope is uninterested. Let's add some complexity with functions.
+In this case, both languages happened to reach the same answer by asking different questions. However, playing only in the global scope is uninteresting. Let's add some complexity with functions.
 
-```js {numberLines: true}{5}:title=JS
-
-let name = 'Ben';
-
-function logName() {
-	console.log(name);
-}
-
-logName();
-```
-
-```bash {numberLines: true}{5}:title=Bash
-#!/bin/bash
-name=Ben
-
-logName() {
-	echo $name
-}
-
-logName
-```
+<SideBySide>
+	<LognameJavascriptSnippet />
+	<LognameBashSnippet />
+</SideBySide>
 
 When the JavaScript engine reaches the `name` reference in line 5, it asks,
 * __Where was this code _written?___ Inside `logName`.
@@ -151,8 +133,8 @@ Once again, the two languages reach the same answer by asking different question
 Try to map out the engines' thought process for our `setName` snippets when they reach the `name` reference on line 5.
 
 <SideBySide>
-    <IntroductionJavascriptSnippet />
-    <IntroductionBashSnippet />
+    <SetnameJavascriptSnippet />
+    <SetnameBashSnippet />
 </SideBySide>
 
 The JavaScript engine asks,
@@ -179,13 +161,11 @@ In lexically scoped languages, variable references are predictable. For instance
 
 Bash, on the other hand, uses <dfn>dynamic scope</dfn>, where scope is nested based on the order of execution. In our snippets, the `logName` scope was nested inside `setName`'s scope, where it was invoked. Dynamic scope is handled at runtime, and [tends to require a little less overhead than lexical scope](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2000-109.pdf). It comes at a high cost of unpredictability—the same line of code in a function could refer to two different things depending on where the function was invoked, and subprograms could have the potential to unwittingly overwrite your variables. It's for this reason that the field has largely moved to lexically scoped languages.
 
-## Closures and Modules
+## Closures
 
 In functional programming languages such as JavaScript, functions are <dfn>first-class citizens</dfn>, meaning they can be passed to and returned from other functions just as you would with any other value. Combine this with lexical scope, and you've got yourself a powerful tool.
 
-<!-- The set of all variables and functions available in the scope chain is called the <dfn>lexical environment</dfn>. JavaScript functions can reference anything that has been defined in their lexical environments. This combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because all functions are defined in a scope, every function creates a closure. -->
-
-A function's <dfn>lexical environment</dfn> is the set of all variables and functions that have been defined in the scope chain when the function is declared. A function can reference any variable or function in its lexical environment, regardless of where the function has been passed, imported, or invoked. This combination of a function and its lexical environment is called a <dfn>closure</dfn>.
+A function's <dfn>lexical environment</dfn> is the set of all variables and functions that have been defined in the scope chain when the function is declared. A function can reference any variable or function in its lexical environment, regardless of where the function has been passed, imported, or invoked. This combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because every function is declared in a scope, every function creates a closure.
 
 Here's a quick example:
 
@@ -265,11 +245,11 @@ counter.decrement(); // logs "2"
 counter.decrement(); // logs "1"
 ```
 
-Here, `createCounter` now returns an object with an `increment` and `decrement` method. Both of these methods are defined in the same lexical scope, so they have the same lexical environment. As a result, both of these functions are able to manipulate the same `counter` variable.
+Here, `createCounter` returns an object with the `increment` and `decrement` methods. Both of these methods are defined in the same lexical scope, so they have the same lexical environment. As a result, both of these functions are able to manipulate the same `counter` variable.
 
 Functional programming is wild.
 
-> A package is most useful if its behavior is independent of the context of its use, thus reducing possible interference with other packages. <!-- Such a package is called _referentially transparent_. Intuitively, referential transparency requires that the meanings of parts of a program be apparent and not change, so that such meanings can be reliably depended upon. --> <i>[…]</i> In particular, names internal to one module should not affect or be affected by other modules — the external behavior of a module should be independent of the choice of names for its local identifiers.
+Closures are everywhere in JavaScript development. They enable the [callback pattern](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)
 
 ## Conclusion
 

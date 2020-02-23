@@ -183,7 +183,91 @@ Bash, on the other hand, uses <dfn>dynamic scope</dfn>, where scope is nested ba
 
 In functional programming languages such as JavaScript, functions are <dfn>first-class citizens</dfn>, meaning they can be passed to and returned from other functions just as you would with any other value. Combine this with lexical scope, and you've got yourself a powerful tool.
 
-The set of all variables available in the scope chain is called the <dfn>lexical environment</dfn>.JavaScript functions can reference anything defined in their lexical environments. The combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because all functions are defined in a scope, every function creates a closure.
+<!-- The set of all variables and functions available in the scope chain is called the <dfn>lexical environment</dfn>. JavaScript functions can reference anything that has been defined in their lexical environments. This combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because all functions are defined in a scope, every function creates a closure. -->
+
+A function's <dfn>lexical environment</dfn> is the set of all variables and functions that have been defined in the scope chain when the function is declared. A function can reference any variable or function in its lexical environment, regardless of where the function has been passed, imported, or invoked. This combination of a function and its lexical environment is called a <dfn>closure</dfn>.
+
+Here's a quick example:
+
+```js {numberLines: true}
+function createCounter() {
+	let counter = 0;
+
+	return function increment() {
+		counter++;
+		console.log(counter);
+	}
+}
+
+let incrementMyCounter = createCounter(); // returns the `increment` function
+
+incrementMyCounter(); // logs "1"
+incrementMyCounter(); // logs "2"
+incrementMyCounter(); // logs "3"
+```
+
+The `increment` function (which is returned from `createCounter` and saved as `incrementMyCounter`) maintains a reference to the `counter` variable declared in line 2, and can continue to manipulate it even after `createCounter` is done executing. It does this, even though `counter` is not defined in the global scope—attempting to log `counter` in the global scope would give you an uncaught reference error.
+
+What if we call `createCounter` twice?
+
+```js {numberLines: true}
+function createCounter() {
+	let counter = 0;
+
+	return function increment() {
+		counter++;
+		console.log(counter);
+	}
+}
+
+let incrementFirstCounter = createCounter(); // returns the `increment` function
+let incrementSecondCounter = createCounter(); // returns the `increment` function
+
+incrementFirstCounter(); // logs "1"
+incrementFirstCounter(); // logs "2"
+incrementFirstCounter(); // logs "3"
+
+incrementSecondCounter(); // logs "1"
+incrementSecondCounter(); // logs "2"
+```
+
+`incrementFirstCounter` and `incrementSecondCounter` are tracking and manipulating two separate `counter` variables from two separate `createCounter` invocations.
+
+Let's do one more. What if `createCounter` returns _two_ functions, both declared inside `createCounter`'s scope?
+
+```js {numberLines: true}
+function createCounter() {
+	let counter = 0;
+
+	function increment() {
+		counter++;
+		console.log(counter);
+	}
+
+	function decrement() {
+		counter--;
+		console.log(counter);
+	}
+
+	return {
+		increment,
+		decrement
+	};
+}
+
+let counter = createCounter(); // returns an object, with `increment` and `decrement` methods
+
+counter.increment(); // logs "1"
+counter.increment(); // logs "2"
+counter.increment(); // logs "3"
+
+counter.decrement(); // logs "2"
+counter.decrement(); // logs "1"
+```
+
+Here, `createCounter` now returns an object with an `increment` and `decrement` method. Both of these methods are defined in the same lexical scope, so they have the same lexical environment. As a result, both of these functions are able to manipulate the same `counter` variable.
+
+Functional programming is wild.
 
 > A package is most useful if its behavior is independent of the context of its use, thus reducing possible interference with other packages. <!-- Such a package is called _referentially transparent_. Intuitively, referential transparency requires that the meanings of parts of a program be apparent and not change, so that such meanings can be reliably depended upon. --> <i>[…]</i> In particular, names internal to one module should not affect or be affected by other modules — the external behavior of a module should be independent of the choice of names for its local identifiers.
 

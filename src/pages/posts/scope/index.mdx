@@ -22,14 +22,12 @@ import SetnameJavascriptSnippet from '../../../examples/scope/setnameJavascriptS
 
 ## Introduction
 
-Consider the following JavaScript and Bash snippets:
+Consider the following JavaScript and Bash snippets. Ask yourself: **what value will the JavaScript code log? Why will it log that?** With the exception of some slight syntax differences, the Bash snippet looks pretty similar to the JavaScript code. **What will the Bash script log? Is it different from the JavaScript code? Why or why not?**
 
 <SideBySide>
     <IntroductionJavascriptSnippet />
     <IntroductionBashSnippet />
 </SideBySide>
-
-Ask yourself: **what value will the JavaScript code log? Why will it log that?** Let's turn to the Bash snippet. With the exception of some slight syntax differences, it looks pretty similar to the JavaScript code. **What will the Bash script log? Is it different from the JavaScript code? Why or why not?**
 
 Feel free to run both snippets for yourself. When we run the JavaScript snippet, it logs `"Ben"`. The Bash code, however, echoes `"Myers"` instead.
 
@@ -167,7 +165,7 @@ In functional programming languages such as JavaScript, functions are <dfn>first
 
 A function's <dfn>lexical environment</dfn> is the set of all variables and functions that have been defined in the scope chain when the function is declared. A function can reference any variable or function in its lexical environment, regardless of where the function has been passed, imported, or invoked. This combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because every function is declared in a scope, every function creates a closure.
 
-Here's a quick example:
+Here's a quick example. The `createCounter` function declares a `counter` variable and an `increment` function. It returns that `increment` function, which is promptly stored in the `incrementMyCounter` variable.
 
 ```js {numberLines: true}
 function createCounter() {
@@ -186,9 +184,9 @@ incrementMyCounter(); // logs "2"
 incrementMyCounter(); // logs "3"
 ```
 
-The `increment` function (which is returned from `createCounter` and saved as `incrementMyCounter`) maintains a reference to the `counter` variable declared in line 2, and can continue to manipulate it even after `createCounter` is done executing. It does this, even though `counter` is not defined in the global scope—attempting to log `counter` in the global scope would give you an uncaught reference error.
+The `increment` function (stored in `incrementMyCounter`) maintains a reference to the `counter` variable declared in line 2, and can continue to manipulate it even after `createCounter` is done executing. It does this, even though `counter` is not defined in the global scope—attempting to log `counter` in the global scope would give you an uncaught reference error.
 
-What if we call `createCounter` twice?
+What if we call `createCounter` twice? Will we get two separate `increment` functions that manipulate separate `counter` variables? Or will they both manipulate the same `counter` variable?
 
 ```js {numberLines: true}
 function createCounter() {
@@ -213,7 +211,7 @@ incrementSecondCounter(); // logs "2"
 
 `incrementFirstCounter` and `incrementSecondCounter` are tracking and manipulating two separate `counter` variables from two separate `createCounter` invocations.
 
-Let's do one more. What if `createCounter` returns _two_ functions, both declared inside `createCounter`'s scope?
+Let's do one more. What if `createCounter` returns _two_ functions, both declared inside `createCounter`'s scope? Because we can only return one value at a time, let's stick both of those functions in an object as methods, and return that object.
 
 ```js {numberLines: true}
 function createCounter() {

@@ -70,6 +70,15 @@ div.codeblock-title {
 	font-family: var(--monospace-font), monospace;
 	font-size: 14px;
 	border-top-right-radius: 0.25rem;
+	transition: background-color 0.5s ease-in-out;
+}
+
+div.side-by-side div.codeblock-title {
+	border-top-left-radius: 0.25rem;
+}
+
+div.side-by-side div.codeblock-title-wrapper {
+	margin-left: 0 !important;
 }
 
 @media screen and (max-width: 768px) {

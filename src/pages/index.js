@@ -24,7 +24,7 @@ const BlogIndex = (props) => {
 	}, []);
 
 	return (
-		<Page location={props.location} title="Posts">
+		<Page location={props.location} title="Blog">
 			<Bio />
 			{snippets}
 		</Page>

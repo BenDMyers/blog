@@ -1,0 +1,15 @@
+```bash {numberLines: true}:title=Bash
+#!/bin/bash
+name=Ben
+
+logName() {
+	echo $name
+}
+
+setName() {
+    local name=Myers
+    logName
+}
+
+setName
+```

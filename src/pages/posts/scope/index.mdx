@@ -1,0 +1,265 @@
+---
+title: "Lexical and Dynamic Scope"
+date: 2020-02-25
+description: A peek inside the matryoshka dolls that power your programming. Written mainly for JavaScript developers.
+cover: 'https://i.imgur.com/nydgedB.jpg'
+coveralt: A series of increasingly small matryoshka dolls.
+emoji: 🔎
+tags: []
+---
+
+import FizzbuzzSnippet from '../../../examples/scope/fizzbuzzSnippet';
+import IntroductionBashSnippet from '../../../examples/scope/introductionBashSnippet';
+import IntroductionJavascriptSnippet from '../../../examples/scope/introductionJavascriptSnippet';
+import MinimalBashSnippet from '../../../examples/scope/minimalBashSnippet';
+import MinimalJavascriptSnippet from '../../../examples/scope/minimalJavascriptSnippet';
+import LognameBashSnippet from '../../../examples/scope/lognameBashSnippet';
+import LognameJavascriptSnippet from '../../../examples/scope/lognameJavascriptSnippet';
+import SetnameBashSnippet from '../../../examples/scope/setnameBashSnippet';
+import SetnameJavascriptSnippet from '../../../examples/scope/setnameJavascriptSnippet';
+
+<p style="margin-top: 0;"><i>Cover image courtesy of <a href="https://commons.wikimedia.org/wiki/File:Russian_Dolls.jpg">Lachlan Fearnley</a>.</i></p>
+
+## Introduction
+
+Consider the following JavaScript and Bash snippets. Ask yourself: **what value will the JavaScript code log? Why will it log that?** With the exception of some slight syntax differences, the Bash snippet looks pretty similar to the JavaScript code. **What will the Bash script log? Is it different from the JavaScript code? Why or why not?**
+
+<SideBySide>
+    <IntroductionJavascriptSnippet />
+    <IntroductionBashSnippet />
+</SideBySide>
+
+Feel free to run both snippets for yourself. When we run the JavaScript snippet, it logs `"Ben"`. The Bash code, however, echoes `"Myers"` instead.
+
+Why are these two results different? To understand that, we'll need to understand scope.
+
+## What Is Scope?
+
+<p><dfn>Scope</dfn> refers to which variables and functions are accessible at a given point during a program's execution. Languages can define different kinds of scopes. Depending on your language of choice, these scopes could include a global scope, block scopes for if-blocks and loops, function scopes that last until the end of the function invocation, and more. Once a scope reaches its end, variables and functions defined in that scope are no longer accessible.</p>
+
+Scopes nest like [matryoshka dolls](https://en.wikipedia.org/wiki/Matryoshka_doll). We can have an if-block scope inside of a for-loop scope inside of a function scope inside the global scope, as in this JavaScript implementation of [FizzBuzz](https://en.wikipedia.org/wiki/Fizz_buzz):
+
+<div id="nestedScopesExample">
+	<FizzbuzzSnippet />
+</div>
+
+As the above snippet shows, variables can cascade down to nested scopes. We can use the globally defined `LIMIT` variable in the for-loop, and we can access the for-loop's `output` variable inside both of those if-blocks.
+
+This is the <dfn>scope chain</dfn>. When a program accesses a variable, the engine will first see whether the current scope has declared that variable. If it has not, then it checks the parent scope, and then its parent scope, and its parent scope, and so forth until it reaches the outermost scope.
+
+This means you can locally define variables without messing with outer scopes' variables:
+
+```js {numberLines: true}
+let name = 'Ben';
+
+function setName() {
+	let name = 'Myers'; // creates local variable, doesn't override the global `name`
+	console.log(name); // logs "Myers"
+}
+
+setName();
+console.log(name); // still logs "Ben"
+```
+
+When the program reaches the `console.log` statement in line 5, the engine first checks whether `name` has been declared in `setName`'s scope. When it finds the declaration in line 4, it runs with it. It is therefore totally unconcerned with any prior declarations of `name`, like the one on line 1.
+
+Let's return to the JavaScript snippet from the introduction. Try to trace out its scopes.
+
+```js {numberLines: true}
+let name = 'Ben';
+
+function logName() {
+    console.log(name);
+}
+
+function setName() {
+    let name = 'Myers';
+    logName();
+}
+
+setName();
+```
+
+You may come to a sticking point: the invocation of `logName` inside `setName`. Does invoking `logName` create a new scope nested inside the `setName` scope? Or is `logName` nested in the global scope where it was declared? Would such a distinction even make a difference?
+
+## Lexical Scope Versus Dynamic Scope
+
+When the JavaScript and Bash engines reach a line of code that references a variable or a function, they ask different questions of the code. The JavaScript engine asks, "Where was this code declared? In other words, where was this written?" On the other hand, Bash asks, "When was this executed?"
+
+Let's build up to our `setName` example, step by step, and see how JavaScript and Bash reached different results by asking these questions.
+
+We'll start small:
+
+<SideBySide>
+	<MinimalJavascriptSnippet />
+	<MinimalBashSnippet />
+</SideBySide>
+
+When the JavaScript engine reaches the `name` reference in line 3, it asks itself,
+* __Okay, where was this code _written?___ In the global scope.
+* __Was a `name` variable declared in the global scope?__ Yes, on line 2.
+* __I'll use that.__
+
+When the Bash engine reaches its `name` reference in line 3, it instead asks,
+* __When was this code _executed?___ In the global scope.
+* __Was a `name` variable declared in the global scope?__ Yes, on line 2.
+* __I'll use that.__
+
+In this case, both languages happened to reach the same answer by asking different questions. However, playing only in the global scope is uninteresting. Let's add some complexity with functions.
+
+<SideBySide>
+	<LognameJavascriptSnippet />
+	<LognameBashSnippet />
+</SideBySide>
+
+When the JavaScript engine reaches the `name` reference in line 5, it asks,
+* __Where was this code _written?___ Inside `logName`.
+* __Has `logName` declared a `name` variable?__ No.
+* __Okay, where was `logName` _declared?___ In the global scope.
+* __Has the global scope declared a `name`?__ Yes, on line 2.
+* __I'll use that.__
+
+Meanwhile, when Bash reaches the `name` reference in line 5, it asks,
+* __Where was this code _executed?___ Inside `logName`.
+* __Has `logName` declared a `name` variable?__ No.
+* __Okay, where did we _call_ `logName`?__ In the global scope.
+* __Has the global scope declared a `name`?__ Absolutely, on line 2.
+* __I'll use that.__
+
+Once again, the two languages reach the same answer by asking different questions.
+
+Try to map out the engines' thought process for our `setName` snippets when they reach the `name` reference on line 5.
+
+<SideBySide>
+    <SetnameJavascriptSnippet />
+    <SetnameBashSnippet />
+</SideBySide>
+
+The JavaScript engine asks,
+* __Where was this code written?__ Inside `logName`.
+* __Has `logName` declared a `name`?__ No.
+* __Where was `logName` declared?__ In the global scope.
+* __Has the global scope declared a `name`?__ Yes, on line 2.
+* __I'll use that.__
+
+In other words, JavaScript's implementation of scope does not care at all that `logName` was invoked by `setName`.
+
+Bash, meanwhile, asks,
+* __Where was this code executed?__ Inside `logName`.
+* __Has `logName` declared a `name`?__ No.
+* __Where was `logName` called?__ Inside `setName`.
+* __Has `setName` declared a `name`?__ Absolutely, on line 9.
+* __I'll use that.__
+
+At long last, we see how similar-seeming code can produce wildly different results across the two languages.
+
+JavaScript and other languages such as [the C family](https://www.geeksforgeeks.org/scope-rules-in-c/) and [Python](https://medium.com/@dannymcwaves/a-python-tutorial-to-understanding-scopes-and-closures-c6a3d3ba0937) use <dfn>lexical scope</dfn>, also called <dfn>static scope</dfn>, which means that scope nests according to where functions and variables are _declared_. When they encounter a reference to a variable, lexically scoped languages ask "Where was this written? Where was _that_ written?" and so forth until they find a variable declaration.
+
+In lexically scoped languages, variable references are predictable. For instance, `name` didn't change what it referred to based on whether `logName` was invoked in the global scope or inside `setName`. This predictability comes at the cost of more required overhead, generally handled at compile time.
+
+Bash, on the other hand, uses <dfn>dynamic scope</dfn>, where scope is nested based on the order of execution. In our snippets, the `logName` scope was nested inside `setName`'s scope, where it was invoked. Dynamic scope is handled at runtime, and [tends to require a little less overhead than lexical scope](https://www.microsoft.com/en-us/research/wp-content/uploads/2016/02/tr-2000-109.pdf). It comes at a high cost of unpredictability—the same line of code in a function could refer to two different things depending on where the function was invoked, and subprograms could have the potential to unwittingly overwrite your variables. It's for this reason that the field has largely moved to lexically scoped languages.
+
+## Closures
+
+In functional programming languages such as JavaScript, functions are <dfn>first-class citizens</dfn>, meaning they can be passed to and returned from other functions just as you would with any other value. Combine this with lexical scope, and you've got yourself a powerful tool.
+
+A function's <dfn>lexical environment</dfn> is the set of all variables and functions that have been defined in the scope chain when the function is declared. A function can reference any variable or function in its lexical environment, regardless of where the function has been passed, imported, or invoked. This combination of a function and its lexical environment is called a <dfn>closure</dfn>. Because every function is declared in a scope, every function creates a closure.
+
+Here's a quick example. The `createCounter` function declares a `counter` variable and an `increment` function. It returns that `increment` function, which is promptly stored in the `incrementMyCounter` variable.
+
+```js {numberLines: true}
+function createCounter() {
+	let counter = 0;
+
+	return function increment() {
+		counter++;
+		console.log(counter);
+	}
+}
+
+let incrementMyCounter = createCounter(); // returns the `increment` function
+
+incrementMyCounter(); // logs "1"
+incrementMyCounter(); // logs "2"
+incrementMyCounter(); // logs "3"
+```
+
+The `increment` function (stored in `incrementMyCounter`) maintains a reference to the `counter` variable declared in line 2, and can continue to manipulate it even after `createCounter` is done executing. It does this, even though `counter` is not defined in the global scope—attempting to log `counter` in the global scope would give you an uncaught reference error.
+
+What if we call `createCounter` twice? Will we get two separate `increment` functions that manipulate separate `counter` variables? Or will they both manipulate the same `counter` variable?
+
+```js {numberLines: true}
+function createCounter() {
+	let counter = 0;
+
+	return function increment() {
+		counter++;
+		console.log(counter);
+	}
+}
+
+let incrementFirstCounter = createCounter(); // returns the `increment` function
+let incrementSecondCounter = createCounter(); // returns the `increment` function
+
+incrementFirstCounter(); // logs "1"
+incrementFirstCounter(); // logs "2"
+incrementFirstCounter(); // logs "3"
+
+incrementSecondCounter(); // logs "1"
+incrementSecondCounter(); // logs "2"
+```
+
+`incrementFirstCounter` and `incrementSecondCounter` are tracking and manipulating two separate `counter` variables from two separate `createCounter` invocations.
+
+Let's do one more. What if `createCounter` returns _two_ functions, both declared inside `createCounter`'s scope? Because we can only return one value at a time, let's stick both of those functions in an object as methods, and return that object.
+
+```js {numberLines: true}
+function createCounter() {
+	let counter = 0;
+
+	function increment() {
+		counter++;
+		console.log(counter);
+	}
+
+	function decrement() {
+		counter--;
+		console.log(counter);
+	}
+
+	return {
+		increment,
+		decrement
+	};
+}
+
+let counter = createCounter(); // returns an object, with `increment` and `decrement` methods
+
+counter.increment(); // logs "1"
+counter.increment(); // logs "2"
+counter.increment(); // logs "3"
+
+counter.decrement(); // logs "2"
+counter.decrement(); // logs "1"
+```
+
+Here, `createCounter` returns an object with the `increment` and `decrement` methods. Both of these methods are defined in the same lexical scope, so they have the same lexical environment. As a result, both of these functions are able to manipulate the same `counter` variable.
+
+Functional programming is wild.
+
+JavaScript developers take full advantage of closures as an innate feature of the language, often without thinking about it, whenever we...
+
+* Use an array utility like `map`, `reduce`, or `filter`.
+* Pass a callback to an asynchronous function
+* Import modules (👋 Hi, Node.js)
+* Do basically anything resembling functional programming
+
+It's no surprise that, as a language, JavaScript is basically _Oops! All Closures_.
+
+## Conclusion
+
+If you're reading this, you're likely a JavaScript developer, if I'm being honest. Barring that, you might write Python, or maybe Java, or perhaps some other lexically scoped language. You may not write a lick of Bash, let alone any other dynamically scoped language.
+
+Nevertheless, scope is a part of your everyday work as a developer, whether you're conscious of it or not. Every reference lookup you write causes your language of choice's engine to ask itself where to find that variable. Whether your language of choice uses lexical scope or dynamic scope can radically change the result and, therefore, it will change how you write and interpret your code.
+
+Personally, as a React developer, I can see two big ways that lexical scope impacts my day-to-day work. First, it enables me to write modularized code, which lets me think about how the code I'm writing solves the problem at hand without worrying about causing side effects in the rest of the program. Secondly, lexical scope enables closures, which make passing functions around _useful_. This lets me use functional programming techniques to solve problems quickly, intuitively, and robustly, and it can enable the same for you.

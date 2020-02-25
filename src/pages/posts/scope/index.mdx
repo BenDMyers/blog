@@ -249,19 +249,19 @@ Here, `createCounter` returns an object with the `increment` and `decrement` met
 
 Functional programming is wild.
 
-We take advantage of closures as an innate feature of the language, often without thinking about it, whenever we...
+JavaScript developers take full advantage of closures as an innate feature of the language, often without thinking about it, whenever we...
 
 * Use an array utility like `map`, `reduce`, or `filter`.
 * Pass a callback to an asynchronous function
 * Import modules (👋 Hi, Node.js)
 * Do basically anything resembling functional programming
 
-It's no surprise that, as a language, JavaScript is basically Oops! All Closures.
+It's no surprise that, as a language, JavaScript is basically _Oops! All Closures_.
 
 ## Conclusion
 
-WRITE A MEANINGFUL CONCLUSION HERE
+If you're reading this, you're likely a JavaScript developer, if I'm being honest. Barring that, you might write Python, or maybe Java, or perhaps some other lexically scoped language. You may not write a lick of Bash, let alone any other dynamically scoped language.
 
-I AM SLEEPY
+Nevertheless, scope is a part of your everyday work as a developer, whether you're conscious of it or not. Every reference lookup you write causes your language of choice's engine to ask itself where to find that variable. Whether your language of choice uses lexical scope or dynamic scope can radically change the result and, therefore, it will change how you write and interpret your code.
 
-GOODNIGHT
+Personally, as a React developer, I can see two big ways that lexical scope impacts my day-to-day work. First, it enables me to write modularized code, which lets me think about how the code I'm writing solves the problem at hand without worrying about causing side effects in the rest of the program. Secondly, lexical scope enables closures, which make passing functions around _useful_. This lets me use functional programming techniques to solve problems quickly, intuitively, and robustly, and it can enable the same for you.

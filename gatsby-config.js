@@ -14,7 +14,7 @@ module.exports = {
 			resolve: 'gatsby-plugin-web-font-loader',
 			options: {
 				google: {
-                    families: ['Lato', 'Roboto Slab:400,700,900', 'Oxygen Mono:400,400i,700']
+                    families: ['Lato', 'Roboto Slab:400,700,900', 'Oxygen Mono:400,400i,600,700']
 				}
 			}
 		},

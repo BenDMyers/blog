@@ -39,7 +39,7 @@
     "lorem-ipsum": "^2.0.3",
     "moment": "^2.24.0",
     "prism-react-renderer": "0.1.7",
-    "prismjs": "1.17.1",
+    "prismjs": "1.21.0",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-helmet": "^5.2.1",

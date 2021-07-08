@@ -1,17 +1,39 @@
 import React from 'react';
 
 import './wide-image.css';
+import toId from '../../../utils/to-id';
 
-const WideImage = ({src, alt, caption}) => {
-	let image = <img className="wide-image" src={src} alt={alt} />;
+const WideImage = ({src, alt, caption, adaptive, longDescription}) => {
+    let wrapperClass = `wide-image-figure ${adaptive ? 'adaptive' : ''}`;
+    let describerId;
 
-	if (caption) {
+    let imageAttributes = {
+        className: 'wide-image',
+        src,
+        alt
+    };
+
+    if(longDescription) {
+        describerId = `image-${toId(src)}-description`;
+        imageAttributes['aria-describedby'] = describerId;
+    }
+
+    let image = <img {...imageAttributes} />;
+
+	if (caption || adaptive || longDescription) {
 		return (
-			<figure className="wide-image-figure">
+			<figure className={wrapperClass}>
 				{image}
-				<figcaption className="wide-image-caption">
-					{caption}
-				</figcaption>
+				{caption && (
+                    <figcaption className="wide-image-caption">
+					    {caption}
+                    </figcaption>
+                )}
+                {longDescription && (
+                    <span id={describerId} style={{display: 'none'}}>
+                        {longDescription}
+                    </span>
+                )}
 			</figure>
 		);
 	} else {

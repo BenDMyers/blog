@@ -1,0 +1,61 @@
+---
+title: "Five Tips for Robustly Accessible Webpages"
+date: 2020-01-13
+description: "A beginner's guide to ARIA: what it is, what it does, why you should use it... and when you shouldn't."
+cover: 'https://i.imgur.com/oQFU2WB.jpg'
+coveralt: "Rube Goldberg machine featuring a Ferris wheel of cups that pour out to add weight to a seesaw. The seesaw has tripped off a ball that has knocked over a line of wafers like dominoes, so the last one can fall into a cup of coffee."
+emoji: 🎡
+tags: ["web accessibility", "accessibility", "web development", "semantics", "aria"]
+---
+
+## Introduction
+
+The north star for web accessibility is [<dfn>POUR</dfn>](https://www.w3.org/WAI/fundamentals/accessibility-principles/)—web content should be perceivable, operable, understandable, and robust. <dfn>Robustness</dfn> ensures that your content isn't just perceivable, operable, and understandable, but that it's all of those things regardless of the browsers, devices, and assistive technologies that users use to access your page.
+
+How do we ensure that our pages are robustly accessible? The following are five things that run through my head when I evaluate the solutions I or my teammates have written:
+
+1. [Know your users' needs](#1-know-your-users-needs)
+2. [Keep it simple](#2-keep-it-simple)
+3. [Use semantic elements where applicable](#3-use-semantic-elements-where-applicable)
+4. [Use a dash of ARIA, at most](#4-use-a-dash-of-aria-at-most)
+5. [Test often and test well](#5-test-often-and-test-well)
+
+## 👩‍🦯 1. Know Your Users' Needs
+
+<!-- Does your solution meet users' needs? Does it provide value to your users?
+
+The principles of POUR are functional requirements for all of your users. _Everyone_ who navigates your page expects to perceive, operate, and understand its contents, regardless of their browsers or platforms. For nondisabled users, these functional requirements are usually taken for granted. When it comes to disabled users, these requirements are often not well-understood or taken into account.
+
+Creating robustly perceivable, operable, and understandable pages is the cornerstone of web accessibility.  -->
+
+As developers, we provide value to users by meeting their needs. We can only do that when we understand what they need in the first place.
+
+Perceivability, operability, understandability, and robustness are [functional requirements](https://www.altexsoft.com/blog/business/functional-and-non-functional-requirements-specification-and-types/#functional-requirements-and-their-specifications) for all of your users. We usually take that for granted, however, because asserting that users should understand and be able to interact with our page feels like such an obvious thing to say. When it comes to disabled users, however, these requirements are often not well-understood or taken into account.
+
+Before fleshing out your solution, ask yourself: what will I need to make this feature usable for disabled users? Will I need 
+
+## 🎡 2. Keep It Simple
+
+How do you maintain a [Rube Goldberg machine](https://en.wikipedia.org/wiki/Rube_Goldberg_machine)?
+
+<WideImage
+    src="https://i.imgur.com/oQFU2WB.jpg"
+    alt="Rube Goldberg machine designed to knock a wafer into a cup of coffee"
+    caption={<>Courtesy of <a href="https://www.behance.net/gallery/54891091/Complex-Simplicity">Jonathan Knowles</a></>}
+    longDescription="The Rube Goldberg machine features a Ferris wheel of cups that pour out to add weight to a seesaw. The seesaw has tripped off a ball that has knocked over a line of wafers like dominoes, so the last one can fall into a cup of coffee."
+    adaptive
+/>
+
+You don't.
+
+Complex, overengineered solutions contain many moving parts. Each moving part is a potential point of failure.
+
+## 🦆 3. Use Semantic Elements Where Applicable
+
+In my experience, UX is largely about setting up promises to your users and then following through on them. In [_How (Not) to Build a Button_](https://blog.benmyers.dev/clickable-divs/), for instance, I share how users' expectations for buttons go beyond being clickable.
+
+If it looks like a duck, swims like a duck, and quacks like a duck, then it should probably be a `<duck/>`.
+
+## 🧂 4. Use a Dash of ARIA, At Most
+
+## 🧪 5. Test Often and Test Well

@@ -13,3 +13,14 @@ figcaption.wide-image-caption {
 	font-size: 14px;
 	font-style: italic;
 }
+
+@media screen and (min-width: 768px) {
+    .adaptive img.wide-image {
+        min-width: calc(50% + 2.625rem);
+        width: calc(50% + 2.625rem);
+    }
+
+    .adaptive.wide-image-figure {
+        text-align: center;
+    }
+}
